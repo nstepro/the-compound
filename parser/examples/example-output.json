@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "generatedAt": "2024-01-15T10:30:00Z",
+    "totalPlaces": 5,
+    "sourceDocId": "1a2b3c4d5e6f7g8h9i0j",
+    "parserVersion": "1.0.0"
+  },
+  "places": [
+    {
+      "id": "blue-moon-cafe",
+      "name": "Blue Moon Cafe",
+      "type": "restaurant",
+      "description": "Cozy waterfront cafe with amazing breakfast and coffee",
+      "url": "https://bluemooncafe.com",
+      "address": "123 Harbor Street, Coastal Town, CA 90210",
+      "mapsLink": "https://maps.google.com/maps?q=123+Harbor+Street+Coastal+Town+CA",
+      "phone": "(555) 123-4567",
+      "priceRange": "$$",
+      "rating": 4.5,
+      "hours": "6:00 AM - 2:00 PM",
+      "notes": "Try the blueberry pancakes! Gets busy on weekends, arrive early.",
+      "tags": ["breakfast", "coffee", "waterfront", "local-favorite"],
+      "coordinates": {
+        "lat": 34.0522,
+        "lng": -118.2437
+      }
+    },
+    {
+      "id": "sunset-hiking-trail",
+      "name": "Sunset Ridge Trail",
+      "type": "activity",
+      "description": "Moderate 3-mile hike with stunning sunset views",
+      "address": "Sunset Ridge Trailhead, Mountain View Road",
+      "mapsLink": "https://maps.google.com/maps?q=Sunset+Ridge+Trailhead",
+      "notes": "Best time to go is 2 hours before sunset. Bring water and flashlight for return trip.",
+      "tags": ["hiking", "sunset", "moderate", "scenic"],
+      "coordinates": {
+        "lat": 34.1234,
+        "lng": -118.5678
+      }
+    },
+    {
+      "id": "farmers-market",
+      "name": "Saturday Farmers Market",
+      "type": "shopping",
+      "description": "Local farmers market with fresh produce and crafts",
+      "address": "Town Square, 456 Main Street",
+      "mapsLink": "https://maps.google.com/maps?q=Town+Square+456+Main+Street",
+      "hours": "Saturdays 8:00 AM - 1:00 PM",
+      "notes": "Best selection arrives early. Don't miss the honey vendor!",
+      "tags": ["farmers-market", "local-produce", "crafts", "saturday-only"]
+    },
+    {
+      "id": "lighthouse-museum",
+      "name": "Historic Lighthouse Museum",
+      "type": "attraction",
+      "description": "19th century lighthouse with maritime exhibits",
+      "url": "https://coastallighthousemuseum.org",
+      "address": "789 Lighthouse Point Drive",
+      "mapsLink": "https://maps.google.com/maps?q=789+Lighthouse+Point+Drive",
+      "phone": "(555) 987-6543",
+      "priceRange": "$",
+      "rating": 4.2,
+      "hours": "10:00 AM - 5:00 PM (closed Mondays)",
+      "notes": "Climb to the top for panoramic views. Gift shop has unique nautical items.",
+      "tags": ["museum", "lighthouse", "history", "views"]
+    },
+    {
+      "id": "pizza-express",
+      "name": "Tony's Pizza Express",
+      "type": "restaurant",
+      "description": "Quick and delicious pizza, great for takeout",
+      "address": "321 Oak Avenue",
+      "phone": "(555) 456-7890",
+      "priceRange": "$",
+      "rating": 4.0,
+      "hours": "11:00 AM - 10:00 PM",
+      "notes": "Cash only! The pepperoni is outstanding.",
+      "tags": ["pizza", "takeout", "cash-only", "quick-bite"]
+    }
+  ]
+} 
