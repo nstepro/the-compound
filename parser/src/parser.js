@@ -5,6 +5,7 @@ import { config } from './config.js';
 import { logger } from './logger.js';
 import { googleDocsService } from './google-docs.js';
 import { openaiService } from './openai-service.js';
+import { webEnrichmentService } from './web-enrichment-service.js';
 import { validateOutput } from './schema.js';
 
 class Parser {
@@ -29,50 +30,92 @@ class Parser {
       .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
   }
 
+  async loadExistingPlaces() {
+    try {
+      const outputPath = path.join(this.outputDir, this.outputFilename);
+      
+      if (!fs.existsSync(outputPath)) {
+        logger.info('No existing places file found');
+        return [];
+      }
+
+      const existingContent = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+      const existingPlaces = existingContent.places || [];
+      
+      logger.info(`Loaded ${existingPlaces.length} existing places`);
+      return existingPlaces;
+    } catch (error) {
+      logger.warn('Failed to load existing places:', error);
+      return [];
+    }
+  }
+
   async parseDocument(docId = null) {
     try {
       const documentId = docId || config.google.docId;
       
       logger.info(`Starting parsing process for document: ${documentId}`);
+      logger.info(`Configuration: fullRefresh=${config.parsing.fullRefresh}, skipEnrichmentIfExists=${config.parsing.skipEnrichmentIfExists}`);
       
-      // Step 1: Fetch document from Google Docs
-      logger.info('Step 1: Fetching document from Google Docs');
+      // Step 1: Load existing places for enrichment optimization
+      logger.info('Step 1: Loading existing places');
+      const existingPlaces = await this.loadExistingPlaces();
+      
+      // Step 2: Fetch document from Google Docs
+      logger.info('Step 2: Fetching document from Google Docs');
       const documentData = await googleDocsService.getDocumentAsMarkdown(documentId);
       
       logger.info(`Document fetched: "${documentData.title}"`);
-      logger.debug(`Document content length: ${documentData.content.length} characters`);
+      logger.info(`Document content length: ${documentData.content.length} characters`);
+      logger.info(`Document sections: ${documentData.sections?.length || 0}`);
       
       if (!documentData.content || documentData.content.trim().length === 0) {
         throw new Error('Document content is empty');
       }
 
-      // Step 2: Parse with OpenAI
-      logger.info('Step 2: Parsing document with OpenAI');
-      const parsedData = await openaiService.parseDocument(documentData.content);
+      // Step 3: Parse with OpenAI
+      logger.info('Step 3: Parsing document with OpenAI');
+      const parsedData = await openaiService.parseDocument(documentData.content, documentData.sections);
       
       if (!parsedData.places || parsedData.places.length === 0) {
         throw new Error('No places found in document');
       }
 
-      // Step 3: Generate unique IDs for places
-      logger.info('Step 3: Generating unique IDs for places');
+      // Step 4: Generate unique IDs for places
+      logger.info('Step 4: Generating unique IDs for places');
       const placesWithIds = parsedData.places.map(place => ({
         ...place,
         id: place.id || this.generatePlaceId(place.name)
       }));
 
-      // Step 4: Optionally enrich with additional data
-      logger.info('Step 4: Enriching place data (optional)');
+      // Step 5: Enrich with additional data
+      const useWebEnrichment = config.parsing.useWebEnrichment;
+      logger.info(`Step 5: Enriching place data (using ${useWebEnrichment ? 'web search' : 'LLM-based'} enrichment)`);
+      
       let enrichedPlaces;
       try {
-        enrichedPlaces = await openaiService.enrichPlaceData(placesWithIds);
+        if (useWebEnrichment) {
+          enrichedPlaces = await webEnrichmentService.enrichPlaces(placesWithIds, existingPlaces);
+        } else {
+          // Fallback to old LLM-based enrichment (not recommended)
+          logger.warn('Using deprecated LLM-based enrichment. Consider switching to web enrichment.');
+          enrichedPlaces = await openaiService.enrichPlaceData(placesWithIds, existingPlaces);
+        }
       } catch (enrichError) {
-        logger.warn('Enrichment failed, using original data:', enrichError);
-        enrichedPlaces = placesWithIds;
+        logger.warn(`${useWebEnrichment ? 'Web' : 'LLM-based'} enrichment failed, using original data:`, enrichError);
+        enrichedPlaces = placesWithIds.map(place => ({
+          ...place,
+          enrichmentStatus: {
+            enriched: false,
+            enrichedAt: new Date().toISOString(),
+            enrichmentVersion: config.parsing.enrichmentVersion,
+            reason: `${useWebEnrichment ? 'Web' : 'LLM-based'} enrichment failed: ${enrichError.message}`
+          }
+        }));
       }
 
-      // Step 5: Generate summary
-      logger.info('Step 5: Generating summary');
+      // Step 6: Generate summary
+      logger.info('Step 6: Generating summary');
       let summary;
       try {
         summary = await openaiService.generateSummary(enrichedPlaces);
@@ -81,8 +124,8 @@ class Parser {
         summary = `Vacation compound guide with ${enrichedPlaces.length} places`;
       }
 
-      // Step 6: Build final output
-      logger.info('Step 6: Building final output');
+      // Step 7: Build final output
+      logger.info('Step 7: Building final output');
       const finalOutput = {
         metadata: {
           generatedAt: new Date().toISOString(),
@@ -90,14 +133,21 @@ class Parser {
           sourceDocId: documentId,
           sourceDocTitle: documentData.title,
           parserVersion: '1.0.0',
+          enrichmentVersion: config.parsing.enrichmentVersion,
           summary: summary,
-          lastModified: documentData.lastModified
+          lastModified: documentData.lastModified,
+          categories: [...new Set(enrichedPlaces.map(p => p.category).filter(Boolean))],
+          enrichmentStats: {
+            totalPlaces: enrichedPlaces.length,
+            enrichedPlaces: enrichedPlaces.filter(p => p.enrichmentStatus?.enriched).length,
+            skippedPlaces: enrichedPlaces.filter(p => p.enrichmentStatus?.enriched === false).length
+          }
         },
         places: enrichedPlaces
       };
 
-      // Step 7: Validate output
-      logger.info('Step 7: Validating output');
+      // Step 8: Validate output
+      logger.info('Step 8: Validating output');
       try {
         validateOutput(finalOutput);
         logger.info('Output validation successful');
@@ -106,11 +156,13 @@ class Parser {
         // Continue with output but log the validation issue
       }
 
-      // Step 8: Save to file
-      logger.info('Step 8: Saving to file');
+      // Step 9: Save to file
+      logger.info('Step 9: Saving to file');
       await this.saveOutput(finalOutput);
       
       logger.info(`Parsing completed successfully! Generated ${finalOutput.places.length} places`);
+      logger.info(`Categories found: ${finalOutput.metadata.categories.join(', ')}`);
+      logger.info(`Enrichment stats: ${finalOutput.metadata.enrichmentStats.enrichedPlaces} enriched, ${finalOutput.metadata.enrichmentStats.skippedPlaces} skipped`);
       
       return finalOutput;
 
@@ -175,7 +227,9 @@ class Parser {
         lastParsed: content.metadata?.generatedAt || stats.mtime.toISOString(),
         totalPlaces: content.places?.length || 0,
         sourceDocId: content.metadata?.sourceDocId,
-        sourceDocTitle: content.metadata?.sourceDocTitle
+        sourceDocTitle: content.metadata?.sourceDocTitle,
+        categories: content.metadata?.categories || [],
+        enrichmentStats: content.metadata?.enrichmentStats || {}
       };
     } catch (error) {
       logger.error('Failed to get parsing stats:', error);

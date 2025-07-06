@@ -108,6 +108,77 @@ class GoogleDocsService {
     return textElements.join('\n\n');
   }
 
+  extractStructuredTextFromDocument(document) {
+    const sections = [];
+    let currentSection = { category: null, content: [] };
+    
+    if (!document.body || !document.body.content) {
+      logger.warn('Document has no body content');
+      return { sections: [], fullText: '' };
+    }
+
+    // Process each element in the document
+    document.body.content.forEach(element => {
+      if (element.paragraph) {
+        const paragraph = element.paragraph;
+        let paragraphText = '';
+        
+        if (paragraph.elements) {
+          paragraph.elements.forEach(elem => {
+            if (elem.textRun && elem.textRun.content) {
+              paragraphText += elem.textRun.content;
+            }
+          });
+        }
+        
+        // Check if this is a heading
+        let isHeading = false;
+        let headingLevel = 0;
+        
+        if (paragraph.paragraphStyle) {
+          const style = paragraph.paragraphStyle;
+          if (style.headingId || style.namedStyleType) {
+            headingLevel = this.getHeadingLevel(style.namedStyleType);
+            if (headingLevel > 0) {
+              isHeading = true;
+            }
+          }
+        }
+        
+        if (paragraphText.trim()) {
+          if (isHeading) {
+            // Start a new section
+            if (currentSection.category || currentSection.content.length > 0) {
+              sections.push(currentSection);
+            }
+            currentSection = {
+              category: paragraphText.trim(),
+              headingLevel: headingLevel,
+              content: []
+            };
+          } else {
+            // Add to current section
+            currentSection.content.push(paragraphText.trim());
+          }
+        }
+      }
+    });
+
+    // Add the last section
+    if (currentSection.category || currentSection.content.length > 0) {
+      sections.push(currentSection);
+    }
+
+    // Build full text with markdown headers
+    const fullText = sections.map(section => {
+      const headerText = section.category ? `${'#'.repeat(section.headingLevel || 1)} ${section.category}\n\n` : '';
+      const contentText = section.content.join('\n\n');
+      return headerText + contentText;
+    }).join('\n\n');
+
+    return { sections, fullText };
+  }
+
   getHeadingLevel(namedStyleType) {
     const headingMap = {
       'HEADING_1': 1,
@@ -124,12 +195,13 @@ class GoogleDocsService {
   async getDocumentAsMarkdown(docId) {
     try {
       const document = await this.getDocumentContent(docId);
-      const plainText = this.extractTextFromDocument(document);
+      const structuredData = this.extractStructuredTextFromDocument(document);
       
-      logger.info(`Extracted ${plainText.length} characters from document`);
+      logger.info(`Extracted ${structuredData.sections.length} sections from document`);
+      logger.info(`Total text length: ${structuredData.fullText.length} characters`);
       
       // Clean up the text
-      const cleanedText = plainText
+      const cleanedText = structuredData.fullText
         .replace(/\n{3,}/g, '\n\n') // Replace multiple newlines with double newlines
         .replace(/[ \t]+/g, ' ') // Replace multiple spaces/tabs with single space
         .trim();
@@ -137,6 +209,7 @@ class GoogleDocsService {
       return {
         title: document.title,
         content: cleanedText,
+        sections: structuredData.sections,
         lastModified: document.revisionId,
         docId: docId
       };

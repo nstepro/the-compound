@@ -18,7 +18,14 @@ export const PlaceSchema = z.object({
   coordinates: z.object({
     lat: z.number(),
     lng: z.number()
-  }).optional().describe('GPS coordinates')
+  }).optional().describe('GPS coordinates'),
+  origText: z.string().optional().describe('Original text from the document for this place'),
+  category: z.string().optional().describe('Document section/category where this place was found'),
+  enrichmentStatus: z.object({
+    enriched: z.boolean().default(false),
+    enrichedAt: z.string().datetime().optional(),
+    enrichmentVersion: z.string().optional()
+  }).optional().describe('Tracking information for enrichment status')
 });
 
 // Complete output schema
