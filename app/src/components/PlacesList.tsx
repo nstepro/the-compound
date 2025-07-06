@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Container, Title, Text, Group, Badge, TextInput, Select, SimpleGrid, LoadingOverlay, Alert } from '@mantine/core';
-import { IconSearch, IconAlertCircle } from '@tabler/icons-react';
+import { Container, Title, Text, Group, Badge, TextInput, Select, SimpleGrid, LoadingOverlay, Alert, Tabs } from '@mantine/core';
+import { IconSearch, IconAlertCircle, IconList, IconMap } from '@tabler/icons-react';
 import { PlaceCard } from './PlaceCard';
+import { MapView } from './MapView';
 import type { PlacesData, Place } from '../types';
 
 export function PlacesList() {
@@ -89,14 +90,6 @@ export function PlacesList() {
 
   return (
     <Container size="xl" py="xl">
-      <Title order={1} mb="md">
-        {placesData.metadata.sourceDocTitle}
-      </Title>
-      
-      <Text size="lg" c="dimmed" mb="xl">
-        {placesData.metadata.summary}
-      </Text>
-
       <Group mb="xl">
         <Badge variant="light" size="lg">
           {placesData.metadata.totalPlaces} places
@@ -136,11 +129,28 @@ export function PlacesList() {
         Showing {filteredPlaces.length} places
       </Text>
 
-      <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
-        {filteredPlaces.map((place) => (
-          <PlaceCard key={place.id} place={place} />
-        ))}
-      </SimpleGrid>
+      <Tabs defaultValue="list" mb="xl">
+        <Tabs.List>
+          <Tabs.Tab value="list" leftSection={<IconList size={16} />}>
+            List View
+          </Tabs.Tab>
+          <Tabs.Tab value="map" leftSection={<IconMap size={16} />}>
+            Map View
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="list" mt="xl">
+          <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
+            {filteredPlaces.map((place) => (
+              <PlaceCard key={place.id} place={place} />
+            ))}
+          </SimpleGrid>
+        </Tabs.Panel>
+
+        <Tabs.Panel value="map" mt="xl">
+          <MapView places={filteredPlaces} loading={loading} error={error} />
+        </Tabs.Panel>
+      </Tabs>
     </Container>
   );
 } 

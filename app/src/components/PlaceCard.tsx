@@ -1,6 +1,7 @@
 import { Card, Text, Badge, Group, Tooltip, ActionIcon, Anchor, Stack } from '@mantine/core';
 import { IconMapPin, IconPhone, IconClock, IconExternalLink } from '@tabler/icons-react';
 import type { Place } from '../types';
+import styles from './PlaceCard.module.css';
 
 interface PlaceCardProps {
   place: Place;
@@ -15,20 +16,47 @@ export function PlaceCard({ place }: PlaceCardProps) {
     accommodation: 'pink',
   }[place.type] || 'gray';
 
+  const getTypeClass = (type: string) => {
+    const typeClasses = {
+      restaurant: styles.restaurantCard,
+      shopping: styles.shoppingCard,
+      activity: styles.activityCard,
+      attraction: styles.attractionCard,
+      accommodation: styles.accommodationCard,
+    };
+    return typeClasses[type as keyof typeof typeClasses] || '';
+  };
+
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Group justify="space-between" mb="xs">
-        <Text fw={500} size="lg">
-          {place.name}
-        </Text>
-        <Badge color={typeColor} variant="light">
-          {place.type}
-        </Badge>
-      </Group>
+    <Card 
+      shadow="none" 
+      padding="lg" 
+      radius="md" 
+      // bg="accent.6"
+      withBorder 
+      className={`${styles.placeCard} ${getTypeClass(place.type)}`}
+    >
+      <div className={styles.cardHeader}>
+        <Group justify="space-between" mb="xs">
+          <Text fw={800} size="lg" className={styles.cardTitle} c="brand.6">
+            {place.name}
+          </Text>
+          <Badge variant="light" size="sm" >
+            {place.category.toUpperCase()}
+          </Badge>
+        </Group>
+          
+
+        {place.description && (
+          <Text size="sm" c="dimmed" mb="xs" className={styles.cardDescription}>
+            {place.description}
+          </Text>
+        )}
+      </div>
 
       <Group mb="xs">
-        <Badge variant="outline" size="sm">
-          {place.category}
+        <Badge color={typeColor} variant="outline">
+          {place.type.toUpperCase()}
         </Badge>
         {place.priceRange && (
           <Badge variant="outline" size="sm" color="green">
@@ -42,77 +70,67 @@ export function PlaceCard({ place }: PlaceCardProps) {
         )}
       </Group>
 
-      {place.description && (
-        <Text size="sm" c="dimmed" mb="xs">
-          {place.description}
-        </Text>
-      )}
-
-      {place.notes && (
-        <Text size="sm" c="dimmed" mb="xs" style={{ fontStyle: 'italic' }}>
-          {place.notes}
-        </Text>
-      )}
-
       <Stack gap="xs" mb="md">
         {place.address && (
-          <Group gap="xs">
-            <IconMapPin size={16} />
+          <div className={styles.infoGroup}>
+            <IconMapPin size={16} className={styles.infoIcon} />
             <Text size="sm">{place.address}</Text>
-          </Group>
+          </div>
         )}
         
         {place.phone && (
-          <Group gap="xs">
-            <IconPhone size={16} />
+          <div className={styles.infoGroup}>
+            <IconPhone size={16} className={styles.infoIcon} />
             <Text size="sm">{place.phone}</Text>
-          </Group>
+          </div>
         )}
         
         {place.hours && (
-          <Group gap="xs">
-            <IconClock size={16} />
+          <div className={styles.infoGroup}>
+            <IconClock size={16} className={styles.infoIcon} />
             <Text size="sm">
               {typeof place.hours === 'string' ? place.hours : 'See details'}
             </Text>
-          </Group>
+          </div>
         )}
       </Stack>
 
       <Group gap="xs" mb="md">
         {place.tags.slice(0, 3).map((tag) => (
-          <Badge key={tag} size="xs" variant="dot">
-            {tag}
+          <Badge key={tag} size="xs" variant="dot" className={styles.tagsBadge}>
+            {tag.toUpperCase()}
           </Badge>
         ))}
         {place.tags.length > 3 && (
           <Tooltip label={place.tags.slice(3).join(', ')}>
-            <Badge size="xs" variant="dot">
-              +{place.tags.length - 3} more
+            <Badge size="xs" variant="dot" className={styles.tagsBadge}>
+              +{place.tags.length - 3} MORE
             </Badge>
           </Tooltip>
         )}
       </Group>
 
-      <Group gap="xs">
-        {place.url && (
-          <Anchor href={place.url} target="_blank" size="sm">
-            <Group gap="xs">
-              <IconExternalLink size={16} />
-              Website
-            </Group>
-          </Anchor>
-        )}
-        
-        {place.mapsLink && (
-          <Anchor href={place.mapsLink} target="_blank" size="sm">
-            <Group gap="xs">
-              <IconMapPin size={16} />
-              Maps
-            </Group>
-          </Anchor>
-        )}
-      </Group>
+      <div className={styles.linkGroup}>
+        <Group gap="xs">
+          {place.url && (
+            <Anchor href={place.url} target="_blank" size="sm" className={styles.customLink}>
+              <Group gap="xs">
+                <IconExternalLink size={16} />
+                Website
+              </Group>
+            </Anchor>
+          )}
+          
+          {place.mapsLink && (
+            <Anchor href={place.mapsLink} target="_blank" size="sm" className={styles.customLink}>
+              <Group gap="xs">
+                <IconMapPin size={16} />
+                Maps
+              </Group>
+            </Anchor>
+          )}
+        </Group>
+      </div>
     </Card>
   );
 } 
