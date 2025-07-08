@@ -65,14 +65,13 @@ export function Home() {
         component="footer" 
         mt="xl" 
         pt="md" 
-        style={{ 
-          borderTop: `1px solid var(--mantine-color-gray-2)`,
+        style={{
           textAlign: 'center'
         }}
       >
         <Text size="sm" c="dimmed">
           {/* Add your addresses here */}
-          Theodore
+          Teddy (Sheddy Resident), Webmaster • Hosted by Geocities
         </Text>
       </Box>
     </Container>
