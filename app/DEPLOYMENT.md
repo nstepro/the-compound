@@ -15,13 +15,19 @@
 heroku create your-app-name
 ```
 
-### 2. Configure Build Settings
+### 2. Configure Environment Variables
+Set up required environment variables:
+```bash
+heroku config:set VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
+```
+
+### 3. Configure Build Settings
 Heroku will automatically detect this as a Node.js app and:
 - Install dependencies with `npm install`
 - Build the app with `npm run build`
 - Start the server with `npm run start`
 
-### 3. Deploy (App is in subdirectory)
+### 4. Deploy (App is in subdirectory)
 Since the app is in the `app/` subdirectory, use git subtree:
 
 ```bash
@@ -40,7 +46,7 @@ git commit -m "Update app"
 git subtree push --prefix app heroku main
 ```
 
-### 4. Open Your App
+### 5. Open Your App
 ```bash
 heroku open
 ```
@@ -67,10 +73,52 @@ git push heroku main
 3. **package.json** - Added Express dependency and start script
 4. **Fixed TypeScript errors** - Removed unused variables for clean build
 
-## Environment Variables
-If you need to set environment variables (like API keys):
+## Environment Variables & Secrets
+
+**❌ NEVER commit `.env` files to git!** They contain sensitive data.
+
+### How Heroku Handles Environment Variables
+
+Heroku uses **config vars** instead of `.env` files for environment variables:
+
+#### Setting Config Vars (CLI)
 ```bash
-heroku config:set VARIABLE_NAME=value
+# Set individual variables
+heroku config:set VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
+
+# Set multiple variables
+heroku config:set VITE_API_URL=https://api.example.com VITE_APP_NAME="Teddy Sheddy"
+
+# View all config vars
+heroku config
+
+# Remove a config var
+heroku config:unset VARIABLE_NAME
+```
+
+#### Setting Config Vars (Dashboard)
+1. Go to your Heroku app dashboard
+2. Click "Settings" tab
+3. Click "Reveal Config Vars"
+4. Add your variables there
+
+### Current Environment Variables Needed
+
+Your app currently uses:
+- `VITE_MAPBOX_ACCESS_TOKEN` - Required for the map functionality
+
+### Local Development
+For local development, create a `.env.local` file (already in `.gitignore`):
+```bash
+# .env.local (DO NOT COMMIT THIS FILE)
+VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
+```
+
+**Pro tip:** You can create a `.env.local.example` file (safe to commit) to document what environment variables are needed:
+```bash
+# .env.local.example
+# Copy this file to .env.local and fill in your actual values
+VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
 ```
 
 ## Notes
@@ -78,4 +126,6 @@ heroku config:set VARIABLE_NAME=value
 - Client-side routing is handled by serving `index.html` for all routes
 - The places data is currently served from the static file in `public/`
 - Since the app is in a subdirectory, use git subtree or monorepo buildpack for deployment
+- Environment variables are managed through Heroku config vars, not `.env` files
+- `.env` files are in `.gitignore` and should NEVER be committed to git
 - When you're ready to connect the parser and use S3, you'll need to update the data fetching logic 
