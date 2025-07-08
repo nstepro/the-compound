@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Container, LoadingOverlay, Alert, Modal } from '@mantine/core';
+import { Container, LoadingOverlay, Alert, Modal, Popover } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 import Map, { Marker } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -10,6 +10,7 @@ interface MapViewProps {
   places: Place[];
   loading: boolean;
   error: string | null;
+  isVisible: boolean;
 }
 
 // Function to get icon and color based on place type
@@ -30,7 +31,50 @@ const getTypeConfig = (type: string): { icon: string; backgroundColor: string } 
   }
 };
 
-export function MapView({ places, loading, error }: MapViewProps) {
+// Simple tooltip component using PlaceCard
+interface MarkerTooltipProps {
+  place: Place;
+  children: React.ReactNode;
+}
+
+function MarkerTooltip({ place, children }: MarkerTooltipProps) {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <Popover 
+      opened={opened} 
+      onClose={() => setOpened(false)}
+      position="top"
+      withArrow
+      shadow="md"
+      radius="md"
+      offset={10}
+      transitionProps={{ duration: 200 }}
+    >
+      <Popover.Target>
+        <div 
+          onMouseEnter={() => setOpened(true)}
+          onMouseLeave={() => setOpened(false)}
+        >
+          {children}
+        </div>
+      </Popover.Target>
+      
+      <Popover.Dropdown>
+        <PlaceCard 
+          place={place} 
+          enableHover={false}
+          compact={true}
+          hideLinks={true}
+          hidePhoneHours={true}
+          maxDescriptionLength={120}
+        />
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+
+export function MapView({ places, loading, error, isVisible }: MapViewProps) {
   const mapRef = useRef<any>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [modalOpened, setModalOpened] = useState(false);
@@ -40,17 +84,53 @@ export function MapView({ places, loading, error }: MapViewProps) {
 
   useEffect(() => {
     if (mapRef.current && placesWithCoordinates.length > 0) {
-      // Center the map on the first place with coordinates
-      const firstPlace = placesWithCoordinates[0];
-      if (firstPlace.coordinates) {
-        mapRef.current.flyTo({
-          center: [firstPlace.coordinates.lng, firstPlace.coordinates.lat],
-          zoom: 10,
-          duration: 1000
-        });
+      if (placesWithCoordinates.length === 1) {
+        // If there's only one place, center on it with a reasonable zoom
+        const place = placesWithCoordinates[0];
+        if (place.coordinates) {
+          mapRef.current.flyTo({
+            center: [place.coordinates.lng, place.coordinates.lat],
+            zoom: 12,
+            duration: 1000
+          });
+        }
+      } else {
+        // Calculate bounds for multiple places
+        const coordinates = placesWithCoordinates
+          .map(place => place.coordinates)
+          .filter(coord => coord !== null);
+        
+        if (coordinates.length > 0) {
+          const lngs = coordinates.map(coord => coord!.lng);
+          const lats = coordinates.map(coord => coord!.lat);
+          
+          const bounds = [
+            [Math.min(...lngs), Math.min(...lats)], // Southwest coordinates
+            [Math.max(...lngs), Math.max(...lats)]  // Northeast coordinates
+          ];
+          
+          mapRef.current.fitBounds(bounds, {
+            padding: 50, // Add some padding around the bounds
+            duration: 1000
+          });
+        }
       }
     }
   }, [placesWithCoordinates]);
+
+  // Handle map resize when it becomes visible
+  useEffect(() => {
+    if (isVisible && mapRef.current) {
+      // Small delay to ensure the tab content is fully rendered
+      const timeoutId = setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.resize();
+        }
+      }, 100);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isVisible]);
 
   const handleMarkerClick = (place: Place) => {
     setSelectedPlace(place);
@@ -107,27 +187,37 @@ export function MapView({ places, loading, error }: MapViewProps) {
                 latitude={place.coordinates.lat}
                 anchor="bottom"
               >
-                <div 
-                  style={{
-                    background: getTypeConfig(place.type).backgroundColor,
-                    width: '35px',
-                    height: '35px',
-                    borderRadius: '50%',
-                    border: '2px solid white',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '18px',
-                    fontWeight: 'bold',
-                    cursor: 'pointer',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                  }}
-                  title={place.name}
-                  onClick={() => handleMarkerClick(place)}
-                >
-                  {getTypeConfig(place.type).icon}
-                </div>
+                <MarkerTooltip place={place}>
+                  <div 
+                    style={{
+                      background: getTypeConfig(place.type).backgroundColor,
+                      width: '35px',
+                      height: '35px',
+                      borderRadius: '50%',
+                      border: '2px solid white',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'white',
+                      fontSize: '18px',
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                    }}
+                    onClick={() => handleMarkerClick(place)}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.1)';
+                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+                    }}
+                  >
+                    {getTypeConfig(place.type).icon}
+                  </div>
+                </MarkerTooltip>
               </Marker>
             )
           ))}
@@ -140,7 +230,7 @@ export function MapView({ places, loading, error }: MapViewProps) {
         size="lg"
         centered
       >
-        {selectedPlace && <PlaceCard place={selectedPlace} />}
+        {selectedPlace && <PlaceCard place={selectedPlace} enableHover={false} />}
       </Modal>
     </>
   );

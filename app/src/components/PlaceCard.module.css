@@ -1,11 +1,14 @@
 /* PlaceCard specific styles */
 
 .placeCard {
-  cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.placeCard:hover {
+.placeCard.hoverEnabled {
+  cursor: pointer;
+}
+
+.placeCard.hoverEnabled:hover {
   transform: translate(-8px, -8px);
   box-shadow: 8px 8px 0 0 var(--mantine-color-brand-6) !important;
 }
@@ -80,3 +83,4 @@
   color: var(--mantine-color-brand-7);
   text-decoration: underline;
 }
+
