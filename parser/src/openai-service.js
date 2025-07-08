@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { config } from './config.js';
 import { logger } from './logger.js';
-import { generateParsingPrompt, generateEnrichmentPrompt, generateCategoryCleanupPrompt } from './prompts.js';
+import { generateParsingPrompt, generateCategoryCleanupPrompt } from './prompts.js';
 import { PlaceSchema, validatePlace } from './schema.js';
 
 class OpenAIService {
@@ -216,142 +216,12 @@ ${parsedData.places.map((p, i) => `${i + 1}. ${p.name} (${p.type}) - Category: $
   }
 
   async enrichPlaceData(places, existingPlaces = []) {
-    // DEPRECATED: This method uses LLM-based enrichment which generates hallucinated data
-    // Use webEnrichmentService.enrichPlaces() instead for real web-based data extraction
-    logger.warn('⚠️  DEPRECATED: enrichPlaceData() uses LLM-based enrichment which generates fake data!');
-    logger.warn('⚠️  Use webEnrichmentService.enrichPlaces() instead for real web-based data extraction');
+    // DEPRECATED: This method is no longer supported
+    // Use webEnrichmentService.enrichPlaces() instead for real Google Places API data
+    logger.error('❌ DEPRECATED: enrichPlaceData() is no longer supported!');
+    logger.error('❌ Use webEnrichmentService.enrichPlaces() instead for real Google Places API data');
     
-    try {
-      if (!this.model) {
-        this.initialize();
-      }
-
-      logger.info(`Starting DEPRECATED LLM-based enrichment for ${places.length} places`);
-      logger.info(`Location context: ${config.location.searchContext}`);
-      
-      // Create a map of existing places for quick lookup
-      const existingPlacesMap = new Map();
-      existingPlaces.forEach(place => {
-        if (place.id && place.enrichmentStatus?.enriched) {
-          existingPlacesMap.set(place.id, place);
-        }
-      });
-
-      const enrichedPlaces = [];
-      let skippedCount = 0;
-      
-      // Process places in batches to avoid rate limits
-      const batchSize = 3;
-      for (let i = 0; i < places.length; i += batchSize) {
-        const batch = places.slice(i, i + batchSize);
-        
-        const batchPromises = batch.map(async (place) => {
-          try {
-            // Check if enrichment should be skipped
-            if (config.parsing.skipEnrichmentIfExists && !config.parsing.fullRefresh) {
-              const existingPlace = existingPlacesMap.get(place.id);
-              if (existingPlace && existingPlace.enrichmentStatus?.enriched) {
-                logger.debug(`Skipping enrichment for ${place.name} (already enriched)`);
-                skippedCount++;
-                return existingPlace;
-              }
-            }
-
-            // Skip if place already has most information
-            if (place.address && place.phone && place.url && !config.parsing.fullRefresh) {
-              logger.debug(`Skipping enrichment for ${place.name} (already complete)`);
-              skippedCount++;
-              return {
-                ...place,
-                enrichmentStatus: {
-                  enriched: true,
-                  enrichedAt: new Date().toISOString(),
-                  enrichmentVersion: config.parsing.enrichmentVersion
-                }
-              };
-            }
-
-            const prompt = generateEnrichmentPrompt(place, config.location.searchContext);
-            
-            const messages = [
-              new SystemMessage(`You are a research assistant. Find and return factual information about places in ${config.location.searchContext}. ONLY search for places in ${config.location.searchContext}.`),
-              new HumanMessage(prompt)
-            ];
-
-            const response = await this.model.invoke(messages);
-            
-            let enrichedData;
-            try {
-              const content = response.content.trim();
-              const jsonMatch = content.match(/```json\s*([\s\S]*?)\s*```/) || 
-                               content.match(/```\s*([\s\S]*?)\s*```/) ||
-                               [null, content];
-              
-              const jsonString = jsonMatch[1] || content;
-              enrichedData = JSON.parse(jsonString);
-              
-              logger.debug(`Enriched place: ${place.name} (${config.location.searchContext})`);
-              
-              // Ensure we don't modify protected fields
-              const protectedFields = ['origText', 'category', 'id', 'name', 'description', 'notes', 'tags'];
-              protectedFields.forEach(field => {
-                if (place[field] !== undefined) {
-                  enrichedData[field] = place[field];
-                }
-              });
-              
-              return { 
-                ...place, 
-                ...enrichedData,
-                enrichmentStatus: {
-                  enriched: true,
-                  enrichedAt: new Date().toISOString(),
-                  enrichmentVersion: config.parsing.enrichmentVersion
-                }
-              };
-              
-            } catch (parseError) {
-              logger.warn(`Failed to parse enrichment for ${place.name}:`, parseError);
-              return {
-                ...place,
-                enrichmentStatus: {
-                  enriched: false,
-                  enrichedAt: new Date().toISOString(),
-                  enrichmentVersion: config.parsing.enrichmentVersion
-                }
-              };
-            }
-            
-          } catch (error) {
-            logger.warn(`Enrichment failed for ${place.name}:`, error);
-            return {
-              ...place,
-              enrichmentStatus: {
-                enriched: false,
-                enrichedAt: new Date().toISOString(),
-                enrichmentVersion: config.parsing.enrichmentVersion
-              }
-            };
-          }
-        });
-
-        const batchResults = await Promise.all(batchPromises);
-        enrichedPlaces.push(...batchResults);
-        
-        // Add delay between batches to respect rate limits
-        if (i + batchSize < places.length) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-      }
-
-      logger.info(`Enrichment completed for ${enrichedPlaces.length} places (${skippedCount} skipped)`);
-      logger.info(`All enrichment searches focused on ${config.location.searchContext}`);
-      return enrichedPlaces;
-
-    } catch (error) {
-      logger.error('Enrichment failed:', error);
-      throw new Error(`Enrichment failed: ${error.message}`);
-    }
+    throw new Error('LLM-based enrichment is deprecated. Use webEnrichmentService.enrichPlaces() instead.');
   }
 
   async generateSummary(places) {

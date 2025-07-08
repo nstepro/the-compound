@@ -1,9 +1,9 @@
-import { Container, Group, Button, Burger, Drawer, Stack, Box, useMantineTheme } from '@mantine/core';
+import { Container, Group, Button, Burger, Drawer, Stack, Box } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Link, useLocation } from 'react-router-dom';
 
 // Function to create a CSS filter for the brand color
-function getBrandColorFilter(brandColor: string): string {
+function getBrandColorFilter(): string {
   // For #307fe2 (your brand color), these filter values produce the correct color
   // You can adjust these values if you change your brand color
   return `brightness(0) saturate(100%) invert(27%) sepia(77%) saturate(1729%) hue-rotate(211deg) brightness(95%) contrast(95%)`;
@@ -12,13 +12,12 @@ function getBrandColorFilter(brandColor: string): string {
 export function Navigation() {
   const [opened, { open, close }] = useDisclosure(false);
   const location = useLocation();
-  const theme = useMantineTheme();
 
   const tabs = [
     { id: 'places', label: 'Places', path: '/places' },
-    { id: 'shorty', label: 'Shorty', path: '/shorty' },
+    { id: 'shady', label: 'Shady', path: '/shady' },
     { id: 'lofty', label: 'Lofty', path: '/lofty' },
-    { id: 'getting-here', label: 'Getting Here', path: '/getting-here' }
+    { id: 'getting-here', label: 'Getting to the Sheddy', path: '/getting-here' }
   ];
 
   const isActive = (path: string) => {
@@ -38,7 +37,7 @@ export function Navigation() {
             w="auto"
             style={{
               // Dynamically color the SVG using the brand color
-              filter: getBrandColorFilter(theme.colors.brand[6])
+              filter: getBrandColorFilter()
             }}
           />
         </Link>

@@ -3,7 +3,7 @@ export interface Place {
   name: string;
   type: string;
   description: string | null;
-  url: string | null;
+  website: string | null;
   address: string | null;
   mapsLink: string | null;
   phone: string | null;

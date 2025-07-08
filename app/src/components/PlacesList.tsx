@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Container, Title, Text, Group, Badge, TextInput, SimpleGrid, LoadingOverlay, Alert, Tabs, Center, Loader } from '@mantine/core';
+import { Container, Title, Text, Group, TextInput, SimpleGrid, LoadingOverlay, Alert, Tabs, Center, Loader } from '@mantine/core';
 import { IconSearch, IconAlertCircle, IconList, IconMap } from '@tabler/icons-react';
 import { PlaceCard } from './PlaceCard';
 import { MapView } from './MapView';
@@ -17,7 +17,6 @@ export function PlacesList() {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
   const [activeTab, setActiveTab] = useState<string | null>('list');
   const [hasMore, setHasMore] = useState(true);
   const searchTimeoutRef = useRef<number | null>(null);
@@ -43,60 +42,48 @@ export function PlacesList() {
     loadPlaces();
   }, []);
 
-  // Debounce search term
+  // Debounce search term with no intermediate state changes
   useEffect(() => {
-    // Clear existing timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
 
-    // Set searching state if there's a search term and it's different from debounced
-    if (searchTerm && searchTerm !== debouncedSearchTerm) {
-      setIsSearching(true);
-    }
-
-    // Set new timeout
     searchTimeoutRef.current = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-      setIsSearching(false);
     }, 500);
 
-    // Cleanup on unmount
     return () => {
       if (searchTimeoutRef.current) {
         clearTimeout(searchTimeoutRef.current);
       }
     };
-  }, [searchTerm, debouncedSearchTerm]);
+  }, [searchTerm]);
+
+  // Optimized search filter function
+  const filterPlaces = useCallback((places: Place[], searchTerm: string) => {
+    if (!searchTerm) return places;
+    
+    const searchTerms = searchTerm.toLowerCase().split(' ').filter(term => term.length > 0);
+    
+    return places.filter(place => {
+      return searchTerms.every(term => {
+        return place.name.toLowerCase().includes(term) ||
+               place.description?.toLowerCase().includes(term) ||
+               place.tags.some(tag => tag.toLowerCase().includes(term)) ||
+               place.category.toLowerCase().includes(term) ||
+               place.type.toLowerCase().includes(term) ||
+               place.address?.toLowerCase().includes(term);
+      });
+    });
+  }, []);
 
   useEffect(() => {
     if (!placesData) return;
 
-    let filtered = placesData.places;
-
-    // Filter by search term (use debounced search term)
-    if (debouncedSearchTerm) {
-      // Split search term by spaces to handle multiple search terms
-      const searchTerms = debouncedSearchTerm.toLowerCase().split(' ').filter(term => term.length > 0);
-      
-      filtered = filtered.filter(place => {
-        // Check if all search terms match the place
-        return searchTerms.every(term => {
-          // Each term should match at least one field
-          return place.name.toLowerCase().includes(term) ||
-                 place.description?.toLowerCase().includes(term) ||
-                 place.tags.some(tag => tag.toLowerCase().includes(term)) ||
-                 place.category.toLowerCase().includes(term) ||
-                 place.type.toLowerCase().includes(term) ||
-                 place.address?.toLowerCase().includes(term);
-        });
-      });
-    }
-
+    const filtered = filterPlaces(placesData.places, debouncedSearchTerm);
     setFilteredPlaces(filtered);
-    // Reset pagination when search changes
     setCurrentPage(1);
-  }, [placesData, debouncedSearchTerm]);
+  }, [placesData, debouncedSearchTerm, filterPlaces]);
 
   // Update displayed places when filtered places or current page changes
   useEffect(() => {
@@ -205,56 +192,36 @@ export function PlacesList() {
         </Tabs.List>
 
         <Tabs.Panel value="list" mt="xl">
-          <div style={{ position: 'relative' }}>
-            {isSearching && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                  zIndex: 1,
-                  borderRadius: '8px',
-                }}
-              />
-            )}
-            <SimpleGrid 
-              cols={{ base: 1, sm: 2, lg: 3 }} 
-              spacing="md"
-              style={{ 
-                opacity: isSearching ? 0.5 : 1,
-                transition: 'opacity 0.2s ease'
-              }}
-            >
-              {displayedPlaces.map((place) => (
-                <PlaceCard key={place.id} place={place} />
-              ))}
-            </SimpleGrid>
-            
-            {/* Sentinel element for infinite scroll */}
-            <div ref={sentinelRef} style={{ height: '20px', margin: '20px 0' }} />
-            
-            {/* Loading indicator */}
-            {loadingMore && (
-              <Center py="md">
-                <Group gap="sm">
-                  <Loader size="sm" />
-                  <Text size="sm" c="dimmed">Loading more places...</Text>
-                </Group>
-              </Center>
-            )}
-            
-            {/* End of results indicator */}
-            {!hasMore && filteredPlaces.length > 0 && (
-              <Center py="md">
-                <Text size="sm" c="dimmed">
-                  You've reached the end! All {filteredPlaces.length} places shown.
-                </Text>
-              </Center>
-            )}
-          </div>
+          <SimpleGrid 
+            cols={{ base: 1, sm: 2, lg: 3 }} 
+            spacing="md"
+          >
+            {displayedPlaces.map((place) => (
+              <PlaceCard key={place.id} place={place} />
+            ))}
+          </SimpleGrid>
+          
+          {/* Sentinel element for infinite scroll */}
+          <div ref={sentinelRef} style={{ height: '20px', margin: '20px 0' }} />
+          
+          {/* Loading indicator */}
+          {loadingMore && (
+            <Center py="md">
+              <Group gap="sm">
+                <Loader size="sm" />
+                <Text size="sm" c="dimmed">Loading more places...</Text>
+              </Group>
+            </Center>
+          )}
+          
+          {/* End of results indicator */}
+          {!hasMore && filteredPlaces.length > 0 && (
+            <Center py="md">
+              <Text size="sm" c="dimmed">
+                You've reached the end! All {filteredPlaces.length} places shown.
+              </Text>
+            </Center>
+          )}
         </Tabs.Panel>
 
         <Tabs.Panel value="map" mt="xl">

@@ -2,10 +2,11 @@
   "name": "app",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "start": "node server.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "update-data": "node update-data.js"
@@ -15,6 +16,7 @@
     "@mantine/hooks": "^8.1.2",
     "@mantine/notifications": "^8.1.2",
     "@tabler/icons-react": "^3.34.0",
+    "express": "^4.21.2",
     "mapbox-gl": "^3.13.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -35,5 +37,8 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

@@ -1,8 +1,10 @@
 import { config } from './src/config.js';
 import { webEnrichmentService } from './src/web-enrichment-service.js';
+import fs from 'fs';
+import path from 'path';
 
 async function testGooglePlacesAPI() {
-  console.log('🧪 Testing Google Places API Configuration');
+  console.log('🧪 Testing Google Places API (New) Configuration');
   
   // Test 1: Check if API key is configured
   if (!config.googlePlaces?.apiKey) {
@@ -17,6 +19,20 @@ async function testGooglePlacesAPI() {
   try {
     console.log('🔍 Testing Places Search...');
     const results = await webEnrichmentService.searchGooglePlaces('McDonalds Maine United States', 1);
+    
+    // Save full response to JSON file in logs folder
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const filename = `google-places-response-${timestamp}.json`;
+    const filepath = path.join('./logs', filename);
+    
+    // Ensure logs directory exists
+    if (!fs.existsSync('./logs')) {
+      fs.mkdirSync('./logs', { recursive: true });
+    }
+    
+    // Write full response to file
+    fs.writeFileSync(filepath, JSON.stringify(results, null, 2));
+    console.log(`💾 Full API response saved to: ${filepath}`);
     
     if (results.length > 0) {
       console.log('✅ Places Search successful!');

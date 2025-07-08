@@ -1,18 +1,27 @@
-import { Container, Title, Text, Card } from '@mantine/core';
+import { Container, Title, Text, Card, Box } from '@mantine/core';
 
 export function Lofty() {
   return (
-    <Container size="xl" py="xl">
+    <Container size="sm" py="xl">
       <Title order={1} mb="md">
-        Lofty
+        The Lofty Sheddy
       </Title>
       
       <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Text size="lg" mb="md">
-          Welcome to Lofty!
-        </Text>
+        <Box
+          component="img"
+          src="/sheddy-narrow.svg"
+          alt="Sheddy Logo"
+          mb="md"
+          style={{
+            maxWidth: '300px',
+            width: '100%',
+            height: 'auto',
+            filter: 'brightness(0) saturate(100%) invert(27%) sepia(77%) saturate(1729%) hue-rotate(211deg) brightness(95%) contrast(95%)'
+          }}
+        />
         <Text c="dimmed">
-          This section is coming soon. Stay tuned for updates!
+          (TBD password-protected section with info like wifi, address, house mechanics, etc.)
         </Text>
       </Card>
     </Container>

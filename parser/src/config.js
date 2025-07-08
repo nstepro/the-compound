@@ -41,8 +41,7 @@ export const config = {
   parsing: {
     fullRefresh: process.env.FULL_REFRESH === 'true' || false,
     enrichmentVersion: process.env.ENRICHMENT_VERSION || '2.0.0',
-    skipEnrichmentIfExists: process.env.SKIP_ENRICHMENT_IF_EXISTS !== 'false', // defaults to true
-    useWebEnrichment: process.env.USE_WEB_ENRICHMENT !== 'false' // defaults to true
+    skipEnrichmentIfExists: process.env.SKIP_ENRICHMENT_IF_EXISTS !== 'false' // defaults to true
   },
 
   // Logging Configuration
@@ -52,12 +51,7 @@ export const config = {
 };
 
 // Validate required configuration
-const requiredEnvVars = ['OPENAI_API_KEY', 'GOOGLE_DOC_ID'];
-
-// Add Google Places API key requirement if web enrichment is enabled
-if (process.env.USE_WEB_ENRICHMENT !== 'false') {
-  requiredEnvVars.push('GOOGLE_PLACES_API_KEY');
-}
+const requiredEnvVars = ['OPENAI_API_KEY', 'GOOGLE_DOC_ID', 'GOOGLE_PLACES_API_KEY'];
 
 const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
 

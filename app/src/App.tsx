@@ -1,6 +1,6 @@
 import { MantineProvider } from '@mantine/core';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { Navigation, PlacesList, Shorty, Lofty, GettingHere, Home } from './components';
+import { Navigation, PlacesList, Shady, Lofty, GettingHere, Home } from './components';
 import { theme } from './theme';
 import '@mantine/core/styles.css';
 
@@ -17,7 +17,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/places" element={<PlacesList />} />
-        <Route path="/shorty" element={<Shorty />} />
+        <Route path="/shady" element={<Shady />} />
         <Route path="/lofty" element={<Lofty />} />
         <Route path="/getting-here" element={<GettingHere />} />
       </Routes>

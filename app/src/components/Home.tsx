@@ -1,21 +1,19 @@
-import { Container, Stack, Box, Group, Button, useMantineTheme, Divider, Text } from '@mantine/core';
+import { Container, Stack, Box, Group, Button, Divider, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
 // Function to create a CSS filter for the brand color
-function getBrandColorFilter(brandColor: string): string {
+function getBrandColorFilter(): string {
   // For #307fe2 (your brand color), these filter values produce the correct color
   // You can adjust these values if you change your brand color
   return `brightness(0) saturate(100%) invert(27%) sepia(77%) saturate(1729%) hue-rotate(211deg) brightness(95%) contrast(95%)`;
 }
 
 export function Home() {
-  const theme = useMantineTheme();
-  
   const tabs = [
     { id: 'places', label: 'Places', path: '/places' },
-    { id: 'shorty', label: 'Shorty', path: '/shorty' },
+    { id: 'shady', label: 'Shady', path: '/shady' },
     { id: 'lofty', label: 'Lofty', path: '/lofty' },
-    { id: 'getting-here', label: 'Getting Here', path: '/getting-here' }
+    { id: 'getting-here', label: 'Getting to the Sheddy', path: '/getting-here' }
   ];
 
   return (
@@ -31,7 +29,7 @@ export function Home() {
             width: '100%',
             height: 'auto',
             // Apply the same brand color filter as the navigation logo
-            filter: getBrandColorFilter(theme.colors.brand[6])
+            filter: getBrandColorFilter()
           }}
         />
 
@@ -68,13 +66,13 @@ export function Home() {
         mt="xl" 
         pt="md" 
         style={{ 
-          borderTop: `1px solid ${theme.colors.gray[2]}`,
+          borderTop: `1px solid var(--mantine-color-gray-2)`,
           textAlign: 'center'
         }}
       >
         <Text size="sm" c="dimmed">
           {/* Add your addresses here */}
-          123 Main Street, City, State 12345 • contact@example.com
+          Theodore
         </Text>
       </Box>
     </Container>

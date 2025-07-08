@@ -1,436 +1,1016 @@
 {
   "metadata": {
-    "generatedAt": "2025-07-06T11:32:29.415Z",
-    "totalPlaces": 46,
+    "generatedAt": "2025-07-08T12:38:45.928Z",
+    "totalPlaces": 80,
     "sourceDocId": "118IOqEAxoyxfhS8phqBbzLVdAE794K_DcO-a3iFfY1s",
     "sourceDocTitle": "Compound Cheat Sheet",
     "parserVersion": "1.0.0",
-    "enrichmentVersion": "1.0.0",
-    "summary": "This Maine, USA vacation compound guide features 46 curated spots, including 32 restaurants, 6 shopping destinations, 6 outdoor activities (hiking and sailing), and 5 beaches or attractions. Highlights include Pengs Pizza’s pistachio pie, Uproot Pie Co’s perfect pizza dinners, and scenic hikes like Mt. Battie and Clark Island. The guide emphasizes local flavors, coastal adventures, and charming small-town experiences, making it ideal for foodies and nature lovers alike.",
+    "enrichmentVersion": "2.0.0",
+    "summary": "This Maine, USA vacation compound guide features 80 curated places, including 44 restaurants, 25 shopping spots, 4 accommodations, 5 activities, and 2 municipal services, plus a variety of beaches, hiking trails, and attractions. Highlights include Peng’s Pizza for pistachio pizza, Uproot Pie Co. for perfect pizza dinners, and the scenic Craignair Inn. The guide emphasizes local flavors, coastal charm, and a strong focus on farm stands, general stores, and outdoor adventures, reflecting Maine’s vibrant food scene and natural beauty.",
     "categories": [
-      "Portland Underground",
+      "Southern Portland",
       "Driving from Portland",
       "St. George and Thomaston",
-      "Rockland County",
-      "Camden Borough",
-      "Hiking Trails",
-      "Popular Beaches",
-      "Beaches and Coastal Areas",
-      "Sails"
+      "Rockland",
+      "Camden and Rockport",
+      "Hiking",
+      "Beaches",
+      "Sailing",
+      "Grocery, Farm Stands, and Fish Markets",
+      "General Stores",
+      "Municipal Services",
+      "Accommodations",
+      "Additional Activities",
+      "Furniture and Antiques",
+      "Furniture and Antiques Shopping"
     ],
     "enrichmentStats": {
-      "totalPlaces": 46,
-      "enrichedPlaces": 45,
-      "skippedPlaces": 1
+      "totalPlaces": 80,
+      "enrichedPlaces": 79,
+      "skippedPlaces": 0
     }
   },
   "places": [
     {
       "id": "pengs-pizza",
-      "name": "Pengs Pizza",
+      "name": "Peng's Pizza",
       "type": "restaurant",
-      "description": "Most incredible pistachio pizza. Must get on the drive up (if they’re open).",
-      "url": "https://www.instagram.com/pengspizza/",
-      "address": null,
-      "mapsLink": null,
-      "phone": null,
-      "priceRange": "$$",
-      "rating": null,
-      "hours": "Pop-up hours vary; check Instagram for updates.",
-      "notes": "Highly recommended for pistachio pizza. Check if open before visiting.",
-      "tags": [
-        "pizza",
-        "pistachio",
-        "drive-up",
-        "casual"
-      ],
-      "coordinates": null,
+      "description": "Most incredible pistachio pizza.",
+      "url": null,
+      "notes": "Must get on the drive up (if they’re open).",
       "origText": "Pengs pizza - most incredible pistachio pizza. must get on the drive up (if they’re open)",
-      "category": "Portland Underground",
+      "category": "Southern Portland",
+      "address": "128 Main St STE 102, Biddeford, ME 04005, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "pizza_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 494-7450",
+      "website": "https://pengspizzapies.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 4:00 – 8:00 PM",
+        "Thursday: 4:00 – 8:00 PM",
+        "Friday: 4:00 – 8:00 PM",
+        "Saturday: 4:00 – 8:00 PM",
+        "Sunday: 4:00 – 8:00 PM"
+      ],
+      "reviewCount": 114,
+      "coordinates": {
+        "lat": 43.4928789,
+        "lng": -70.453858
+      },
+      "mapsLink": "https://maps.google.com/?cid=8652228593632083123&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:30:49.402Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:32:19.399Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJJ927A0ClskwRs_zqfhDkEng",
+        "confidence": "high"
+      },
+      "tags": [
+        "pizza restaurant",
+        "restaurant",
+        "pistachio pizza",
+        "drive up",
+        "food",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 4p-8p",
+        "Thursday 4p-8p",
+        "Friday 4p-8p",
+        "Saturday 4p-8p",
+        "Sunday 4p-8p"
+      ]
     },
     {
-      "id": "eventide",
-      "name": "Eventide",
+      "id": "eventide-oyster-co",
+      "name": "Eventide Oyster Co.",
       "type": "restaurant",
       "description": null,
-      "url": "https://eventideoysterco.com/",
-      "address": "86 Middle St, Portland, ME 04101, United States",
-      "mapsLink": "https://goo.gl/maps/2v6j6n2Xy6k6n3wA8",
-      "phone": "+1 207-774-8538",
-      "priceRange": "$$ - $$$",
-      "rating": 4.6,
-      "hours": "Monday–Sunday: 11:00 AM – 10:00 PM",
-      "notes": "Mentioned as a stop on the drive from Portland.",
-      "tags": [
-        "seafood",
-        "popular"
-      ],
-      "coordinates": {
-        "lat": 43.65721,
-        "lng": -70.25441
-      },
+      "url": null,
+      "notes": null,
       "origText": "eventide / honey paw",
       "category": "Driving from Portland",
+      "address": "86 Middle St, Portland, ME 04101, USA",
+      "rating": 4.5,
+      "googlePlacesTypes": [
+        "seafood_restaurant",
+        "bar",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "priceRange": "$$$",
+      "phone": "(207) 774-8538",
+      "website": "http://www.eventideoysterco.com/",
+      "rawHours": [
+        "Monday: 11:00 AM – 11:00 PM",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:00 PM",
+        "Thursday: 11:00 AM – 11:00 PM",
+        "Friday: 11:00 AM – 11:00 PM",
+        "Saturday: 11:00 AM – 11:00 PM",
+        "Sunday: 11:00 AM – 11:00 PM"
+      ],
+      "reviewCount": 4843,
+      "coordinates": {
+        "lat": 43.6593878,
+        "lng": -70.2513467
+      },
+      "mapsLink": "https://maps.google.com/?cid=9311582936533014705&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:30:53.335Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:32:24.064Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJeYjFM0CcskwRsZijjFhjOYE",
+        "confidence": "high"
+      },
+      "tags": [
+        "seafood restaurant",
+        "oysters",
+        "bar",
+        "restaurant",
+        "food",
+        "eventide",
+        "honey paw"
+      ],
+      "hours": "Every day from 11a to 11p"
     },
     {
-      "id": "honey-paw",
-      "name": "Honey Paw",
+      "id": "the-honey-paw",
+      "name": "The Honey Paw",
       "type": "restaurant",
       "description": null,
-      "url": "https://thehoneypaw.com/",
-      "address": "78 Middle St, Portland, ME 04101, United States",
-      "mapsLink": "https://www.google.com/maps/place/The+Honey+Paw/@43.656897,-70.254111,17z/data=!3m1!4b1!4m5!3m4!1s0x4cb29c31b2b1b6e1:0x6e2e7c318e44b81e!8m2!3d43.656897!4d-70.254111",
-      "phone": "+1 207-774-8538",
-      "priceRange": "$$",
-      "rating": 4.6,
-      "hours": "Monday–Thursday: 11:30 AM–9 PM; Friday–Saturday: 11:30 AM–10 PM; Sunday: 11:30 AM–9 PM",
-      "notes": "Mentioned as a stop on the drive from Portland.",
-      "tags": [
-        "asian",
-        "popular"
-      ],
-      "coordinates": {
-        "lat": 43.656897,
-        "lng": -70.254111
-      },
+      "url": null,
+      "notes": null,
       "origText": "eventide / honey paw",
       "category": "Driving from Portland",
+      "address": "78 Middle St, Portland, ME 04101, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "restaurant",
+        "american_restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$$",
+      "phone": "(207) 774-8538",
+      "website": "http://thehoneypaw.com/",
+      "rawHours": [
+        "Monday: 11:00 AM – 10:00 PM",
+        "Tuesday: 11:00 AM – 10:00 PM",
+        "Wednesday: 11:00 AM – 10:00 PM",
+        "Thursday: 11:00 AM – 10:00 PM",
+        "Friday: 11:00 AM – 10:00 PM",
+        "Saturday: 11:00 AM – 10:00 PM",
+        "Sunday: 11:00 AM – 10:00 PM"
+      ],
+      "reviewCount": 1388,
+      "coordinates": {
+        "lat": 43.6595783,
+        "lng": -70.2510018
+      },
+      "mapsLink": "https://maps.google.com/?cid=4859059175506917400&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:30:57.364Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:32:30.373Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJe4raS0CcskwRGDixYpPYbkM",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "american restaurant",
+        "food",
+        "point of interest",
+        "establishment",
+        "eventide",
+        "honey paw"
+      ],
+      "hours": "Every day from 11a to 10p"
     },
     {
       "id": "smalls",
       "name": "Smalls",
       "type": "restaurant",
       "description": "Coffee and wine bar.",
-      "url": "https://www.smallsportland.com/",
-      "address": "28 Brackett St, Portland, ME 04102, United States",
-      "mapsLink": "https://www.google.com/maps/place/Smalls/@43.650857,-70.272393,17z/data=!3m1!4b1!4m5!3m4!1s0x4cb29c1e2e8e7b7d:0x6e8e7c2b2e8e7b7d!8m2!3d43.650857!4d-70.2702043",
-      "phone": "+1 207-536-1325",
-      "priceRange": "$$",
-      "rating": 4.7,
-      "hours": "Monday–Friday 8:00 AM–3:00 PM, Saturday–Sunday 9:00 AM–3:00 PM",
-      "notes": "Coffee and wine bar on the drive from Portland.",
-      "tags": [
-        "coffee",
-        "wine-bar",
-        "casual"
-      ],
-      "coordinates": {
-        "lat": 43.650857,
-        "lng": -70.2702043
-      },
+      "url": null,
+      "notes": null,
       "origText": "Smalls (coffee and wine bar)",
       "category": "Driving from Portland",
+      "address": "28 Brackett St, Portland, ME 04102, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "cafe",
+        "coffee_shop",
+        "food_store",
+        "store",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "http://www.smallsisgood.com/",
+      "rawHours": [
+        "Monday: 8:00 AM – 8:00 PM",
+        "Tuesday: 8:00 AM – 8:00 PM",
+        "Wednesday: 8:00 AM – 8:00 PM",
+        "Thursday: 8:00 AM – 8:00 PM",
+        "Friday: 8:00 AM – 8:00 PM",
+        "Saturday: 8:00 AM – 8:00 PM",
+        "Sunday: 8:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 214,
+      "coordinates": {
+        "lat": 43.647835099999995,
+        "lng": -70.2614715
+      },
+      "mapsLink": "https://maps.google.com/?cid=8578290054023082030&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:02.318Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:32:34.854Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ2XpQcbOdskwRLvBPulo1DHc",
+        "confidence": "high"
+      },
+      "tags": [
+        "coffee",
+        "wine",
+        "cafe",
+        "bar",
+        "restaurant",
+        "food",
+        "coffee shop"
+      ],
+      "hours": "Every day from 8a to 8p"
     },
     {
       "id": "tandem-coffee",
       "name": "Tandem Coffee",
       "type": "restaurant",
-      "description": "Coffee shop.",
-      "url": "https://www.tandemcoffee.com/",
-      "address": "742 Congress St, Portland, ME 04102, United States",
-      "mapsLink": "https://goo.gl/maps/3w3kQn7w7vK2",
-      "phone": "+1 207-760-4440",
-      "priceRange": "$",
-      "rating": 4.7,
-      "hours": "Monday-Sunday 8:00 AM–2:00 PM",
-      "notes": "Coffee shop on the drive from Portland.",
-      "tags": [
-        "coffee",
-        "cafe"
-      ],
-      "coordinates": {
-        "lat": 43.65417,
-        "lng": -70.27735
-      },
+      "description": null,
+      "url": null,
+      "notes": null,
       "origText": "tandem coffee",
       "category": "Driving from Portland",
+      "address": "122 Anderson St, Portland, ME 04101, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "coffee_shop",
+        "cafe",
+        "food_store",
+        "point_of_interest",
+        "store",
+        "food",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 760-4440",
+      "website": "http://tandemcoffee.com/",
+      "rawHours": [
+        "Monday: 8:00 AM – 3:00 PM",
+        "Tuesday: 8:00 AM – 3:00 PM",
+        "Wednesday: 8:00 AM – 3:00 PM",
+        "Thursday: 8:00 AM – 3:00 PM",
+        "Friday: 8:00 AM – 3:00 PM",
+        "Saturday: 8:00 AM – 3:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 345,
+      "coordinates": {
+        "lat": 43.6669187,
+        "lng": -70.2558834
+      },
+      "mapsLink": "https://maps.google.com/?cid=5110086799305260322&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:01.931Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:32:39.260Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJA3VBQW-cskwRIr0AnN6s6kY",
+        "confidence": "high"
+      },
+      "tags": [
+        "coffee shop",
+        "cafe",
+        "food store",
+        "point of interest",
+        "store",
+        "coffee",
+        "casual"
+      ],
+      "hours": [
+        "Monday 8a-3p",
+        "Tuesday 8a-3p",
+        "Wednesday 8a-3p",
+        "Thursday 8a-3p",
+        "Friday 8a-3p",
+        "Saturday 8a-3p",
+        "Sunday Closed"
+      ]
+    },
+    {
+      "id": "speckled-axe-coffee",
+      "name": "Speckled Axe Coffee",
+      "type": "restaurant",
+      "description": "Wood fired coffee beans.",
+      "url": null,
+      "notes": null,
+      "origText": "Speckled axe coffee portland - wood fired coffee beans",
+      "category": "Driving from Portland",
+      "address": "18 Thames St, Portland, ME 04101, USA",
+      "rating": 4.3,
+      "googlePlacesTypes": [
+        "coffee_shop",
+        "cafe",
+        "food_store",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "http://www.speckledax.com/",
+      "rawHours": [
+        "Monday: 7:00 AM – 2:00 PM",
+        "Tuesday: 7:00 AM – 2:00 PM",
+        "Wednesday: 7:00 AM – 2:00 PM",
+        "Thursday: 7:00 AM – 2:00 PM",
+        "Friday: 7:00 AM – 2:00 PM",
+        "Saturday: 7:00 AM – 2:00 PM",
+        "Sunday: 7:00 AM – 2:00 PM"
+      ],
+      "reviewCount": 181,
+      "coordinates": {
+        "lat": 43.6597825,
+        "lng": -70.2478244
+      },
+      "mapsLink": "https://maps.google.com/?cid=14995761934162813287&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:32:43.403Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJNUsfHxidskwRZ2EZNgemG9A",
+        "confidence": "high"
+      },
+      "tags": [
+        "coffee shop",
+        "cafe",
+        "wood fired coffee",
+        "portland",
+        "coffee beans",
+        "food store",
+        "local favorite"
+      ],
+      "hours": "Every day from 7a to 2p"
     },
     {
       "id": "banh-appetit",
       "name": "Banh Appetit",
       "type": "restaurant",
       "description": null,
-      "url": "https://www.banhappetit.com/",
-      "address": "171 Cumberland Ave, Portland, ME 04101, United States",
-      "mapsLink": "https://www.google.com/maps/place/Banh+Appetit/@43.661573,-70.258837,17z/data=!3m1!4b1!4m6!3m5!1s0x4cb29c2e2e7e2b1b:0x7e1e9b2c2c1e7c3d!8m2!3d43.661573!4d-70.256643!16s%2Fg%2F11j2w2w7k7",
-      "phone": "+1 207-536-0986",
-      "priceRange": "$",
-      "rating": 4.8,
-      "hours": "Monday-Saturday 11:00 AM–8:00 PM; Sunday Closed",
-      "notes": "Mentioned as a stop on the drive from Portland.",
-      "tags": [
-        "banh-mi",
-        "vietnamese"
-      ],
-      "coordinates": {
-        "lat": 43.661573,
-        "lng": -70.256643
-      },
+      "url": null,
+      "notes": null,
       "origText": "banh appetit",
       "category": "Driving from Portland",
+      "address": "171 Cumberland Ave, Portland, ME 04101, USA",
+      "rating": 4.9,
+      "googlePlacesTypes": [
+        "vietnamese_restaurant",
+        "meal_takeaway",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "priceRange": "$",
+      "phone": "(207) 613-9399",
+      "website": "http://www.banhappetitme.com/",
+      "rawHours": [
+        "Monday: 11:00 AM – 6:00 PM",
+        "Tuesday: 11:00 AM – 6:00 PM",
+        "Wednesday: 11:00 AM – 6:00 PM",
+        "Thursday: 11:00 AM – 6:00 PM",
+        "Friday: 11:00 AM – 4:00 PM",
+        "Saturday: 11:00 AM – 4:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 549,
+      "coordinates": {
+        "lat": 43.6624854,
+        "lng": -70.2543031
+      },
+      "mapsLink": "https://maps.google.com/?cid=10298592298262912020&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:01.944Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:32:47.914Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJzbgZ04SdskwRFNyIiCHz644",
+        "confidence": "high"
+      },
+      "tags": [
+        "vietnamese restaurant",
+        "restaurant",
+        "meal takeaway",
+        "food",
+        "banh mi",
+        "quick bite"
+      ],
+      "hours": [
+        "Monday 11a-6p",
+        "Tuesday 11a-6p",
+        "Wednesday 11a-6p",
+        "Thursday 11a-6p",
+        "Friday 11a-4p",
+        "Saturday 11a-4p",
+        "Sunday Closed"
+      ]
     },
     {
-      "id": "lil-chippys",
-      "name": "Lil Chippys",
+      "id": "lil-chippy",
+      "name": "Lil Chippy",
       "type": "restaurant",
       "description": null,
       "url": null,
-      "address": null,
-      "mapsLink": null,
-      "phone": null,
-      "priceRange": null,
-      "rating": null,
-      "hours": null,
-      "notes": "Mentioned as a stop on the drive from Portland.",
-      "tags": [
-        "casual",
-        "snacks"
-      ],
-      "coordinates": null,
-      "origText": "lil chippys",
+      "notes": null,
+      "origText": "lil chippy",
       "category": "Driving from Portland",
+      "address": "52 Washington Ave, Portland, ME 04101, USA",
+      "rating": 4.9,
+      "googlePlacesTypes": [
+        "seafood_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 536-4508",
+      "website": "http://lilchippymaine.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 12:00 – 8:00 PM",
+        "Thursday: 12:00 – 8:00 PM",
+        "Friday: 12:00 – 8:00 PM",
+        "Saturday: 12:00 – 8:00 PM",
+        "Sunday: 12:00 – 8:00 PM"
+      ],
+      "reviewCount": 136,
+      "coordinates": {
+        "lat": 43.665002,
+        "lng": -70.25214190000001
+      },
+      "mapsLink": "https://maps.google.com/?cid=12719014211303318212&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:04.674Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:32:52.193Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJH3oWaQCdskwRxCLhdQkEg7A",
+        "confidence": "high"
+      },
+      "tags": [
+        "seafood restaurant",
+        "restaurant",
+        "fish and chips",
+        "casual dining",
+        "takeout",
+        "family friendly"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 12p-8p",
+        "Thursday 12p-8p",
+        "Friday 12p-8p",
+        "Saturday 12p-8p",
+        "Sunday 12p-8p"
+      ]
     },
     {
       "id": "crunchy-poke",
       "name": "Crunchy Poke",
       "type": "restaurant",
       "description": null,
-      "url": "https://www.crunchypoke.com/",
-      "address": "425 Fore St, Portland, ME 04101, United States",
-      "mapsLink": "https://goo.gl/maps/4kQk6n8vQn2Q2w6z8",
-      "phone": "+1 207-536-0986",
-      "priceRange": "$$",
-      "rating": 4.7,
-      "hours": "Monday-Saturday: 11:00 AM – 8:00 PM; Sunday: 12:00 PM – 8:00 PM",
-      "notes": "Mentioned as a stop on the drive from Portland.",
-      "tags": [
-        "poke",
-        "seafood"
-      ],
-      "coordinates": {
-        "lat": 43.65621,
-        "lng": -70.25543
-      },
+      "url": null,
+      "notes": null,
       "origText": "crunchy poke",
       "category": "Driving from Portland",
-      "enrichmentStatus": {
-        "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:05.911Z",
-        "enrichmentVersion": "1.0.0"
-      }
-    },
-    {
-      "id": "bagel-stop-dutchmans",
-      "name": "Bagel Stop (Dutchman's)",
-      "type": "restaurant",
-      "description": "Bagel stop en route from Portland.",
-      "url": "https://www.dutchmans.me/menu",
-      "address": "Cabot Mill Antiques, 14 Maine St, Brunswick, ME 04011, United States",
-      "mapsLink": "https://www.google.com/maps/place/14+Maine+St,+Brunswick,+ME+04011",
-      "phone": "(207) 406-4237",
-      "priceRange": "$",
+      "address": "426 Fore St, Portland, ME 04101, USA",
       "rating": 4.8,
-      "hours": "Monday-Sunday 8:00 AM – 2:00 PM",
-      "notes": "Order ahead online. Located in the same building as Cabot Mill Antiques.",
-      "tags": [
-        "bagels",
-        "breakfast",
-        "order-ahead"
+      "googlePlacesTypes": [
+        "japanese_restaurant",
+        "ramen_restaurant",
+        "tea_house",
+        "american_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
       ],
+      "priceRange": "$$",
+      "phone": "(207) 835-0838",
+      "website": "https://crunchypoke.com/",
+      "rawHours": [
+        "Monday: 11:00 AM – 8:30 PM",
+        "Tuesday: 11:00 AM – 8:30 PM",
+        "Wednesday: 11:00 AM – 8:30 PM",
+        "Thursday: 11:00 AM – 9:00 PM",
+        "Friday: 11:00 AM – 9:00 PM",
+        "Saturday: 11:00 AM – 9:00 PM",
+        "Sunday: 11:00 AM – 8:30 PM"
+      ],
+      "reviewCount": 554,
       "coordinates": {
-        "lat": 43.916347,
-        "lng": -69.965847
+        "lat": 43.6558837,
+        "lng": -70.25414789999999
       },
-      "origText": "bagel stop en route from portland - https://www.dutchmans.me/menu (order ahead online and check out cabot mill antiques in the same building)",
-      "category": "Driving from Portland",
+      "mapsLink": "https://maps.google.com/?cid=14755791556717872805&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:07.258Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:32:57.028Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJJaCpMu-dskwRpYbgxT0ax8w",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "japanese food",
+        "poke",
+        "ramen",
+        "tea house",
+        "american food",
+        "quick bite",
+        "casual dining"
+      ],
+      "hours": [
+        "Monday 11a-8:30p",
+        "Tuesday 11a-8:30p",
+        "Wednesday 11a-8:30p",
+        "Thursday 11a-9p",
+        "Friday 11a-9p",
+        "Saturday 11a-9p",
+        "Sunday 11a-8:30p"
+      ]
     },
     {
-      "id": "cabot-mill-antiques",
-      "name": "Cabot Mill Antiques",
+      "id": "bagel-stop",
+      "name": "Bagel Stop",
       "type": "shopping",
-      "description": "Antiques shop in the same building as Dutchman's Bagel Stop.",
-      "url": "https://www.cabotmillantiques.com/",
-      "address": "14 Maine St, Brunswick, ME 04011, United States",
-      "mapsLink": "https://www.google.com/maps/place/Cabot+Mill+Antiques/@43.918163,-69.965964,17z/data=!3m1!4b1!4m5!3m4!1s0x4cb1b7e1c1e6e3e7:0x7e6e3d1e2c1e6e3e!8m2!3d43.918163!4d-69.965964",
-      "phone": "+1 207-725-2855",
-      "priceRange": "$$",
-      "rating": 4.6,
-      "hours": "Monday-Sunday 10:00 AM – 5:00 PM",
-      "notes": "Located in the same building as Dutchman's Bagel Stop.",
-      "tags": [
-        "antiques",
-        "shopping"
-      ],
-      "coordinates": {
-        "lat": 43.918163,
-        "lng": -69.965964
-      },
+      "description": null,
+      "url": "https://www.dutchmans.me/menu",
+      "notes": "Order ahead online and check out Cabot Mill Antiques in the same building.",
       "origText": "bagel stop en route from portland - https://www.dutchmans.me/menu (order ahead online and check out cabot mill antiques in the same building)",
       "category": "Driving from Portland",
+      "address": "599 Forest Ave, Portland, ME 04101, USA",
+      "rating": 4.2,
+      "googlePlacesTypes": [
+        "bagel_shop",
+        "deli",
+        "bakery",
+        "food_store",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$",
+      "phone": "(207) 775-0718",
+      "website": "http://www.misterbagelforestave.com/",
+      "rawHours": [
+        "Monday: 6:30 AM – 12:00 PM",
+        "Tuesday: 6:30 AM – 12:00 PM",
+        "Wednesday: 6:30 AM – 12:00 PM",
+        "Thursday: 6:30 AM – 12:00 PM",
+        "Friday: 6:30 AM – 12:00 PM",
+        "Saturday: 7:00 AM – 12:00 PM",
+        "Sunday: 7:00 AM – 12:00 PM"
+      ],
+      "reviewCount": 277,
+      "coordinates": {
+        "lat": 43.6697373,
+        "lng": -70.2820626
+      },
+      "mapsLink": "https://maps.google.com/?cid=1952178757341076665&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:11.465Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:01.337Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJsaBm-Y6bskwRudxgmTyIFxs",
+        "confidence": "high"
+      },
+      "tags": [
+        "bagel shop",
+        "bakery",
+        "deli",
+        "breakfast",
+        "order ahead",
+        "quick bite",
+        "food store",
+        "near antiques"
+      ],
+      "hours": [
+        "Monday 6:30a-12p",
+        "Tuesday 6:30a-12p",
+        "Wednesday 6:30a-12p",
+        "Thursday 6:30a-12p",
+        "Friday 6:30a-12p",
+        "Saturday 7a-12p",
+        "Sunday 7a-12p"
+      ]
     },
     {
-      "id": "treats-wiscasset",
+      "id": "treats",
       "name": "Treats",
-      "type": "restaurant",
+      "type": "shopping",
       "description": null,
-      "url": "https://www.treatsofmaine.com/",
-      "address": "80 Main St, Wiscasset, ME 04578, United States",
-      "mapsLink": "https://www.google.com/maps/place/Treats/@44.003964,-69.665858,17z/data=!3m1!4b1!4m5!3m4!1s0x4cb29c7e2c1b7e6b:0x7e2e4e6c8b6b6c2b!8m2!3d44.003964!4d-69.6636693",
-      "phone": "+1 207-882-6192",
-      "priceRange": "$$",
-      "rating": 4.7,
-      "hours": "Monday-Saturday 8:00 AM–5:00 PM; Sunday 8:00 AM–3:00 PM",
-      "notes": "Located in Wiscasset.",
-      "tags": [
-        "bakery",
-        "cafe",
-        "wiscasset"
-      ],
-      "coordinates": {
-        "lat": 44.003964,
-        "lng": -69.6636693
-      },
+      "url": null,
+      "notes": null,
       "origText": "treats (wiscasset)",
       "category": "Driving from Portland",
+      "address": "36 Thomas Dr, Westbrook, ME 04092, USA",
+      "rating": 3.1,
+      "googlePlacesTypes": [
+        "wholesaler",
+        "point_of_interest",
+        "store",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 871-0700",
+      "website": "https://cloud.email.sysco.com/become-a-customer?utm_medium=googlemybusiness&utm_source=google.com&utm_campaign=gmb_opcopages&utm_content=NorthernNewEngland",
+      "rawHours": [
+        "Monday: 8:00 AM – 5:00 PM",
+        "Tuesday: 8:00 AM – 5:00 PM",
+        "Wednesday: 8:00 AM – 5:00 PM",
+        "Thursday: 8:00 AM – 5:00 PM",
+        "Friday: 8:00 AM – 5:00 PM",
+        "Saturday: Closed",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 70,
+      "coordinates": {
+        "lat": 43.6496004,
+        "lng": -70.3483645
+      },
+      "mapsLink": "https://maps.google.com/?cid=462172401660145298&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:11.256Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:06.515Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJiYT7YISZskwRki7xwVn3aQY",
+        "confidence": "high"
+      },
+      "tags": [
+        "store",
+        "food",
+        "wholesaler",
+        "wiscasset",
+        "treats",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday 8a-5p",
+        "Tuesday 8a-5p",
+        "Wednesday 8a-5p",
+        "Thursday 8a-5p",
+        "Friday 8a-5p",
+        "Saturday Closed",
+        "Sunday Closed"
+      ]
     },
     {
       "id": "in-a-silent-way-wine-bar",
       "name": "In a Silent Way Wine Bar",
       "type": "restaurant",
-      "description": "Wine bar in Wiscasset.",
-      "url": "https://www.inasilentwaywinebar.com/",
-      "address": "65 Main St, Wiscasset, ME 04578, United States",
-      "mapsLink": "https://www.google.com/maps/place/In+a+Silent+Way+Wine+Bar/@44.003893,-69.665779,17z/data=!3m1!4b1!4m6!3m5!1s0x4cb1c0e1e0e2e5b7:0x2e6e8e6b89347568!8m2!3d44.003893!4d-69.6635903!16s%2Fg%2F11v0b1v9wq",
-      "phone": "+1 207-687-8197",
-      "priceRange": "$$",
-      "rating": 4.9,
-      "hours": "Wednesday–Saturday: 4:00 PM – 9:00 PM; Sunday–Tuesday: Closed",
-      "notes": "Wine bar located in Wiscasset.",
-      "tags": [
-        "wine-bar",
-        "wiscasset"
-      ],
-      "coordinates": {
-        "lat": 44.003893,
-        "lng": -69.6635903
-      },
+      "description": null,
+      "url": null,
+      "notes": null,
       "origText": "in a silent way wine bar (wiscasset)",
       "category": "Driving from Portland",
+      "address": "51 Water St, Wiscasset, ME 04578, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "wine_bar",
+        "liquor_store",
+        "bar",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "http://www.inasilentwaymaine.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: Closed",
+        "Friday: 6:00 – 8:00 PM",
+        "Saturday: 4:00 – 8:00 PM",
+        "Sunday: 4:00 – 8:00 PM"
+      ],
+      "reviewCount": 26,
+      "coordinates": {
+        "lat": 44.002800099999995,
+        "lng": -69.6641403
+      },
+      "mapsLink": "https://maps.google.com/?cid=14528312144361255577&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:11.953Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:11.611Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ2UeM4iGTrUwRmXKlxuvunsk",
+        "confidence": "high"
+      },
+      "tags": [
+        "wine bar",
+        "bar",
+        "liquor store",
+        "wiscasset",
+        "food",
+        "store",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday Closed",
+        "Thursday Closed",
+        "Friday 6p-8p",
+        "Saturday 4p-8p",
+        "Sunday 4p-8p"
+      ]
     },
     {
-      "id": "odd-alewives",
-      "name": "Odd Alewives",
+      "id": "odd-alewives-farm-brewery",
+      "name": "Odd Alewives Farm Brewery",
       "type": "restaurant",
-      "description": "Brewery and pizza. Closed for winter.",
-      "url": "https://www.oddalewives.com/",
-      "address": "99 Old Alewive Rd, Waldoboro, ME 04572, United States",
-      "mapsLink": "https://www.google.com/maps/place/Odd+Alewives+Farm+Brewery/@44.089091,-69.393881,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae1a8e7e6e8e4d:0x2e2e3e3c3e3e3e3e!8m2!3d44.089091!4d-69.393881!16s%2Fg%2F11f3v1zv7y",
-      "phone": "+1 207-790-8406",
-      "priceRange": "$$",
+      "description": "Brewery and pizza.",
+      "url": null,
+      "notes": "Closed for winter.",
+      "origText": "odd alewives (brewery and pizza - closed for winter)",
+      "category": "Driving from Portland",
+      "address": "99 Old Rte One, Waldoboro, ME 04572, USA",
       "rating": 4.8,
-      "hours": "Closed for winter",
-      "notes": "Brewery and pizza. Closed for winter.",
+      "googlePlacesTypes": [
+        "pizza_restaurant",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 790-8406",
+      "website": "http://www.oddalewives.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: 4:00 – 8:00 PM",
+        "Friday: 4:00 – 8:00 PM",
+        "Saturday: 4:00 – 8:00 PM",
+        "Sunday: 4:00 – 8:00 PM"
+      ],
+      "reviewCount": 200,
+      "coordinates": {
+        "lat": 44.0991626,
+        "lng": -69.3661015
+      },
+      "mapsLink": "https://maps.google.com/?cid=1186226140913355338&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:33:15.765Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJKaeTbTjCrUwRSkps6GNSdhA",
+        "confidence": "high"
+      },
       "tags": [
         "brewery",
         "pizza",
-        "seasonal"
+        "farm",
+        "restaurant",
+        "bar",
+        "seasonal",
+        "closed for winter"
       ],
-      "coordinates": {
-        "lat": 44.089091,
-        "lng": -69.393881
-      },
-      "origText": "odd alewives (brewery and pizza - closed for winter)",
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday Closed",
+        "Thursday 4p-8p",
+        "Friday 4p-8p",
+        "Saturday 4p-8p",
+        "Sunday 4p-8p"
+      ]
+    },
+    {
+      "id": "king-eiders-pub",
+      "name": "King Eider's Pub",
+      "type": "restaurant",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "king eiders pub",
       "category": "Driving from Portland",
+      "address": "2 Elm St, Damariscotta, ME 04543, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "pub",
+        "bar",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 563-6008",
+      "website": "http://www.kingeiderspub.com/",
+      "rawHours": [
+        "Monday: 11:30 AM – 9:00 PM",
+        "Tuesday: 11:30 AM – 9:00 PM",
+        "Wednesday: 11:30 AM – 9:00 PM",
+        "Thursday: 11:30 AM – 9:00 PM",
+        "Friday: 11:30 AM – 9:00 PM",
+        "Saturday: 11:30 AM – 9:00 PM",
+        "Sunday: 11:30 AM – 8:00 PM"
+      ],
+      "reviewCount": 1130,
+      "coordinates": {
+        "lat": 44.0330295,
+        "lng": -69.5315841
+      },
+      "mapsLink": "https://maps.google.com/?cid=8284091130564647891&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:16.096Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:20.490Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ7x5DCs2UrUwR0xtFBP4A93I",
+        "confidence": "high"
+      },
+      "tags": [
+        "pub",
+        "bar",
+        "restaurant",
+        "food",
+        "point of interest",
+        "establishment"
+      ],
+      "hours": [
+        "Monday 11:30a-9p",
+        "Tuesday 11:30a-9p",
+        "Wednesday 11:30a-9p",
+        "Thursday 11:30a-9p",
+        "Friday 11:30a-9p",
+        "Saturday 11:30a-9p",
+        "Sunday 11:30a-8p"
+      ]
+    },
+    {
+      "id": "brunos-wood-fired-pizza",
+      "name": "Bruno's Wood Fired Pizza",
+      "type": "restaurant",
+      "description": "Surprisingly good pizza in downtown Bath.",
+      "url": null,
+      "notes": null,
+      "origText": "Brunos wood fired pizza - surprisingly good pizza in downtown bath",
+      "category": "Driving from Portland",
+      "address": "33 Allen Ave, Portland, ME 04103, USA",
+      "rating": 4.4,
+      "googlePlacesTypes": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 878-9511",
+      "website": "https://brunosportland.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 11:30 AM – 11:00 PM",
+        "Wednesday: 11:30 AM – 11:00 PM",
+        "Thursday: 11:30 AM – 11:00 PM",
+        "Friday: 11:30 AM – 11:00 PM",
+        "Saturday: 11:30 AM – 11:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 1009,
+      "coordinates": {
+        "lat": 43.689287,
+        "lng": -70.292873
+      },
+      "mapsLink": "https://maps.google.com/?cid=8916981274389809920&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:33:25.072Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJA04SlA6bskwRAIvQkDl7v3s",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "pizza",
+        "wood fired",
+        "downtown",
+        "bath",
+        "food",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 11:30a-11p",
+        "Wednesday 11:30a-11p",
+        "Thursday 11:30a-11p",
+        "Friday 11:30a-11p",
+        "Saturday 11:30a-11p",
+        "Sunday Closed"
+      ]
     },
     {
       "id": "uproot-pie-co",
-      "name": "Uproot Pie Co",
+      "name": "Uproot Pie Co.",
       "type": "restaurant",
-      "description": "Perfect pizza dinner, only open Thursday and Friday.",
-      "url": "https://www.uprootpieco.com/",
-      "address": "340 Main St, Union, ME 04862, United States",
-      "mapsLink": "https://www.google.com/maps/place/Uproot+Pie+Co/@44.210243,-69.274838,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae1e3e3b1e3e3b:0x7e3e3e3e3e3e3e3e!8m2!3d44.210243!4d-69.274838!16s%2Fg%2F11c5w2w7p_",
-      "phone": "+1 207-975-4304",
-      "priceRange": "$$",
-      "rating": 4.9,
-      "hours": "Thursday: 4:00 PM – 8:00 PM; Friday: 4:00 PM – 8:00 PM",
-      "notes": "Perfect pizza dinner. Only open Thursday and Friday.",
-      "tags": [
-        "pizza",
-        "dinner",
-        "limited-hours"
-      ],
-      "coordinates": {
-        "lat": 44.210243,
-        "lng": -69.274838
-      },
+      "description": "Perfect pizza dinner.",
+      "url": null,
+      "notes": "Only open Thursday and Friday.",
       "origText": "uproot pie co - perfect pizza dinner, only open th/fr",
       "category": "St. George and Thomaston",
+      "address": "9 Green St Unit C, Thomaston, ME 04861, USA",
+      "rating": 4.9,
+      "googlePlacesTypes": [
+        "pizza_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 370-1568",
+      "website": "http://theuprootpieco.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 4:00 – 8:00 PM",
+        "Thursday: 4:00 – 8:00 PM",
+        "Friday: 4:00 – 8:00 PM",
+        "Saturday: 9:00 AM – 1:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 51,
+      "coordinates": {
+        "lat": 44.078038299999996,
+        "lng": -69.1845077
+      },
+      "mapsLink": "https://maps.google.com/?cid=12924758723804196229&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:17.272Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:30.147Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJwz4OZXDPrUwRhe36u5T3XbM",
+        "confidence": "high"
+      },
+      "tags": [
+        "pizza restaurant",
+        "restaurant",
+        "pizza",
+        "dinner",
+        "limited hours",
+        "thursday friday only",
+        "food"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 4p-8p",
+        "Thursday 4p-8p",
+        "Friday 4p-8p",
+        "Saturday 9a-1p",
+        "Sunday Closed"
+      ]
     },
     {
       "id": "the-causeway",
@@ -438,245 +1018,714 @@
       "type": "restaurant",
       "description": "Brunch or happy hour are best.",
       "url": "https://craignair.com/wp-content/uploads/2024/07/brunch-menu.pdf",
-      "address": "5 3rd St, Spruce Head, ME 04859, United States",
-      "mapsLink": "https://www.google.com/maps/place/5+3rd+St,+Spruce+Head,+ME+04859",
-      "phone": "+1 207-594-7644",
-      "priceRange": "$$",
-      "rating": 4.7,
-      "hours": "Thursday–Monday: 8:00 AM – 2:00 PM, 4:00 PM – 8:00 PM; Tuesday–Wednesday: Closed",
-      "notes": "Brunch or happy hour are best.",
-      "tags": [
-        "brunch",
-        "happy-hour",
-        "casual"
-      ],
-      "coordinates": {
-        "lat": 44.00037,
-        "lng": -69.14018
-      },
+      "notes": null,
       "origText": "The Causeway (brunch or hh are best) - https://craignair.com/wp-content/uploads/2024/07/brunch-menu.pdf",
       "category": "St. George and Thomaston",
+      "address": "5 3rd St, St. George, ME 04859, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "restaurant",
+        "bar",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 594-7644",
+      "website": "http://www.craignair.com/causeway",
+      "rawHours": [
+        "Monday: 4:00 – 8:00 PM",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: 4:00 – 8:00 PM",
+        "Friday: 4:00 – 8:00 PM",
+        "Saturday: 4:00 – 8:00 PM",
+        "Sunday: 10:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 121,
+      "coordinates": {
+        "lat": 43.991644699999995,
+        "lng": -69.18204659999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=8448068006031799071&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:16.004Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:34.520Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ_1e7di7JrUwRHzPeeReRPXU",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "bar",
+        "brunch",
+        "happy hour",
+        "food",
+        "casual dining",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday 4p-8p",
+        "Tuesday Closed",
+        "Wednesday Closed",
+        "Thursday 4p-8p",
+        "Friday 4p-8p",
+        "Saturday 4p-8p",
+        "Sunday 10a-8p"
+      ]
     },
     {
       "id": "ancho-honey",
       "name": "Ancho Honey",
       "type": "restaurant",
-      "description": "Amazing sammies.",
+      "description": "Amazing sandwiches.",
       "url": "http://www.anchohoney.com/welcome-1",
-      "address": "153 Main St, Thomaston, ME 04861, United States",
-      "mapsLink": "https://www.google.com/maps/place/Ancho+Honey/@44.078218,-69.180726,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae1e7e8e2e7b8d:0x7e2b1b9b1e1e1e1e!8m2!3d44.078218!4d-69.180726!16s%2Fg%2F11j2z9_7q3",
-      "phone": "+1 207-354-0033",
-      "priceRange": "$",
-      "rating": 4.8,
-      "hours": "Monday-Saturday 11:00 AM–3:00 PM; Sunday Closed",
-      "notes": "Known for amazing sandwiches.",
-      "tags": [
-        "sandwiches",
-        "casual",
-        "lunch"
-      ],
-      "coordinates": {
-        "lat": 44.078218,
-        "lng": -69.180726
-      },
+      "notes": null,
       "origText": "Ancho Honey (amazing sammies) - http://www.anchohoney.com/welcome-1",
       "category": "St. George and Thomaston",
+      "address": "6 Wallston Rd, St. George, ME 04860, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 372-2111",
+      "website": "http://anchohoney.com/",
+      "reviewCount": 104,
+      "coordinates": {
+        "lat": 43.966124099999995,
+        "lng": -69.21777650000001
+      },
+      "mapsLink": "https://maps.google.com/?cid=11124464961908005877&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:21.859Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:38.962Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJmVyWyTG2rUwR9VvOYvEJYpo",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "sandwiches",
+        "quick bite",
+        "lunch",
+        "food",
+        "point of interest",
+        "establishment"
+      ]
     },
     {
       "id": "linas-kitchen-and-garden",
       "name": "Lina’s Kitchen and Garden",
       "type": "shopping",
-      "description": "Farm stand with sourdough bagels. Only open Sunday in the winter.",
-      "url": "https://www.instagram.com/linaskitchenandgarden/",
-      "address": "105 Wallston Rd, St. George, ME 04860, United States",
-      "mapsLink": "https://www.google.com/maps/place/105+Wallston+Rd,+St+George,+ME+04860",
-      "phone": null,
-      "priceRange": "$",
-      "rating": 5,
-      "hours": "Sunday (winter only); check Instagram for updates",
-      "notes": "Farm stand with sourdough bagels. Only open Sunday in the winter.",
-      "tags": [
-        "farm-stand",
-        "bagels",
-        "seasonal"
-      ],
-      "coordinates": {
-        "lat": 44.008072,
-        "lng": -69.209253
-      },
+      "description": "Farm stand with sourdough bagels.",
+      "url": null,
+      "notes": "Only open Sunday in the winter.",
       "origText": "Lina’s kitchen and garden - farm stand with sourdough bagels (only open sun in the winter)",
       "category": "St. George and Thomaston",
+      "address": "64 Spruce Head Rd, South Thomaston, ME 04858, USA",
+      "rating": 5,
+      "googlePlacesTypes": [
+        "farm",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 607-1057",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: 9:00 AM – 6:00 PM",
+        "Friday: Closed",
+        "Saturday: Closed",
+        "Sunday: 9:00 AM – 6:00 PM"
+      ],
+      "reviewCount": 5,
+      "coordinates": {
+        "lat": 44.049602799999995,
+        "lng": -69.1300844
+      },
+      "mapsLink": "https://maps.google.com/?cid=7869372642448863241&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:20.674Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:42.746Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ_ZpIbADPrUwRCXBXfrmgNW0",
+        "confidence": "high"
+      },
+      "tags": [
+        "farm stand",
+        "sourdough bagels",
+        "breakfast",
+        "sunday only",
+        "seasonal",
+        "farm",
+        "local food"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday Closed",
+        "Thursday 9a-6p",
+        "Friday Closed",
+        "Saturday Closed",
+        "Sunday 9a-6p"
+      ]
     },
     {
       "id": "owls-head-general-store",
-      "name": "Owl’s Head General Store",
+      "name": "Owl's Head General Store",
       "type": "restaurant",
       "description": "BLTs for days.",
-      "url": "https://www.facebook.com/OwlsHeadGeneralStore/",
-      "address": "2 South Shore Drive, Owls Head, ME 04854, United States",
-      "mapsLink": "https://goo.gl/maps/6Q7w7y4w8v5w6k8r7",
-      "phone": "+1 207-594-9154",
-      "priceRange": "$",
-      "rating": 4.7,
-      "hours": {
-        "Monday": "7:00 AM – 2:00 PM",
-        "Tuesday": "7:00 AM – 2:00 PM",
-        "Wednesday": "7:00 AM – 2:00 PM",
-        "Thursday": "7:00 AM – 2:00 PM",
-        "Friday": "7:00 AM – 2:00 PM",
-        "Saturday": "7:00 AM – 2:00 PM",
-        "Sunday": "Closed"
-      },
-      "notes": "Famous for BLTs.",
-      "tags": [
-        "general-store",
-        "blt",
-        "sandwiches",
-        "casual"
-      ],
-      "coordinates": {
-        "lat": 44.078993,
-        "lng": -69.064017
-      },
+      "url": null,
+      "notes": null,
       "origText": "owl’s head general store - BLTs for days",
       "category": "St. George and Thomaston",
+      "address": "2 S Shore Dr, Owls Head, ME 04854, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "meal_takeaway",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$",
+      "phone": "(207) 466-9046",
+      "website": "https://www.owlsheadgeneralstore.com/",
+      "rawHours": [
+        "Monday: 7:00 AM – 7:00 PM",
+        "Tuesday: Closed",
+        "Wednesday: 7:00 AM – 7:00 PM",
+        "Thursday: 7:00 AM – 7:00 PM",
+        "Friday: 7:00 AM – 7:00 PM",
+        "Saturday: 7:00 AM – 7:00 PM",
+        "Sunday: 9:00 AM – 7:00 PM"
+      ],
+      "reviewCount": 250,
+      "coordinates": {
+        "lat": 44.082573,
+        "lng": -69.0573978
+      },
+      "mapsLink": "https://maps.google.com/?cid=11010041257739601402&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:21.334Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:47.424Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJLx6g3erNrUwR-sX2sTCGy5g",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "meal takeaway",
+        "blt",
+        "sandwiches",
+        "general store",
+        "quick bite",
+        "food",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday 7a-7p",
+        "Tuesday Closed",
+        "Wednesday 7a-7p",
+        "Thursday 7a-7p",
+        "Friday 7a-7p",
+        "Saturday 7a-7p",
+        "Sunday 9a-7p"
+      ]
     },
     {
       "id": "mccloons-lobster-shack",
-      "name": "McCloons Lobster Shack",
+      "name": "McCloon's Lobster Shack",
       "type": "restaurant",
       "description": null,
-      "url": "https://www.mccloonslobstershack.com/",
-      "address": "315 Island Rd, South Thomaston, ME 04858, United States",
-      "mapsLink": "https://www.google.com/maps/place/McCloons+Lobster+Shack/@44.027068,-69.110837,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae1b6e5e5c7e7b:0x7e6e1e6b7e6e1e6b!8m2!3d44.027068!4d-69.110837!16s%2Fg%2F11b7m7w9v7",
-      "phone": "+1 207-593-1382",
-      "priceRange": "$$",
-      "rating": 4.8,
-      "hours": "Seasonal. Typically open daily 11:30 AM–7:30 PM (May–October). Check website or call for current hours.",
+      "url": null,
       "notes": null,
-      "tags": [
-        "lobster",
-        "seafood",
-        "shack"
-      ],
-      "coordinates": {
-        "lat": 44.027068,
-        "lng": -69.110837
-      },
       "origText": "mccloons lobster shack",
       "category": "St. George and Thomaston",
+      "address": "315 Island Rd, South Thomaston, ME 04858, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "seafood_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 593-1382",
+      "website": "http://www.mcloonslobster.com/",
+      "rawHours": [
+        "Monday: 11:30 AM – 7:00 PM",
+        "Tuesday: 11:30 AM – 7:00 PM",
+        "Wednesday: 11:30 AM – 7:00 PM",
+        "Thursday: 11:30 AM – 7:00 PM",
+        "Friday: 11:30 AM – 7:00 PM",
+        "Saturday: 11:30 AM – 7:00 PM",
+        "Sunday: 11:30 AM – 7:00 PM"
+      ],
+      "reviewCount": 1492,
+      "coordinates": {
+        "lat": 43.9953505,
+        "lng": -69.117899
+      },
+      "mapsLink": "https://maps.google.com/?cid=7648739319711885649&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:27.040Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:52.450Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJkdwgMUvKrUwRUWn98uLHJWo",
+        "confidence": "high"
+      },
+      "tags": [
+        "seafood restaurant",
+        "lobster",
+        "restaurant",
+        "casual dining",
+        "food",
+        "point of interest"
+      ],
+      "hours": "Every day from 11:30a to 7p"
     },
     {
       "id": "flip-side-coffee",
       "name": "Flip Side Coffee",
       "type": "restaurant",
       "description": null,
-      "url": "https://www.flipsidecoffeemaine.com/",
-      "address": "2 Main St, Thomaston, ME 04861, United States",
-      "mapsLink": "https://www.google.com/maps/place/Flip+Side+Coffee/@44.078395,-69.180225,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae2b2e2b7e7e4d:0x8e7e8e8e8e8e8e8e!8m2!3d44.078395!4d-69.180225!16s%2Fg%2F11j2z8v8y_",
-      "phone": "+1 207-354-5354",
-      "priceRange": "$",
-      "rating": 4.8,
-      "hours": "Monday-Saturday 7:00 AM–2:00 PM; Sunday Closed",
+      "url": null,
       "notes": null,
-      "tags": [
-        "coffee",
-        "cafe"
-      ],
-      "coordinates": {
-        "lat": 44.078395,
-        "lng": -69.180225
-      },
       "origText": "flip side coffee",
       "category": "St. George and Thomaston",
+      "address": "189 Main St, Thomaston, ME 04861, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "coffee_shop",
+        "cafe",
+        "food_store",
+        "point_of_interest",
+        "store",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 354-5221",
+      "website": "https://www.flipsidecoffeemaine.com/",
+      "rawHours": [
+        "Monday: 7:00 AM – 3:00 PM",
+        "Tuesday: 7:00 AM – 3:00 PM",
+        "Wednesday: 7:00 AM – 3:00 PM",
+        "Thursday: 7:00 AM – 3:00 PM",
+        "Friday: 7:00 AM – 3:00 PM",
+        "Saturday: 7:00 AM – 3:00 PM",
+        "Sunday: 7:00 AM – 3:00 PM"
+      ],
+      "reviewCount": 214,
+      "coordinates": {
+        "lat": 44.0790323,
+        "lng": -69.1835894
+      },
+      "mapsLink": "https://maps.google.com/?cid=9045204213037212326&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:25.957Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:33:57.746Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJxQVzHZ3PrUwRpiLz5k4Fh30",
+        "confidence": "high"
+      },
+      "tags": [
+        "coffee shop",
+        "cafe",
+        "food store",
+        "coffee",
+        "point of interest",
+        "store",
+        "casual",
+        "establishment"
+      ],
+      "hours": "Every day from 7a to 3p"
     },
     {
       "id": "laurels-dolce-vita",
       "name": "Laurel’s Dolce Vita",
-      "type": "restaurant",
+      "type": "shopping",
       "description": "Pastries.",
-      "url": "https://www.facebook.com/LaurelsDolceVita/",
-      "address": "170 Main St, Thomaston, ME 04861, United States",
-      "mapsLink": "https://www.google.com/maps/place/170+Main+St,+Thomaston,+ME+04861",
-      "phone": "+1 207-354-2220",
-      "priceRange": "$",
-      "rating": 4.9,
-      "hours": "Wednesday–Saturday 7:00 AM–2:00 PM; Sunday–Tuesday Closed",
-      "notes": "Known for pastries.",
-      "tags": [
-        "pastries",
-        "bakery"
-      ],
-      "coordinates": {
-        "lat": 44.078183,
-        "lng": -69.180053
-      },
+      "url": null,
+      "notes": null,
       "origText": "laurel’s dolce vita (pastries)",
       "category": "St. George and Thomaston",
+      "address": "350 Main St, Thomaston, ME 04861, USA",
+      "rating": 4.9,
+      "googlePlacesTypes": [
+        "bakery",
+        "food_store",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 354-5242",
+      "website": "http://laurelsdolcevita.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 9:00 AM – 2:00 PM",
+        "Thursday: 9:00 AM – 2:00 PM",
+        "Friday: 9:00 AM – 2:00 PM",
+        "Saturday: 9:00 AM – 2:00 PM",
+        "Sunday: 9:00 AM – 1:00 PM"
+      ],
+      "reviewCount": 68,
+      "coordinates": {
+        "lat": 44.0776733,
+        "lng": -69.1911319
+      },
+      "mapsLink": "https://maps.google.com/?cid=15846733584946998088&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:25.187Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:34:03.355Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJdY8PumHPrUwRSKsEZTzo6ts",
+        "confidence": "high"
+      },
+      "tags": [
+        "bakery",
+        "pastries",
+        "food store",
+        "dessert",
+        "store",
+        "quick bite",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 9a-2p",
+        "Thursday 9a-2p",
+        "Friday 9a-2p",
+        "Saturday 9a-2p",
+        "Sunday 9a-1p"
+      ]
     },
     {
       "id": "st-george-pizza",
       "name": "St. George Pizza",
       "type": "restaurant",
       "description": "Cute restaurant, simple menu.",
-      "url": "https://www.facebook.com/stgeorgepizza/",
-      "address": "213 Main St, Tenants Harbor, ME 04860, United States",
-      "mapsLink": "https://www.google.com/maps/place/St+George+Pizza/@43.963927,-69.207201,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae2e1e0e4f5e7d:0x2e2c7d2e2c7d2e2c!8m2!3d43.963927!4d-69.207201!16s%2Fg%2F1tdw6w7w",
-      "phone": "+1 207-372-6002",
-      "priceRange": "$",
-      "rating": 4.6,
-      "hours": "Monday-Saturday 11:00 AM – 8:00 PM, Sunday Closed",
-      "notes": "Simple menu, cute spot.",
-      "tags": [
-        "pizza",
-        "casual"
-      ],
-      "coordinates": {
-        "lat": 43.963927,
-        "lng": -69.207201
-      },
+      "url": null,
+      "notes": null,
       "origText": "St. George pizza - cute resto, simple menu",
       "category": "St. George and Thomaston",
+      "address": "310 Main St, Warren, ME 04864, USA",
+      "rating": 4.9,
+      "googlePlacesTypes": [
+        "pizza_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 477-5656",
+      "website": "http://stgeorge-pizza.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 11:00 AM – 2:00 PM",
+        "Thursday: 11:00 AM – 2:00 PM",
+        "Friday: 4:00 – 8:00 PM",
+        "Saturday: 4:00 – 8:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 8,
+      "coordinates": {
+        "lat": 44.120642,
+        "lng": -69.2414791
+      },
+      "mapsLink": "https://maps.google.com/?cid=16328025637845396074&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:32.907Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:34:08.514Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJGTXlWLnFrUwRauo-287MmOI",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "pizza",
+        "pizza restaurant",
+        "simple menu",
+        "cute",
+        "food"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 11a-2p",
+        "Thursday 11a-2p",
+        "Friday 4p-8p",
+        "Saturday 4p-8p",
+        "Sunday Closed"
+      ]
+    },
+    {
+      "id": "oyster-river-winery",
+      "name": "Oyster River Winery",
+      "type": "shopping",
+      "description": "Great tasting room.",
+      "url": null,
+      "notes": "Sadly no dogs inside.",
+      "origText": "Oyster river winery - great tasting room but sadly no dogs inside",
+      "category": "St. George and Thomaston",
+      "address": "929 Oyster River Rd, Warren, ME 04864, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "liquor_store",
+        "farm",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 370-7575",
+      "website": "http://www.oysterriverwine.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: Closed",
+        "Friday: 12:00 – 5:00 PM",
+        "Saturday: 12:00 – 5:00 PM",
+        "Sunday: 12:00 – 5:00 PM"
+      ],
+      "reviewCount": 32,
+      "coordinates": {
+        "lat": 44.1017021,
+        "lng": -69.2221382
+      },
+      "mapsLink": "https://maps.google.com/?cid=5754201811702903070&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:34:13.037Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJqTI06IjFrUwRHvF1iA8I208",
+        "confidence": "high"
+      },
+      "tags": [
+        "winery",
+        "tasting room",
+        "no dogs inside",
+        "liquor store",
+        "farm",
+        "food",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday Closed",
+        "Thursday Closed",
+        "Friday 12p-5p",
+        "Saturday 12p-5p",
+        "Sunday 12p-5p"
+      ]
+    },
+    {
+      "id": "dip-net",
+      "name": "Dip Net",
+      "type": "restaurant",
+      "description": "Moved across the dock, looks like a cafe but is a killer bar.",
+      "url": null,
+      "notes": "Ask for Lisa.",
+      "origText": "Dip Net (port clyde) - moved across the dock, looks like a cafe but is a killer bar - ask for Lisa",
+      "category": "St. George and Thomaston",
+      "address": "2 Cold Storage Rd, Port Clyde, ME 04855, USA",
+      "rating": 4.2,
+      "googlePlacesTypes": [
+        "seafood_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 372-1112",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 11:30 AM – 3:00 PM",
+        "Wednesday: 11:30 AM – 3:00 PM",
+        "Thursday: 11:30 AM – 6:00 PM",
+        "Friday: 11:30 AM – 6:00 PM",
+        "Saturday: 11:30 AM – 6:00 PM",
+        "Sunday: 11:30 AM – 3:00 PM"
+      ],
+      "reviewCount": 208,
+      "coordinates": {
+        "lat": 43.926145899999995,
+        "lng": -69.2591362
+      },
+      "mapsLink": "https://maps.google.com/?cid=9412267265155568327&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:34:18.619Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ86fP7SS2rUwRx5KiljUXn4I",
+        "confidence": "high"
+      },
+      "tags": [
+        "seafood restaurant",
+        "bar",
+        "restaurant",
+        "dockside",
+        "hidden gem",
+        "ask for lisa",
+        "port clyde"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 11:30a-3p",
+        "Wednesday 11:30a-3p",
+        "Thursday 11:30a-6p",
+        "Friday 11:30a-6p",
+        "Saturday 11:30a-6p",
+        "Sunday 11:30a-3p"
+      ]
+    },
+    {
+      "id": "the-happy-clam",
+      "name": "The Happy Clam",
+      "type": "restaurant",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "The Happy Clam (tenants harbor)",
+      "category": "St. George and Thomaston",
+      "address": "13 River Rd, St. George, ME 04860, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 372-8999",
+      "website": "https://www.facebook.com/TheHappyClamPubandEatery/",
+      "rawHours": [
+        "Monday: 4:00 – 8:00 PM",
+        "Tuesday: Closed",
+        "Wednesday: 11:00 AM – 8:00 PM",
+        "Thursday: 11:00 AM – 8:00 PM",
+        "Friday: 11:00 AM – 8:30 PM",
+        "Saturday: 11:00 AM – 8:30 PM",
+        "Sunday: 8:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 355,
+      "coordinates": {
+        "lat": 43.9683498,
+        "lng": -69.2074721
+      },
+      "mapsLink": "https://maps.google.com/?cid=4022854238161821088&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:34:25.089Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJk7RTTzXIrUwRoF3PmJ0M1Dc",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "seafood",
+        "tenants harbor",
+        "harbor view",
+        "local favorite",
+        "casual dining",
+        "food",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday 4p-8p",
+        "Tuesday Closed",
+        "Wednesday 11a-8p",
+        "Thursday 11a-8p",
+        "Friday 11a-8:30p",
+        "Saturday 11a-8:30p",
+        "Sunday 8a-8p"
+      ]
+    },
+    {
+      "id": "the-black-harpoon",
+      "name": "The Black Harpoon",
+      "type": "restaurant",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "The Black Harpoon (port clyde)",
+      "category": "St. George and Thomaston",
+      "address": "202 Drift Inn Rd, St. George, ME 04860, USA",
+      "rating": 4.4,
+      "googlePlacesTypes": [
+        "restaurant",
+        "seafood_restaurant",
+        "bar_and_grill",
+        "bar",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 372-2167",
+      "website": "https://www.theblackharpoon.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 4:30 – 8:00 PM",
+        "Wednesday: 4:30 – 8:00 PM",
+        "Thursday: 4:30 – 8:00 PM",
+        "Friday: 4:30 – 8:00 PM",
+        "Saturday: 4:30 – 8:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 117,
+      "coordinates": {
+        "lat": 43.9276513,
+        "lng": -69.2534654
+      },
+      "mapsLink": "https://maps.google.com/?cid=12910976383927994049&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:34:30.597Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJHwl1QuC2rUwRwUZ8q50ALbM",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "seafood",
+        "bar and grill",
+        "bar",
+        "port clyde",
+        "casual dining"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 4:30p-8p",
+        "Wednesday 4:30p-8p",
+        "Thursday 4:30p-8p",
+        "Friday 4:30p-8p",
+        "Saturday 4:30p-8p",
+        "Sunday Closed"
+      ]
     },
     {
       "id": "cafe-grazie",
@@ -684,198 +1733,548 @@
       "type": "restaurant",
       "description": null,
       "url": null,
-      "address": null,
-      "mapsLink": null,
-      "phone": null,
-      "priceRange": null,
-      "rating": null,
-      "hours": null,
       "notes": null,
-      "tags": [
-        "cafe"
-      ],
-      "coordinates": null,
       "origText": "cafe grazie",
-      "category": "Rockland County",
+      "category": "Rockland",
+      "address": "148 S Main St, Rockland, ME 04841, USA",
+      "rating": 5,
+      "googlePlacesTypes": [
+        "cafe",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 466-9113",
+      "website": "https://www.doublegrazie.world/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 8:00 AM – 2:00 PM",
+        "Thursday: 8:00 AM – 2:00 PM",
+        "Friday: 8:00 AM – 2:00 PM",
+        "Saturday: 8:00 AM – 2:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 12,
+      "coordinates": {
+        "lat": 44.0979162,
+        "lng": -69.1109823
+      },
+      "mapsLink": "https://maps.google.com/?cid=5859510011640433947&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
-        "enriched": false,
-        "enrichedAt": "2025-07-06T11:31:29.885Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:34:36.709Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJD_By96XPrUwRG02sgU8pUVE",
+        "confidence": "high"
+      },
+      "tags": [
+        "cafe",
+        "coffee",
+        "food",
+        "casual dining",
+        "point of interest",
+        "establishment"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 8a-2p",
+        "Thursday 8a-2p",
+        "Friday 8a-2p",
+        "Saturday 8a-2p",
+        "Sunday Closed"
+      ]
     },
     {
       "id": "jesss-seafood-market",
       "name": "Jess’s Seafood Market",
-      "type": "shopping",
+      "type": "restaurant",
       "description": null,
-      "url": "https://www.jesssmarket.com/",
-      "address": "118 S Main St, Rockland, ME 04841, United States",
-      "mapsLink": "https://www.google.com/maps/place/Jess's+Market/@44.101393,-69.110964,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae2b6e0e1b5b1d:0x8e2b1a0c1e7b1c2d!8m2!3d44.101393!4d-69.1087753!16s%2Fg%2F1td_6k6w",
-      "phone": "+1 207-594-5944",
-      "priceRange": null,
-      "rating": 4.8,
-      "hours": "Monday-Saturday 9:00 AM–5:30 PM, Sunday Closed",
+      "url": null,
       "notes": null,
-      "tags": [
-        "seafood",
-        "market"
-      ],
-      "coordinates": {
-        "lat": 44.101393,
-        "lng": -69.1087753
-      },
       "origText": "jess’s seafood market",
-      "category": "Rockland County",
+      "category": "Rockland",
+      "address": "118 Main St, Rockland, ME 04841, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "market",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 596-6068",
+      "website": "http://www.jessmarket.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 10:00 AM – 5:00 PM",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 10:00 AM – 5:00 PM",
+        "Saturday: 10:00 AM – 5:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 317,
+      "coordinates": {
+        "lat": 44.0963129,
+        "lng": -69.1109319
+      },
+      "mapsLink": "https://maps.google.com/?cid=12510034604789774532&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:31.585Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:34:41.014Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJr_VVzDrOrUwRxLhWKjGSnK0",
+        "confidence": "high"
+      },
+      "tags": [
+        "seafood",
+        "market",
+        "food",
+        "seafood market",
+        "point of interest",
+        "fresh fish",
+        "local business"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 10a-5p",
+        "Wednesday 10a-5p",
+        "Thursday 10a-5p",
+        "Friday 10a-5p",
+        "Saturday 10a-5p",
+        "Sunday Closed"
+      ]
     },
     {
-      "id": "sammys",
-      "name": "Sammy’s",
+      "id": "sammys-deluxe",
+      "name": "Sammy’s Deluxe",
       "type": "restaurant",
       "description": null,
       "url": "https://sammysdeluxe-onlinestore.square.site/#18",
-      "address": "488 Main St, Rockland, ME 04841, United States",
-      "mapsLink": "https://www.google.com/maps/place/488+Main+St,+Rockland,+ME+04841,+USA",
-      "phone": "+1 207-593-9258",
-      "priceRange": "$$",
-      "rating": 4.7,
-      "hours": "Wednesday–Saturday: 5:00 PM–9:00 PM; Sunday–Tuesday: Closed",
-      "notes": "Highly recommended (MUST).",
-      "tags": [
-        "must-visit",
-        "dining"
-      ],
-      "coordinates": {
-        "lat": 44.10447,
-        "lng": -69.1089
-      },
+      "notes": "MUST.",
       "origText": "Sammy’s (MUST) - https://sammysdeluxe-onlinestore.square.site/#18",
-      "category": "Rockland County",
+      "category": "Rockland",
+      "address": "488 Main St, Rockland, ME 04841, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 466-9059",
+      "website": "http://www.sammysdeluxe.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 5:00 – 9:00 PM",
+        "Thursday: 5:00 – 9:00 PM",
+        "Friday: 5:00 – 9:00 PM",
+        "Saturday: 5:00 – 9:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 177,
+      "coordinates": {
+        "lat": 44.10602000000001,
+        "lng": -69.10957499999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=9760115254239806109&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:36.750Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:34:45.299Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJdxRB8SjOrUwRncLVxxzlcoc",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "food",
+        "must try",
+        "local favorite",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 5p-9p",
+        "Thursday 5p-9p",
+        "Friday 5p-9p",
+        "Saturday 5p-9p",
+        "Sunday Closed"
+      ]
     },
     {
       "id": "hello-hello-books",
       "name": "Hello Hello Books",
       "type": "shopping",
       "description": null,
-      "url": "https://hellohellobooks.com/",
-      "address": "316 Main St, Rockland, ME 04841, United States",
-      "mapsLink": "https://www.google.com/maps/place/Hello+Hello+Books/@44.104927,-69.109073,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae2c6e2e1a7e2b:0x2e8e5c2c3c6b6c6a!8m2!3d44.104927!4d-69.109073!16s%2Fg%2F11c5w2w3w7",
-      "phone": "+1 207-593-7780",
-      "priceRange": null,
-      "rating": 4.8,
-      "hours": "Monday-Saturday 10:00 AM–5:00 PM, Sunday 10:00 AM–4:00 PM",
+      "url": null,
       "notes": null,
-      "tags": [
-        "books",
-        "bookstore"
-      ],
-      "coordinates": {
-        "lat": 44.104927,
-        "lng": -69.109073
-      },
       "origText": "hello hello books",
-      "category": "Rockland County",
+      "category": "Rockland",
+      "address": "316 Main St, Rockland, ME 04841, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "book_store",
+        "gift_shop",
+        "point_of_interest",
+        "store",
+        "establishment"
+      ],
+      "phone": "(207) 593-7780",
+      "website": "http://www.hellohellobooks.com/",
+      "rawHours": [
+        "Monday: 10:00 AM – 5:00 PM",
+        "Tuesday: 10:00 AM – 5:00 PM",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 9:00 AM – 6:00 PM",
+        "Saturday: 9:00 AM – 6:00 PM",
+        "Sunday: 9:00 AM – 4:00 PM"
+      ],
+      "reviewCount": 72,
+      "coordinates": {
+        "lat": 44.1025972,
+        "lng": -69.10923369999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=3410173910625028287&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:40.807Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:34:50.592Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJOa8J8yXOrUwRvwgclRpfUy8",
+        "confidence": "high"
+      },
+      "tags": [
+        "book store",
+        "gift shop",
+        "store",
+        "point of interest",
+        "independent bookstore",
+        "local business"
+      ],
+      "hours": [
+        "Monday 10a-5p",
+        "Tuesday 10a-5p",
+        "Wednesday 10a-5p",
+        "Thursday 10a-5p",
+        "Friday 9a-6p",
+        "Saturday 9a-6p",
+        "Sunday 9a-4p"
+      ]
     },
     {
       "id": "home-kitchen-cafe",
       "name": "Home Kitchen Cafe",
       "type": "restaurant",
       "description": null,
-      "url": "https://www.homekitchencafe.com/",
-      "address": "650 Main St, Rockland, ME 04841, United States",
-      "mapsLink": "https://www.google.com/maps/place/Home+Kitchen+Cafe/@44.111354,-69.115839,17z/data=!3m1!4b1!4m5!3m4!1s0x4cae2b7e0f6e8e2d:0x6e6b1e2e8e9e7e7d!8m2!3d44.111354!4d-69.115839",
-      "phone": "+1 207-596-2449",
-      "priceRange": "$$",
-      "rating": 4.6,
-      "hours": "Monday-Sunday 7:00 AM–2:00 PM",
+      "url": null,
       "notes": null,
-      "tags": [
-        "cafe",
-        "breakfast"
-      ],
-      "coordinates": {
-        "lat": 44.111354,
-        "lng": -69.115839
-      },
       "origText": "home kitchen cafe",
-      "category": "Rockland County",
+      "category": "Rockland",
+      "address": "650 Main St, Rockland, ME 04841, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "breakfast_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 596-2449",
+      "website": "http://www.homekitchencafe.com/",
+      "rawHours": [
+        "Monday: 8:00 AM – 2:30 PM",
+        "Tuesday: Closed",
+        "Wednesday: 8:00 AM – 2:30 PM",
+        "Thursday: 8:00 AM – 2:30 PM",
+        "Friday: 8:00 AM – 2:30 PM",
+        "Saturday: 8:00 AM – 2:30 PM",
+        "Sunday: 8:00 AM – 2:00 PM"
+      ],
+      "reviewCount": 1040,
+      "coordinates": {
+        "lat": 44.1103452,
+        "lng": -69.10939619999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=4493216504621288991&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:38.574Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:34:54.632Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ4WCRPtbRrUwRH87f2JocWz4",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "breakfast",
+        "cafe",
+        "food",
+        "casual dining"
+      ],
+      "hours": [
+        "Monday 8a-2:30p",
+        "Tuesday Closed",
+        "Wednesday 8a-2:30p",
+        "Thursday 8a-2:30p",
+        "Friday 8a-2:30p",
+        "Saturday 8a-2:30p",
+        "Sunday 8a-2p"
+      ]
     },
     {
       "id": "myrtles",
       "name": "Myrtle’s",
       "type": "restaurant",
       "description": "Dive bar.",
-      "url": "https://www.facebook.com/myrtlesrockland/",
-      "address": "385 Main St, Rockland, ME 04841, United States",
-      "mapsLink": "https://www.google.com/maps/place/Myrtle's/@44.104841,-69.108728,17z/data=!3m1!4b1!4m5!3m4!1s0x4cae2e6e7e8f7a1d:0x7e8e2e8e2e8e2e8e!8m2!3d44.104841!4d-69.108728",
-      "phone": "+1 207-593-9371",
-      "priceRange": "$",
-      "rating": 4.4,
-      "hours": "Monday-Sunday: 12:00 PM – 1:00 AM",
-      "notes": "Dive bar.",
-      "tags": [
-        "dive-bar",
-        "bar"
-      ],
-      "coordinates": {
-        "lat": 44.104841,
-        "lng": -69.108728
-      },
+      "url": null,
+      "notes": null,
       "origText": "myrtle’s (dive bar)",
-      "category": "Rockland County",
+      "category": "Rockland",
+      "address": "12 Myrtle St, Rockland, ME 04841, USA",
+      "rating": 4.4,
+      "googlePlacesTypes": [
+        "bar",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$",
+      "phone": "(207) 596-6250",
+      "rawHours": [
+        "Monday: 11:00 AM – 9:00 PM",
+        "Tuesday: 11:00 AM – 1:00 AM",
+        "Wednesday: 11:00 AM – 1:00 AM",
+        "Thursday: 11:00 AM – 1:00 AM",
+        "Friday: 11:00 AM – 1:00 AM",
+        "Saturday: 11:00 AM – 1:00 AM",
+        "Sunday: 11:00 AM – 9:00 PM"
+      ],
+      "reviewCount": 244,
+      "coordinates": {
+        "lat": 44.1013519,
+        "lng": -69.1095826
+      },
+      "mapsLink": "https://maps.google.com/?cid=12083154414827908718&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:47.053Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:01.836Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJMb0qdCXOrUwRbq4Cxuv8r6c",
+        "confidence": "high"
+      },
+      "tags": [
+        "bar",
+        "dive bar",
+        "point of interest",
+        "establishment",
+        "casual",
+        "local favorite"
+      ],
+      "hours": [
+        "Monday 11a-9p",
+        "Tuesday 11a-1a",
+        "Wednesday 11a-1a",
+        "Thursday 11a-1a",
+        "Friday 11a-1a",
+        "Saturday 11a-1a",
+        "Sunday 11a-9p"
+      ]
+    },
+    {
+      "id": "adas-kitchen",
+      "name": "Ada’s Kitchen",
+      "type": "restaurant",
+      "description": null,
+      "url": null,
+      "notes": "Recommended, not tried.",
+      "origText": "Ada’s kitchen (recommended, not tried)",
+      "category": "Rockland",
+      "address": "449 Main St, Rockland, ME 04841, USA",
+      "rating": 4.4,
+      "googlePlacesTypes": [
+        "italian_restaurant",
+        "pizza_restaurant",
+        "bar",
+        "food_store",
+        "restaurant",
+        "point_of_interest",
+        "store",
+        "food",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 593-7735",
+      "website": "https://www.adaskitchen.com/",
+      "rawHours": [
+        "Monday: 4:00 – 9:30 PM",
+        "Tuesday: 4:00 – 9:30 PM",
+        "Wednesday: 4:00 – 9:30 PM",
+        "Thursday: 4:00 – 9:30 PM",
+        "Friday: 4:00 – 10:00 PM",
+        "Saturday: 4:00 – 10:00 PM",
+        "Sunday: 4:00 – 9:30 PM"
+      ],
+      "reviewCount": 566,
+      "coordinates": {
+        "lat": 44.105337999999996,
+        "lng": -69.10916399999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=18401597972942426117&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:35:06.473Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ__-LlijOrUwRBRDITNybX_8",
+        "confidence": "high"
+      },
+      "tags": [
+        "italian restaurant",
+        "pizza",
+        "bar",
+        "restaurant",
+        "recommended",
+        "food store"
+      ],
+      "hours": [
+        "Monday 4p-9:30p",
+        "Tuesday 4p-9:30p",
+        "Wednesday 4p-9:30p",
+        "Thursday 4p-9:30p",
+        "Friday 4p-10p",
+        "Saturday 4p-10p",
+        "Sunday 4p-9:30p"
+      ]
+    },
+    {
+      "id": "wileys",
+      "name": "Wiley’s",
+      "type": "restaurant",
+      "description": "Casual patio and “taco shack”.",
+      "url": null,
+      "notes": null,
+      "origText": "Wiley’s (casual patio and “taco shack”)",
+      "category": "Rockland",
+      "address": "346 Main St, Rockland, ME 04841, USA",
+      "rating": 4.9,
+      "googlePlacesTypes": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 200-1219",
+      "website": "https://wileysfood.square.site/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 11:00 AM – 2:00 PM",
+        "Wednesday: 11:00 AM – 4:00 PM",
+        "Thursday: 11:00 AM – 4:00 PM",
+        "Friday: 8:00 AM – 4:00 PM",
+        "Saturday: 8:00 AM – 4:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 68,
+      "coordinates": {
+        "lat": 44.1031311,
+        "lng": -69.1092714
+      },
+      "mapsLink": "https://maps.google.com/?cid=13238070222241263496&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:35:10.878Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ1fg3LqHPrUwRiO9dlLoSt7c",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "taco",
+        "casual",
+        "patio seating",
+        "quick bite",
+        "food",
+        "outdoor dining"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 11a-2p",
+        "Wednesday 11a-4p",
+        "Thursday 11a-4p",
+        "Friday 8a-4p",
+        "Saturday 8a-4p",
+        "Sunday Closed"
+      ]
     },
     {
       "id": "winonas",
       "name": "Winona’s",
       "type": "restaurant",
       "description": null,
-      "url": "https://www.winonasmaine.com/",
-      "address": "31 Elm St, Camden, ME 04843, United States",
-      "mapsLink": "https://www.google.com/maps/place/Winona's/@44.210899,-69.064073,17z/data=!3m1!4b1!4m5!3m4!1s0x4cae1e3e1e1e1e1e:0x7e8e1e1e1e1e1e1e!8m2!3d44.210899!4d-69.064073",
-      "phone": "+1 207-230-7135",
-      "priceRange": "$$",
-      "rating": 4.8,
-      "hours": "Wednesday–Sunday 8:00 AM–2:00 PM; Closed Monday & Tuesday",
+      "url": null,
       "notes": null,
-      "tags": [
-        "cafe",
-        "bakery"
-      ],
-      "coordinates": {
-        "lat": 44.210899,
-        "lng": -69.064073
-      },
       "origText": "winona’s",
-      "category": "Camden Borough",
+      "category": "Camden and Rockport",
+      "address": "31 Elm St, Camden, ME 04843, USA",
+      "rating": 5,
+      "googlePlacesTypes": [
+        "american_restaurant",
+        "restaurant",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "website": "http://winonasmaine.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: 4:00 – 8:00 PM",
+        "Friday: 4:00 – 8:00 PM",
+        "Saturday: 4:00 – 8:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 30,
+      "coordinates": {
+        "lat": 44.2091229,
+        "lng": -69.065945
+      },
+      "mapsLink": "https://maps.google.com/?cid=12004720505838827874&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:45.674Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:16.666Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJgWX-eQDXrUwRYvleQrJVmaY",
+        "confidence": "high"
+      },
+      "tags": [
+        "american restaurant",
+        "restaurant",
+        "food",
+        "point of interest",
+        "establishment"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday Closed",
+        "Thursday 4p-8p",
+        "Friday 4p-8p",
+        "Saturday 4p-8p",
+        "Sunday Closed"
+      ]
     },
     {
       "id": "long-grain",
@@ -883,502 +2282,2393 @@
       "type": "restaurant",
       "description": null,
       "url": "https://www.longgraincamden.com",
-      "address": "20 Washington St, Camden, ME 04843, United States",
-      "mapsLink": "https://www.google.com/maps/place/Long+Grain/@44.210964,-69.064617,17z/data=!3m1!4b1!4m5!3m4!1s0x4cae1b6e0c1e7e2b:0x6e8d7e6a4548932c!8m2!3d44.210964!4d-69.0624283",
-      "phone": "+1 207-236-9001",
-      "priceRange": "$$",
-      "rating": 4.6,
-      "hours": "Monday–Saturday 12–2:30 PM, 5–8:30 PM; Sunday Closed",
       "notes": "Open Sunday.",
-      "tags": [
-        "asian",
-        "dinner",
-        "camden"
-      ],
-      "coordinates": {
-        "lat": 44.210964,
-        "lng": -69.0624283
-      },
       "origText": "Long Grain (sun) - https://www.longgraincamden.com",
-      "category": "Camden Borough",
+      "category": "Camden and Rockport",
+      "address": "20 Washington St, Camden, ME 04843, USA",
+      "rating": 4.5,
+      "googlePlacesTypes": [
+        "thai_restaurant",
+        "cafe",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 236-9001",
+      "website": "https://www.longgraincamden.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 11:30 AM – 2:30 PM, 4:30 – 9:00 PM",
+        "Wednesday: 11:30 AM – 2:30 PM, 4:30 – 9:00 PM",
+        "Thursday: 11:30 AM – 2:30 PM, 4:30 – 9:00 PM",
+        "Friday: 11:30 AM – 2:30 PM, 4:30 – 9:00 PM",
+        "Saturday: 11:30 AM – 2:30 PM, 4:30 – 9:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 581,
+      "coordinates": {
+        "lat": 44.209555599999995,
+        "lng": -69.0662639
+      },
+      "mapsLink": "https://maps.google.com/?cid=12092469838501899273&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:45.278Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:21.045Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJV3ZtagzXrUwRCewH3T8V0ac",
+        "confidence": "high"
+      },
+      "tags": [
+        "thai restaurant",
+        "restaurant",
+        "cafe",
+        "open sunday",
+        "food",
+        "camden"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 11:30a-2:30p, 4:30p-9p",
+        "Wednesday 11:30a-2:30p, 4:30p-9p",
+        "Thursday 11:30a-2:30p, 4:30p-9p",
+        "Friday 11:30a-2:30p, 4:30p-9p",
+        "Saturday 11:30a-2:30p, 4:30p-9p",
+        "Sunday Closed"
+      ]
     },
     {
       "id": "costa-media",
       "name": "Costa Media",
       "type": "restaurant",
-      "description": null,
+      "description": "Sunday dinner or brunch.",
       "url": "https://www.midcoastlouis.com",
-      "address": null,
-      "mapsLink": null,
-      "phone": null,
-      "priceRange": "$$",
-      "rating": null,
-      "hours": "Sunday dinner or brunch",
-      "notes": "Sunday dinner or brunch.",
-      "tags": [
-        "brunch",
-        "dinner",
-        "camden"
-      ],
-      "coordinates": null,
+      "notes": null,
       "origText": "Costa Media (sun dinner or brunch) - https://www.midcoastlouis.com",
-      "category": "Camden Borough",
+      "category": "Camden and Rockport",
+      "address": "50 Elm St, Camden, ME 04843, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 230-8424",
+      "website": "http://www.midcoastlouis.com/",
+      "rawHours": [
+        "Monday: 3:00 – 9:00 PM",
+        "Tuesday: 3:00 – 9:00 PM",
+        "Wednesday: Closed",
+        "Thursday: 3:00 – 9:00 PM",
+        "Friday: 3:00 – 9:00 PM",
+        "Saturday: 11:00 AM – 9:00 PM",
+        "Sunday: 11:00 AM – 9:00 PM"
+      ],
+      "reviewCount": 64,
+      "coordinates": {
+        "lat": 44.2081533,
+        "lng": -69.0666541
+      },
+      "mapsLink": "https://maps.google.com/?cid=7659342706534383058&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:49.520Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:26.134Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJGVrtt97XrUwR0v31U5xzS2o",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "brunch",
+        "sunday dinner",
+        "food",
+        "point of interest",
+        "establishment"
+      ],
+      "hours": [
+        "Monday 3p-9p",
+        "Tuesday 3p-9p",
+        "Wednesday Closed",
+        "Thursday 3p-9p",
+        "Friday 3p-9p",
+        "Saturday 11a-9p",
+        "Sunday 11a-9p"
+      ]
     },
     {
       "id": "first-fig",
       "name": "First Fig",
-      "type": "restaurant",
-      "description": "Wine bar + Sunday afternoon tacos.",
-      "url": "https://www.firstfigcamden.com/",
-      "address": "31 Elm St, Camden, ME 04843, United States",
-      "mapsLink": "https://www.google.com/maps/place/First+Fig/@44.210964,-69.064664,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae1e6e2e3e6e3f:0x7e6e2e3e6e2e3e6e!8m2!3d44.210964!4d-69.064664!16s%2Fg%2F11t4z5z5q2",
-      "phone": "+1 207-230-7070",
-      "priceRange": "$$",
-      "rating": 4.8,
-      "hours": "Sunday: 12:00 PM – 6:00 PM; Closed Monday–Saturday",
-      "notes": "Wine bar and Sunday afternoon tacos.",
-      "tags": [
-        "wine-bar",
-        "tacos",
-        "camden"
-      ],
-      "coordinates": {
-        "lat": 44.210964,
-        "lng": -69.064664
-      },
+      "type": "shopping",
+      "description": "Wine bar and Sunday afternoon tacos.",
+      "url": null,
+      "notes": null,
       "origText": "first fig - wine bar + sunday afternoon tacos",
-      "category": "Camden Borough",
+      "category": "Camden and Rockport",
+      "address": "31 Elm St, Camden, ME 04843, USA",
+      "rating": 5,
+      "googlePlacesTypes": [
+        "liquor_store",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "https://www.instagram.com/firstfig_",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 2:00 – 8:00 PM",
+        "Thursday: 2:00 – 8:00 PM",
+        "Friday: 2:00 – 8:00 PM",
+        "Saturday: 2:00 – 8:00 PM",
+        "Sunday: 2:00 – 8:00 PM"
+      ],
+      "reviewCount": 18,
+      "coordinates": {
+        "lat": 44.2091229,
+        "lng": -69.065945
+      },
+      "mapsLink": "https://maps.google.com/?cid=14429909722577733223&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:53.720Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:30.725Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJxY-SBgDXrUwRZ4Yzk3BWQcg",
+        "confidence": "high"
+      },
+      "tags": [
+        "wine bar",
+        "tacos",
+        "sunday afternoon",
+        "liquor store",
+        "food",
+        "point of interest",
+        "store"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 2p-8p",
+        "Thursday 2p-8p",
+        "Friday 2p-8p",
+        "Saturday 2p-8p",
+        "Sunday 2p-8p"
+      ]
     },
     {
       "id": "the-place",
       "name": "The Place",
-      "type": "restaurant",
+      "type": "shopping",
       "description": "Best pastries ever.",
       "url": "https://thisistheplace.me",
-      "address": "21 Main St, Camden, ME 04843, United States",
-      "mapsLink": "https://www.google.com/maps/place/21+Main+St,+Camden,+ME+04843",
-      "phone": "(207) 230-7111",
-      "priceRange": "$",
-      "rating": 4.9,
-      "hours": "Monday-Saturday 7:00 AM–3:00 PM; Sunday Closed",
-      "notes": "Best pastries ever.",
-      "tags": [
-        "pastries",
-        "bakery",
-        "camden"
-      ],
-      "coordinates": {
-        "lat": 44.209034,
-        "lng": -69.064537
-      },
+      "notes": null,
       "origText": "The Place - best pastries ever https://thisistheplace.me",
-      "category": "Camden Borough",
+      "category": "Camden and Rockport",
+      "address": "117 Elm St, Camden, ME 04843, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "bakery",
+        "food_store",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "https://theplacebakery.taplink.ws/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: Closed",
+        "Friday: Closed",
+        "Saturday: 9:00 AM – 12:00 PM",
+        "Sunday: 9:00 AM – 12:00 PM"
+      ],
+      "reviewCount": 60,
+      "coordinates": {
+        "lat": 44.2020963,
+        "lng": -69.0758862
+      },
+      "mapsLink": "https://maps.google.com/?cid=8879706095176167078&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:50.964Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:35.413Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJud278cTXrUwRpq7YmKUNO3s",
+        "confidence": "high"
+      },
+      "tags": [
+        "bakery",
+        "pastries",
+        "food store",
+        "store",
+        "food",
+        "best pastries",
+        "dessert"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday Closed",
+        "Thursday Closed",
+        "Friday Closed",
+        "Saturday 9a-12p",
+        "Sunday 9a-12p"
+      ]
     },
     {
       "id": "40-paper",
       "name": "40 Paper",
       "type": "restaurant",
       "description": "Good happy hour.",
-      "url": "https://www.40paper.com/",
-      "address": "40 Washington St, Camden, ME 04843, United States",
-      "mapsLink": "https://goo.gl/maps/7vQw8y8v8wJ2",
-      "phone": "+1 207-230-0111",
-      "priceRange": "$$",
-      "rating": 4.5,
-      "hours": "Monday-Saturday 4:00 PM–9:00 PM; Closed Sunday. Happy hour: 4:00 PM–6:00 PM (Mon-Sat)",
-      "notes": "Good happy hour.",
-      "tags": [
-        "happy-hour",
-        "bar",
-        "camden"
-      ],
-      "coordinates": {
-        "lat": 44.210282,
-        "lng": -69.064858
-      },
+      "url": null,
+      "notes": null,
       "origText": "40 paper - good happy hour",
-      "category": "Camden Borough",
+      "category": "Camden and Rockport",
+      "address": "40 Washington St, Camden, ME 04843, USA",
+      "rating": 4.4,
+      "googlePlacesTypes": [
+        "italian_restaurant",
+        "american_restaurant",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "phone": "(207) 230-0111",
+      "website": "http://40paper.com/",
+      "rawHours": [
+        "Monday: 4:00 – 8:00 PM",
+        "Tuesday: 4:00 – 8:00 PM",
+        "Wednesday: 4:00 – 8:00 PM",
+        "Thursday: 4:00 – 8:00 PM",
+        "Friday: 4:00 – 8:00 PM",
+        "Saturday: 4:00 – 8:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 359,
+      "coordinates": {
+        "lat": 44.2104168,
+        "lng": -69.0675055
+      },
+      "mapsLink": "https://maps.google.com/?cid=3902209236648035048&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:01.827Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:40.776Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJdXIAgwzXrUwR6IKnPaBuJzY",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "italian",
+        "american",
+        "happy hour",
+        "food",
+        "point of interest"
+      ],
+      "hours": "Monday to Saturday from 4p to 8p, Sunday Closed"
     },
     {
-      "id": "norumbega",
-      "name": "Norumbega",
+      "id": "norumbega-inn",
+      "name": "Norumbega Inn",
       "type": "accommodation",
       "description": "Hotel but has a cute happy hour.",
-      "url": "https://www.norumbegainn.com/",
-      "address": "63 High St, Camden, ME 04843, United States",
-      "mapsLink": "https://www.google.com/maps/place/The+Norumbega+Inn/@44.217047,-69.064083,17z/data=!3m1!4b1!4m9!3m8!1s0x4cae1c6e9e7b6b6b:0x7b7d1c2b7e2e1b6e!5m2!4m1!1i2!8m2!3d44.217047!4d-69.064083!16s%2Fg%2F1td_7w7l",
-      "phone": "+1 207-236-4646",
-      "priceRange": "$$$",
-      "rating": 4.8,
-      "hours": "Check-in: 3:00 PM – 6:00 PM; Happy hour times vary, call for details",
-      "notes": "Hotel with a cute happy hour.",
-      "tags": [
-        "hotel",
-        "happy-hour",
-        "camden"
-      ],
-      "coordinates": {
-        "lat": 44.217047,
-        "lng": -69.064083
-      },
+      "url": null,
+      "notes": null,
       "origText": "Norumbega - hotel but has a cute hh",
-      "category": "Camden Borough",
+      "category": "Camden and Rockport",
+      "address": "63 High St, Camden, ME 04843, USA",
+      "rating": 4.9,
+      "googlePlacesTypes": [
+        "hotel",
+        "lodging",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 236-4646",
+      "website": "https://norumbegainn.com/?utm_source=google&utm_medium=button&utm_id=gmb",
+      "reviewCount": 168,
+      "coordinates": {
+        "lat": 44.2178556,
+        "lng": -69.0566583
+      },
+      "mapsLink": "https://maps.google.com/?cid=10866924751883493409&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:31:59.354Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:45.960Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ27N1fqTXrUwRIWDqhHwSz5Y",
+        "confidence": "high"
+      },
+      "tags": [
+        "hotel",
+        "lodging",
+        "happy hour",
+        "cute atmosphere",
+        "point of interest"
+      ]
     },
     {
       "id": "fresh-off-the-farm",
       "name": "Fresh Off the Farm",
       "type": "shopping",
-      "description": "Fantastic grocery store / farm stand.",
-      "url": "https://www.freshoffthefarmfoods.com/",
-      "address": "495 Commercial St, Rockport, ME 04856, United States",
-      "mapsLink": "https://www.google.com/maps/place/Fresh+Off+the+Farm/@44.164393,-69.099671,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae1e2e1f7e7e2d:0x3e1c7a9b2e8c6e8d!8m2!3d44.164393!4d-69.099671!16s%2Fg%2F1td5k2wz",
-      "phone": "+1 207-236-3260",
-      "priceRange": "$$",
-      "rating": 4.7,
-      "hours": "Monday-Saturday 8:00 AM–6:00 PM, Sunday 9:00 AM–5:00 PM",
-      "notes": "Fantastic grocery store and farm stand.",
-      "tags": [
-        "grocery",
-        "farm-stand",
-        "camden"
-      ],
-      "coordinates": {
-        "lat": 44.164393,
-        "lng": -69.099671
-      },
+      "description": "Fantastic grocery store and farm stand.",
+      "url": null,
+      "notes": null,
       "origText": "fresh off the farm - fantastic grocery store / farm stand",
-      "category": "Camden Borough",
+      "category": "Camden and Rockport",
+      "address": "495 Commercial St, Rockport, ME 04856, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "farm",
+        "grocery_store",
+        "food_store",
+        "wholesaler",
+        "health",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 236-3260",
+      "website": "https://www.freshoffthefarmrockport.com/",
+      "rawHours": [
+        "Monday: 8:00 AM – 7:00 PM",
+        "Tuesday: 8:00 AM – 7:00 PM",
+        "Wednesday: 8:00 AM – 7:00 PM",
+        "Thursday: 8:00 AM – 7:00 PM",
+        "Friday: 8:00 AM – 7:00 PM",
+        "Saturday: 8:00 AM – 7:00 PM",
+        "Sunday: 9:00 AM – 5:30 PM"
+      ],
+      "reviewCount": 125,
+      "coordinates": {
+        "lat": 44.168265,
+        "lng": -69.0823162
+      },
+      "mapsLink": "https://maps.google.com/?cid=11036338697517223842&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:02.369Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:49.256Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJxT8ENtrQrUwRok9phpLzKJk",
+        "confidence": "high"
+      },
+      "tags": [
+        "grocery store",
+        "farm stand",
+        "fresh produce",
+        "local food",
+        "food store",
+        "farm",
+        "health",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday 8a-7p",
+        "Tuesday 8a-7p",
+        "Wednesday 8a-7p",
+        "Thursday 8a-7p",
+        "Friday 8a-7p",
+        "Saturday 8a-7p",
+        "Sunday 9a-5:30p"
+      ]
     },
     {
-      "id": "clark-island-hike",
-      "name": "Clark Island",
-      "type": "activity",
-      "description": "Hiking trail. Park in back of the parking lot of Craignair; it will be marked for preserve parking.",
-      "url": "https://www.mcht.org/preserve/clark-island-preserve/",
-      "address": "5 3rd St, Spruce Head, ME 04859, United States",
-      "mapsLink": "https://www.google.com/maps/place/Clark+Island+Preserve/@44.011944,-69.120833,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae1e6e2e6b2e3d:0x7e2b6b1b1b1b1b1b!8m2!3d44.011944!4d-69.120833!16s%2Fg%2F11h_6w5q2d",
-      "phone": "+1 207-729-7366",
-      "priceRange": "Free",
-      "rating": 4.8,
-      "hours": "Dawn to dusk, daily",
-      "notes": "Park in back of the parking lot of Craignair; it will be marked for preserve parking.",
-      "tags": [
-        "hiking",
-        "nature",
-        "preserve"
+      "id": "nina-june",
+      "name": "Nina June",
+      "type": "restaurant",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Nina june",
+      "category": "Camden and Rockport",
+      "address": "24 Central St, Rockport, ME 04856, USA",
+      "rating": 4.4,
+      "googlePlacesTypes": [
+        "restaurant",
+        "liquor_store",
+        "bar",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
       ],
+      "phone": "(207) 236-8880",
+      "website": "http://www.ninajunerestaurant.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 5:00 – 9:00 PM",
+        "Thursday: 5:00 – 9:00 PM",
+        "Friday: 5:00 – 9:00 PM",
+        "Saturday: 5:00 – 9:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 139,
       "coordinates": {
-        "lat": 44.011944,
-        "lng": -69.120833
+        "lat": 44.1873577,
+        "lng": -69.07279360000001
       },
-      "origText": "clark island (park in back of the parking lot of craignair - it will be marked for preserve parking)",
-      "category": "Hiking Trails",
+      "mapsLink": "https://maps.google.com/?cid=5396616918524146129&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:08.524Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:35:55.628Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ1SWs_i_XrUwR0bF-sX6i5Eo",
+        "confidence": "high"
+      },
+      "tags": [
+        "restaurant",
+        "bar",
+        "liquor store",
+        "food",
+        "store",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 5p-9p",
+        "Thursday 5p-9p",
+        "Friday 5p-9p",
+        "Saturday 5p-9p",
+        "Sunday Closed"
+      ]
+    },
+    {
+      "id": "seafolk-coffee",
+      "name": "Seafolk Coffee",
+      "type": "restaurant",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Seafolk coffee",
+      "category": "Camden and Rockport",
+      "address": "22 Central St, Rockport, ME 04856, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "cafe",
+        "wine_bar",
+        "bar",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$$",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 8:00 AM – 2:00 PM",
+        "Wednesday: 8:00 AM – 2:00 PM",
+        "Thursday: 8:00 AM – 2:00 PM",
+        "Friday: 8:00 AM – 2:00 PM",
+        "Saturday: 8:00 AM – 2:00 PM",
+        "Sunday: 8:00 AM – 2:00 PM"
+      ],
+      "reviewCount": 149,
+      "coordinates": {
+        "lat": 44.187416999999996,
+        "lng": -69.072558
+      },
+      "mapsLink": "https://maps.google.com/?cid=9409644459886933868&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:36:01.103Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJazoM-S_XrUwRbHdIJsjFlYI",
+        "confidence": "high"
+      },
+      "tags": [
+        "cafe",
+        "coffee",
+        "wine bar",
+        "bar",
+        "food",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 8a-2p",
+        "Wednesday 8a-2p",
+        "Thursday 8a-2p",
+        "Friday 8a-2p",
+        "Saturday 8a-2p",
+        "Sunday 8a-2p"
+      ]
+    },
+    {
+      "id": "clark-island-preserve",
+      "name": "Clark Island Preserve",
+      "type": "activity",
+      "description": "Nature preserve and hiking area.",
+      "url": null,
+      "notes": "Park in back of the parking lot of Craignair - it will be marked for preserve parking.",
+      "origText": "clark island (park in back of the parking lot of craignair - it will be marked for preserve parking)",
+      "category": "Hiking",
+      "address": "337 Clark Island Rd, St. George, ME 04860, USA",
+      "rating": 4.9,
+      "googlePlacesTypes": [
+        "hiking_area",
+        "park",
+        "sports_activity_location",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "https://www.mcht.org/preserve/clark-island-saint-george/",
+      "reviewCount": 10,
+      "coordinates": {
+        "lat": 43.9899221,
+        "lng": -69.1821789
+      },
+      "mapsLink": "https://maps.google.com/?cid=15219385750851910956&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:36:06.031Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJURhBUb3JrUwRLH0rY7QeNtM",
+        "confidence": "high"
+      },
+      "tags": [
+        "nature preserve",
+        "hiking area",
+        "park",
+        "scenic",
+        "outdoor activities",
+        "point of interest",
+        "establishment",
+        "marked parking"
+      ]
     },
     {
       "id": "ash-point",
       "name": "Ash Point",
-      "type": "activity",
-      "description": "Hiking trail.",
-      "url": "https://www.maine.gov/dacf/parks/trail_activities.shtml",
-      "address": "Ash Point Dr, Owls Head, ME 04854, United States",
-      "mapsLink": "https://www.google.com/maps/place/Ash+Point+Dr,+Owls+Head,+ME+04854",
-      "phone": null,
-      "priceRange": null,
-      "rating": 4.7,
-      "hours": null,
+      "type": "attraction",
+      "description": "Hiking area.",
+      "url": null,
       "notes": null,
-      "tags": [
-        "hiking",
-        "nature"
-      ],
-      "coordinates": {
-        "lat": 44.0587,
-        "lng": -69.0482
-      },
       "origText": "ash point",
-      "category": "Hiking Trails",
+      "category": "Hiking",
+      "address": "477 Ash Point Dr, Owls Head, ME 04854, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "hiking_area",
+        "tourist_attraction",
+        "sports_activity_location",
+        "park",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "http://www.georgesriver.org/ash-point-preserve/",
+      "reviewCount": 52,
+      "coordinates": {
+        "lat": 44.04621170000001,
+        "lng": -69.0801139
+      },
+      "mapsLink": "https://maps.google.com/?cid=10896619495943813860&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:06.838Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:36:09.633Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJd5jnGkDMrUwR5LpT5LKROJc",
+        "confidence": "high"
+      },
+      "tags": [
+        "hiking area",
+        "tourist attraction",
+        "park",
+        "outdoor activity",
+        "scenic spot",
+        "sports activity location",
+        "nature"
+      ]
     },
     {
       "id": "fort-point-trail",
       "name": "Fort Point Trail",
       "type": "activity",
       "description": "Hiking trail.",
-      "url": "https://www.maine.gov/fortpoint",
-      "address": "Fort Point State Park, 180 Lighthouse Rd, Stockton Springs, ME 04981, United States",
-      "mapsLink": "https://www.google.com/maps/place/Fort+Point+State+Park/@44.502222,-68.808611,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae1e7e0e6b7e2d:0x7e7e6e8e6e8e6e8e!8m2!3d44.502222!4d-68.808611!16s%2Fg%2F1tdv9w7d",
-      "phone": "+1 207-941-4014",
-      "priceRange": "Day use fee: $3 Maine residents, $4 non-residents (as of 2024)",
-      "rating": 4.7,
-      "hours": "Open daily, 9:00 AM – sunset (seasonal, typically May–October)",
+      "url": null,
       "notes": null,
-      "tags": [
-        "hiking",
-        "nature"
-      ],
-      "coordinates": {
-        "lat": 44.502222,
-        "lng": -68.808611
-      },
       "origText": "fort point trail",
-      "category": "Hiking Trails",
+      "category": "Hiking",
+      "address": "947 River Rd, St. George, ME 04860, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "park",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "https://www.georgesriver.org/copy-of-jones-brook-trail",
+      "rawHours": [
+        "Monday: 6:00 AM – 8:00 PM",
+        "Tuesday: 6:00 AM – 8:00 PM",
+        "Wednesday: 6:00 AM – 8:00 PM",
+        "Thursday: 6:00 AM – 8:00 PM",
+        "Friday: 6:00 AM – 8:00 PM",
+        "Saturday: 6:00 AM – 8:00 PM",
+        "Sunday: 6:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 31,
+      "coordinates": {
+        "lat": 44.0226337,
+        "lng": -69.1991828
+      },
+      "mapsLink": "https://maps.google.com/?cid=2293586093430119673&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:08.373Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:36:14.067Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJlywgie_IrUwR-ZytaGZ01B8",
+        "confidence": "high"
+      },
+      "tags": [
+        "hiking trail",
+        "park",
+        "point of interest",
+        "scenic",
+        "outdoor activity",
+        "nature walk"
+      ],
+      "hours": "Every day from 6a to 8p"
     },
     {
       "id": "mt-battie",
       "name": "Mt. Battie",
       "type": "activity",
-      "description": "Hiking trail.",
-      "url": "https://www.maine.gov/cgi-bin/online/doc/parksearch/details.pl?park_id=15",
-      "address": "280 Belfast Rd, Camden, ME 04843, United States",
-      "mapsLink": "https://www.google.com/maps/place/Mt+Battie/@44.217222,-69.063611,17z/data=!3m1!4b1!4m6!3m5!1s0x4cae1c7e2e8e8c1b:0x6e6c2b7b29ea4947!8m2!3d44.217222!4d-69.063611!16s%2Fg%2F11b7m9w0w2",
-      "phone": "+1 207-236-3109",
-      "priceRange": "State park entry fee: $4-$6 (adults), $1 (children 5-11), free (under 5)",
-      "rating": 4.8,
-      "hours": "Camden Hills State Park: Daily 9:00 AM – Sunset",
+      "description": "Hiking destination.",
+      "url": null,
       "notes": null,
+      "origText": "mt. battie",
+      "category": "Hiking",
+      "address": "57 Megunticook St, Camden, ME 04843, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "hiking_area",
+        "sports_activity_location",
+        "park",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "http://www.maine.gov/dacf/parks/trail_activities/camden_trail_conditions.shtml",
+      "reviewCount": 119,
+      "coordinates": {
+        "lat": 44.2166041,
+        "lng": -69.070073
+      },
+      "mapsLink": "https://maps.google.com/?cid=16030542406506678750&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:36:18.202Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJIWdbO57XrUwR3omqoGLtd94",
+        "confidence": "high"
+      },
       "tags": [
         "hiking",
         "mountain",
-        "nature"
-      ],
-      "coordinates": {
-        "lat": 44.217222,
-        "lng": -69.063611
-      },
-      "origText": "mt. battie",
-      "category": "Hiking Trails",
-      "enrichmentStatus": {
-        "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:14.697Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "scenic view",
+        "park",
+        "outdoor activity",
+        "tourist attraction",
+        "point of interest"
+      ]
     },
     {
       "id": "beech-hill-preserve",
       "name": "Beech Hill Preserve",
-      "type": "activity",
-      "description": "Hiking trail.",
-      "url": "https://www.coastalmountains.org/preserves/beech-hill-preserve/",
-      "address": "316 Beech Hill Rd, Rockport, ME 04856, United States",
-      "mapsLink": "https://goo.gl/maps/2Qp7Qk6v6Qn3kQwA8",
-      "phone": "+1 207-236-7091",
-      "priceRange": "Free",
-      "rating": 4.8,
-      "hours": "Open daily from dawn to dusk",
-      "notes": null,
-      "tags": [
-        "hiking",
-        "preserve",
-        "nature"
-      ],
-      "coordinates": {
-        "lat": 44.188889,
-        "lng": -69.120833
-      },
-      "origText": "beech hill preserve",
-      "category": "Hiking Trails",
-      "enrichmentStatus": {
-        "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:13.937Z",
-        "enrichmentVersion": "1.0.0"
-      }
-    },
-    {
-      "id": "clark-island-beach",
-      "name": "Clark Island",
       "type": "attraction",
-      "description": "Beach.",
-      "url": "https://www.clarkislandmaine.org/",
-      "address": "Clark Island Rd, St. George, ME 04859, United States",
-      "mapsLink": "https://goo.gl/maps/7n2Qw7Qn8nQ2",
-      "phone": null,
-      "priceRange": null,
-      "rating": 4.8,
-      "hours": "Open daily, dawn to dusk",
+      "description": "Nature preserve and hiking area.",
+      "url": null,
       "notes": null,
-      "tags": [
-        "beach",
-        "nature"
+      "origText": "beech hill preserve",
+      "category": "Hiking",
+      "address": "316 Beech Hill Rd, Rockport, ME 04856, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "tourist_attraction",
+        "park",
+        "point_of_interest",
+        "establishment"
       ],
+      "phone": "(207) 236-7091",
+      "website": "https://www.coastalmountains.org/preserves/beech-hill-preserve/",
+      "rawHours": [
+        "Monday: 9:00 AM – 5:00 PM",
+        "Tuesday: 9:00 AM – 5:00 PM",
+        "Wednesday: 9:00 AM – 5:00 PM",
+        "Thursday: 9:00 AM – 5:00 PM",
+        "Friday: 9:00 AM – 5:00 PM",
+        "Saturday: 9:00 AM – 5:00 PM",
+        "Sunday: 9:00 AM – 5:00 PM"
+      ],
+      "reviewCount": 341,
       "coordinates": {
-        "lat": 44.0117,
-        "lng": -69.1706
+        "lat": 44.1659581,
+        "lng": -69.0978767
       },
-      "origText": "clark island",
-      "category": "Popular Beaches",
+      "mapsLink": "https://maps.google.com/?cid=8577723725176747610&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:13.691Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:36:22.357Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJG8URnsHQrUwRWraZBEgyCnc",
+        "confidence": "high"
+      },
+      "tags": [
+        "nature preserve",
+        "hiking",
+        "tourist attraction",
+        "park",
+        "outdoor activities",
+        "scenic",
+        "point of interest"
+      ],
+      "hours": "Every day from 9a to 5p"
     },
     {
       "id": "drift-inn-beach",
       "name": "Drift Inn Beach",
       "type": "attraction",
       "description": "Beach.",
-      "url": "https://www.stgeorgemaine.com/parks-recreation/pages/drift-inn-beach",
-      "address": "Drift Inn Beach Rd, Tenants Harbor, ME 04860, United States",
-      "mapsLink": "https://goo.gl/maps/8v8rQw6vQwQ2",
-      "phone": "(207) 372-6363",
-      "priceRange": null,
-      "rating": "4.7",
-      "hours": "Open daily, 7:00 AM – 9:00 PM (seasonal hours may vary)",
+      "url": null,
       "notes": null,
-      "tags": [
-        "beach",
-        "nature"
-      ],
-      "coordinates": {
-        "lat": 43.963502,
-        "lng": -69.196803
-      },
       "origText": "drift inn beach",
-      "category": "Beaches and Coastal Areas",
+      "category": "Beaches",
+      "address": "23 Drift Inn Rd, St. George, ME 04860, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "tourist_attraction",
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "http://drift-inn-beach.keeq.io/",
+      "rawHours": [
+        "Monday: 6:00 AM – 8:00 PM",
+        "Tuesday: 6:00 AM – 8:00 PM",
+        "Wednesday: 6:00 AM – 8:00 PM",
+        "Thursday: 6:00 AM – 8:00 PM",
+        "Friday: 6:00 AM – 8:00 PM",
+        "Saturday: 6:00 AM – 8:00 PM",
+        "Sunday: 6:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 141,
+      "coordinates": {
+        "lat": 43.9315253,
+        "lng": -69.24365139999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=17043199921938700756&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:19.246Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:36:26.433Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJVSjOUuS2rUwR1Bkfvwechew",
+        "confidence": "high"
+      },
+      "tags": [
+        "beach",
+        "tourist attraction",
+        "point of interest",
+        "outdoor",
+        "scenic",
+        "establishment"
+      ],
+      "hours": "Every day from 6a to 8p"
     },
     {
       "id": "birch-point-state-park",
       "name": "Birch Point State Park",
       "type": "attraction",
-      "description": "State park with beach.",
-      "url": "https://www.maine.gov/bpch/parks/park_detail.html?id=10",
-      "address": "Birch Point State Park, 505 Birch Point Rd, Owls Head, ME 04854, United States",
-      "mapsLink": "https://goo.gl/maps/7Jk8Qw5n8kQ2",
-      "phone": "+1 207-594-6067",
-      "priceRange": "Day-use fee: $4 Maine residents, $6 non-residents (adults, as of 2024)",
-      "rating": 4.7,
-      "hours": "9:00 AM – Sunset (seasonal, typically Memorial Day to Labor Day)",
+      "description": "State park and beach.",
+      "url": null,
       "notes": null,
-      "tags": [
-        "beach",
-        "state-park",
-        "nature"
-      ],
-      "coordinates": {
-        "lat": 44.067222,
-        "lng": -69.070833
-      },
       "origText": "birch point state park",
-      "category": "Popular Beaches",
+      "category": "Beaches",
+      "address": "459 S Shore Dr, Owls Head, ME 04854, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "state_park",
+        "park",
+        "tourist_attraction",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 941-4014",
+      "website": "http://www.maine.gov/cgi-bin/online/doc/parksearch/details.pl?park_id=72",
+      "rawHours": [
+        "Monday: 9:00 AM – 7:00 PM",
+        "Tuesday: 9:00 AM – 7:00 PM",
+        "Wednesday: 9:00 AM – 7:00 PM",
+        "Thursday: 9:00 AM – 7:00 PM",
+        "Friday: 9:00 AM – 7:00 PM",
+        "Saturday: 9:00 AM – 7:00 PM",
+        "Sunday: 9:00 AM – 7:00 PM"
+      ],
+      "reviewCount": 448,
+      "coordinates": {
+        "lat": 44.0413911,
+        "lng": -69.09718029999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=3124432870535863444&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:20.680Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:36:30.597Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJqfowThDMrUwRlBzYTCQ3XCs",
+        "confidence": "high"
+      },
+      "tags": [
+        "state park",
+        "beach",
+        "park",
+        "tourist attraction",
+        "nature",
+        "family friendly",
+        "outdoor activities"
+      ],
+      "hours": "Every day from 9a to 7p"
     },
     {
       "id": "camden-town-beach",
       "name": "Camden Town Beach",
-      "type": "attraction",
-      "description": "Town beach in Camden.",
-      "url": "https://www.camdenmaine.gov/index.asp?SEC=F6A7C7A2-2B6C-4B6B-8B6A-1A2B3F6A7C7A&Type=B_BASIC",
-      "address": "1 Harbor Park, Camden, ME 04843, United States",
-      "mapsLink": "https://www.google.com/maps/place/1+Harbor+Park,+Camden,+ME+04843",
-      "phone": "(207) 236-3353",
-      "priceRange": null,
-      "rating": "4.6",
-      "hours": "Open daily, 6:00 AM – 10:00 PM",
+      "type": "activity",
+      "description": "Beach.",
+      "url": null,
       "notes": null,
-      "tags": [
-        "beach",
-        "camden",
-        "nature"
-      ],
-      "coordinates": {
-        "lat": 44.2093,
-        "lng": -69.0642
-      },
       "origText": "camden town beach",
-      "category": "Popular Beaches",
+      "category": "Beaches",
+      "address": "Laite Memorial Beach, Camden, ME 04843, USA",
+      "rating": 4.4,
+      "googlePlacesTypes": [
+        "beach",
+        "natural_feature",
+        "establishment"
+      ],
+      "reviewCount": 36,
+      "coordinates": {
+        "lat": 44.203967899999995,
+        "lng": -69.0592035
+      },
+      "mapsLink": "https://maps.google.com/?cid=9615701264204237891&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:21.811Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:36:34.575Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJudKKsxrXrUwRQwwrh1rVcYU",
+        "confidence": "high"
+      },
+      "tags": [
+        "beach",
+        "natural feature",
+        "camden town",
+        "outdoor",
+        "waterfront",
+        "establishment"
+      ]
     },
     {
       "id": "lazy-jack-schooner",
       "name": "Lazy Jack Schooner",
       "type": "activity",
       "description": "Sailing experience.",
-      "url": "https://www.schoonerlazyjackcruises.com/",
-      "address": "Piers 1 & 2, 111 Commercial St, Boothbay Harbor, ME 04538, United States",
-      "mapsLink": "https://www.google.com/maps/place/111+Commercial+St,+Boothbay+Harbor,+ME+04538",
-      "phone": "+1 207-380-5460",
-      "priceRange": null,
-      "rating": 4.9,
-      "hours": "Daily 10:00 AM – 6:00 PM (seasonal, check website for current schedule)",
+      "url": null,
       "notes": null,
-      "tags": [
-        "sailing",
-        "boat-tour",
-        "activity"
-      ],
-      "coordinates": {
-        "lat": 43.853491,
-        "lng": -69.628694
-      },
       "origText": "lazy jack schooner",
-      "category": "Sails",
+      "category": "Sailing",
+      "address": "Bay Vw Lndg, Camden, ME 04843, USA",
+      "rating": 5,
+      "googlePlacesTypes": [
+        "adventure_sports_center",
+        "tour_agency",
+        "sports_complex",
+        "travel_agency",
+        "sports_activity_location",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 230-0602",
+      "website": "http://www.schoonerlazyjack.com/",
+      "rawHours": [
+        "Monday: 9:00 AM – 7:00 PM",
+        "Tuesday: 9:00 AM – 7:00 PM",
+        "Wednesday: 9:00 AM – 7:00 PM",
+        "Thursday: 9:00 AM – 7:00 PM",
+        "Friday: 9:00 AM – 7:00 PM",
+        "Saturday: 9:00 AM – 7:00 PM",
+        "Sunday: 9:00 AM – 7:00 PM"
+      ],
+      "reviewCount": 169,
+      "coordinates": {
+        "lat": 44.2095376,
+        "lng": -69.0632078
+      },
+      "mapsLink": "https://maps.google.com/?cid=9049915496175482066&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
       "enrichmentStatus": {
         "enriched": true,
-        "enrichedAt": "2025-07-06T11:32:26.670Z",
-        "enrichmentVersion": "1.0.0"
-      }
+        "enrichedAt": "2025-07-08T12:36:38.586Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJUf8lAAzXrUwR0rTX_DHCl30",
+        "confidence": "high"
+      },
+      "tags": [
+        "sailing",
+        "adventure sports",
+        "tour agency",
+        "boat tour",
+        "sports activity",
+        "travel agency",
+        "outdoor experience",
+        "point of interest"
+      ],
+      "hours": "Every day from 9a to 7p"
+    },
+    {
+      "id": "liberty-lobster",
+      "name": "Liberty Lobster",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Liberty Lobster (st george)",
+      "category": "Grocery, Farm Stands, and Fish Markets",
+      "address": "8 Mann Rd, St. George, ME 04860, USA",
+      "rating": 5,
+      "googlePlacesTypes": [
+        "market",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 542-8288",
+      "website": "https://www.facebook.com/profile.php?id=100057195650264",
+      "rawHours": [
+        "Monday: 12:00 – 6:00 PM",
+        "Tuesday: 12:00 – 6:00 PM",
+        "Wednesday: 12:00 – 6:00 PM",
+        "Thursday: 12:00 – 6:00 PM",
+        "Friday: 12:00 – 6:00 PM",
+        "Saturday: 12:00 – 6:00 PM",
+        "Sunday: 12:00 – 6:00 PM"
+      ],
+      "reviewCount": 4,
+      "coordinates": {
+        "lat": 43.9463394,
+        "lng": -69.21331599999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=13126489528547784410&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:36:42.900Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJUba5NwC3rUwR2rb52K2oKrY",
+        "confidence": "high"
+      },
+      "tags": [
+        "market",
+        "seafood",
+        "lobster",
+        "st george",
+        "point of interest",
+        "local establishment"
+      ],
+      "hours": "Every day from 12p to 6p"
+    },
+    {
+      "id": "schoolhouse-farm-stand",
+      "name": "Schoolhouse Farm Stand",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Schoolhouse farm stand",
+      "category": "Grocery, Farm Stands, and Fish Markets",
+      "address": "School House Farm, 1171 Atlantic Hwy, Warren, ME 04864, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "farm",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 699-8723",
+      "website": "https://www.facebook.com/Schoolhousefarm1171",
+      "rawHours": [
+        "Monday: 8:00 AM – 6:00 PM",
+        "Tuesday: 8:00 AM – 6:00 PM",
+        "Wednesday: 8:00 AM – 6:00 PM",
+        "Thursday: 8:00 AM – 6:00 PM",
+        "Friday: 8:00 AM – 6:00 PM",
+        "Saturday: 8:00 AM – 6:00 PM",
+        "Sunday: 8:00 AM – 6:00 PM"
+      ],
+      "reviewCount": 150,
+      "coordinates": {
+        "lat": 44.0999925,
+        "lng": -69.2474692
+      },
+      "mapsLink": "https://maps.google.com/?cid=18020955988669575650&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:36:47.707Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJGXulEfnErUwR4jGZGf5LF_o",
+        "confidence": "high"
+      },
+      "tags": [
+        "farm stand",
+        "farm",
+        "local produce",
+        "point of interest",
+        "establishment"
+      ],
+      "hours": "Every day from 8a to 6p"
+    },
+    {
+      "id": "weskeag-farms",
+      "name": "Weskeag Farms",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Weskeag farms",
+      "category": "Grocery, Farm Stands, and Fish Markets",
+      "address": "62 Elm St, South Thomaston, ME 04858, USA",
+      "rating": 4.9,
+      "googlePlacesTypes": [
+        "farm",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 596-0007",
+      "website": "https://weskeagoystercompany.com/",
+      "rawHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "reviewCount": 17,
+      "coordinates": {
+        "lat": 44.0557412,
+        "lng": -69.123587
+      },
+      "mapsLink": "https://maps.google.com/?cid=9940222960049196202&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:36:56.114Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJy6eBvMnPrUwRqgzq2R3E8ok",
+        "confidence": "high"
+      },
+      "tags": [
+        "farm",
+        "point of interest",
+        "establishment",
+        "local produce",
+        "maine",
+        "agriculture"
+      ],
+      "hours": "Every day, open 24 hours"
+    },
+    {
+      "id": "jesss-fish-market",
+      "name": "Jess’s Fish Market",
+      "type": "restaurant",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Jess’ fish market",
+      "category": "Grocery, Farm Stands, and Fish Markets",
+      "address": "118 Main St, Rockland, ME 04841, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "market",
+        "point_of_interest",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 596-6068",
+      "website": "http://www.jessmarket.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 10:00 AM – 5:00 PM",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 10:00 AM – 5:00 PM",
+        "Saturday: 10:00 AM – 5:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 317,
+      "coordinates": {
+        "lat": 44.0963129,
+        "lng": -69.1109319
+      },
+      "mapsLink": "https://maps.google.com/?cid=12510034604789774532&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:00.888Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJr_VVzDrOrUwRxLhWKjGSnK0",
+        "confidence": "high"
+      },
+      "tags": [
+        "fish market",
+        "market",
+        "seafood",
+        "food",
+        "point of interest",
+        "establishment"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 10a-5p",
+        "Wednesday 10a-5p",
+        "Thursday 10a-5p",
+        "Friday 10a-5p",
+        "Saturday 10a-5p",
+        "Sunday Closed"
+      ]
+    },
+    {
+      "id": "southend-grocery",
+      "name": "Southend Grocery",
+      "type": "shopping",
+      "description": "Great beer selection.",
+      "url": null,
+      "notes": null,
+      "origText": "Southend grocery (great beer selection)",
+      "category": "Grocery, Farm Stands, and Fish Markets",
+      "address": "67 Main St, Rockland, ME 04841, USA",
+      "rating": 4.5,
+      "googlePlacesTypes": [
+        "grocery_store",
+        "food_delivery",
+        "food_store",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 596-7321",
+      "website": "https://southendgrocery.com/",
+      "rawHours": [
+        "Monday: 7:00 AM – 8:00 PM",
+        "Tuesday: 7:00 AM – 8:00 PM",
+        "Wednesday: 7:00 AM – 8:00 PM",
+        "Thursday: 7:00 AM – 8:00 PM",
+        "Friday: 7:00 AM – 8:00 PM",
+        "Saturday: 7:00 AM – 8:00 PM",
+        "Sunday: 8:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 172,
+      "coordinates": {
+        "lat": 44.0942213,
+        "lng": -69.11036399999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=15655531178300701067&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:04.957Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJu98ORjnOrUwRi3mq_KieQ9k",
+        "confidence": "high"
+      },
+      "tags": [
+        "grocery store",
+        "beer selection",
+        "food store",
+        "store",
+        "food delivery",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday 7a-8p",
+        "Tuesday 7a-8p",
+        "Wednesday 7a-8p",
+        "Thursday 7a-8p",
+        "Friday 7a-8p",
+        "Saturday 7a-8p",
+        "Sunday 8a-8p"
+      ]
+    },
+    {
+      "id": "tenants-harbor-general-store",
+      "name": "Tenants Harbor General Store",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Tenants harbor general store",
+      "category": "General Stores",
+      "address": "16 Main St, Tenants Harbor, ME 04860, USA",
+      "rating": 4.2,
+      "googlePlacesTypes": [
+        "gas_station",
+        "deli",
+        "grocery_store",
+        "food_store",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 372-6311",
+      "website": "https://www.lindabeansperfectmaine.com/stores/tenants-harbor-general-store/",
+      "rawHours": [
+        "Monday: 5:00 AM – 8:00 PM",
+        "Tuesday: 5:00 AM – 8:00 PM",
+        "Wednesday: 5:00 AM – 8:00 PM",
+        "Thursday: 5:00 AM – 8:00 PM",
+        "Friday: 5:00 AM – 8:00 PM",
+        "Saturday: 5:00 AM – 8:00 PM",
+        "Sunday: 5:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 94,
+      "coordinates": {
+        "lat": 43.9666031,
+        "lng": -69.2087981
+      },
+      "mapsLink": "https://maps.google.com/?cid=6603586588088504739&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:09.242Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJw-bIrzq2rUwRo5GMugOnpFs",
+        "confidence": "high"
+      },
+      "tags": [
+        "general store",
+        "grocery store",
+        "deli",
+        "gas station",
+        "food",
+        "tenants harbor",
+        "convenience",
+        "local favorite"
+      ],
+      "hours": "Every day from 5a to 8p"
+    },
+    {
+      "id": "hoggys-store",
+      "name": "Hoggy’s Store",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Hoggy’s Store (279 St George Rd, South Thomaston, ME 04858)",
+      "category": "General Stores",
+      "address": "279 St George Rd, South Thomaston, ME 04858, USA",
+      "rating": 4.3,
+      "googlePlacesTypes": [
+        "gas_station",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 354-3577",
+      "rawHours": [
+        "Monday: 5:00 AM – 8:00 PM",
+        "Tuesday: 5:00 AM – 8:00 PM",
+        "Wednesday: 5:00 AM – 9:00 PM",
+        "Thursday: 5:00 AM – 9:00 PM",
+        "Friday: 5:00 AM – 9:00 PM",
+        "Saturday: 6:00 AM – 9:00 PM",
+        "Sunday: 7:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 25,
+      "coordinates": {
+        "lat": 44.0647896,
+        "lng": -69.16079719999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=6668517149914854621&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:14.128Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJLVIouBrPrUwR3XRGOwRVi1w",
+        "confidence": "high"
+      },
+      "tags": [
+        "gas station",
+        "convenience store",
+        "point of interest",
+        "establishment",
+        "south thomaston",
+        "roadside stop"
+      ],
+      "hours": [
+        "Monday 5a-8p",
+        "Tuesday 5a-8p",
+        "Wednesday 5a-9p",
+        "Thursday 5a-9p",
+        "Friday 5a-9p",
+        "Saturday 6a-9p",
+        "Sunday 7a-8p"
+      ]
+    },
+    {
+      "id": "keag-store",
+      "name": "Keag Store",
+      "type": "shopping",
+      "description": "Legendary.",
+      "url": null,
+      "notes": null,
+      "origText": "Keag store - legendary",
+      "category": "General Stores",
+      "address": "4 Elm St, South Thomaston, ME 04858, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "convenience_store",
+        "food_store",
+        "point_of_interest",
+        "store",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 596-6810",
+      "website": "https://www.facebook.com/Keag-Store-111503358871976/",
+      "rawHours": [
+        "Monday: 5:00 AM – 8:00 PM",
+        "Tuesday: 5:00 AM – 8:00 PM",
+        "Wednesday: 5:00 AM – 8:00 PM",
+        "Thursday: 5:00 AM – 8:00 PM",
+        "Friday: 5:00 AM – 8:00 PM",
+        "Saturday: 5:00 AM – 8:00 PM",
+        "Sunday: 5:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 227,
+      "coordinates": {
+        "lat": 44.052053099999995,
+        "lng": -69.125225
+      },
+      "mapsLink": "https://maps.google.com/?cid=4309356558549900370&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:18.063Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ554fTbzOrUwRUtzdQvXozTs",
+        "confidence": "high"
+      },
+      "tags": [
+        "convenience store",
+        "food store",
+        "legendary",
+        "point of interest",
+        "store",
+        "food",
+        "local favorite"
+      ],
+      "hours": "Every day from 5a to 8p"
+    },
+    {
+      "id": "owls-head-general-store-2",
+      "name": "Owl's Head General Store",
+      "type": "restaurant",
+      "description": "Great sandwiches.",
+      "url": null,
+      "notes": null,
+      "origText": "Owls head general store - great sandwiches",
+      "category": "General Stores",
+      "address": "2 S Shore Dr, Owls Head, ME 04854, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "meal_takeaway",
+        "restaurant",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "priceRange": "$",
+      "phone": "(207) 466-9046",
+      "website": "https://www.owlsheadgeneralstore.com/",
+      "rawHours": [
+        "Monday: 7:00 AM – 7:00 PM",
+        "Tuesday: Closed",
+        "Wednesday: 7:00 AM – 7:00 PM",
+        "Thursday: 7:00 AM – 7:00 PM",
+        "Friday: 7:00 AM – 7:00 PM",
+        "Saturday: 7:00 AM – 7:00 PM",
+        "Sunday: 9:00 AM – 7:00 PM"
+      ],
+      "reviewCount": 250,
+      "coordinates": {
+        "lat": 44.082573,
+        "lng": -69.0573978
+      },
+      "mapsLink": "https://maps.google.com/?cid=11010041257739601402&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "tags": [
+        "restaurant",
+        "meal takeaway",
+        "sandwiches",
+        "general store",
+        "quick bite",
+        "food"
+      ],
+      "hours": [
+        "Monday 7a-7p",
+        "Tuesday Closed",
+        "Wednesday 7a-7p",
+        "Thursday 7a-7p",
+        "Friday 7a-7p",
+        "Saturday 7a-7p",
+        "Sunday 9a-7p"
+      ]
+    },
+    {
+      "id": "thomaston-grocery",
+      "name": "Thomaston Grocery",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Thomaston grocery",
+      "category": "General Stores",
+      "address": "193 Main St, Thomaston, ME 04861, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "grocery_store",
+        "food_store",
+        "point_of_interest",
+        "store",
+        "food",
+        "establishment"
+      ],
+      "phone": "(207) 354-2583",
+      "website": "http://www.facebook.com/thomgroc",
+      "rawHours": [
+        "Monday: 8:00 AM – 6:00 PM",
+        "Tuesday: 8:00 AM – 6:00 PM",
+        "Wednesday: 8:00 AM – 6:00 PM",
+        "Thursday: 8:00 AM – 6:00 PM",
+        "Friday: 8:00 AM – 6:00 PM",
+        "Saturday: 8:00 AM – 4:30 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 135,
+      "coordinates": {
+        "lat": 44.07896470000001,
+        "lng": -69.1837299
+      },
+      "mapsLink": "https://maps.google.com/?cid=5939081320017295417&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:26.270Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJX6unoXDPrUwROfjJc_7aa1I",
+        "confidence": "high"
+      },
+      "tags": [
+        "grocery store",
+        "food store",
+        "store",
+        "point of interest",
+        "food",
+        "thomaston"
+      ],
+      "hours": [
+        "Monday 8a-6p",
+        "Tuesday 8a-6p",
+        "Wednesday 8a-6p",
+        "Thursday 8a-6p",
+        "Friday 8a-6p",
+        "Saturday 8a-4:30p",
+        "Sunday Closed"
+      ]
+    },
+    {
+      "id": "st-george-town-transfer-station",
+      "name": "St. George Town Transfer Station",
+      "type": "other",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "St George town transfer station (176 Wallston Rd, St. George, ME 04860)",
+      "category": "Municipal Services",
+      "address": "176 Wallston Rd, St. George, ME 04860, USA",
+      "rating": 5,
+      "googlePlacesTypes": [
+        "point_of_interest",
+        "establishment"
+      ],
+      "website": "https://www.stgeorgemaine.com/transfer-station",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 8:00 AM – 4:00 PM",
+        "Wednesday: 8:00 AM – 4:00 PM",
+        "Thursday: 8:00 AM – 4:00 PM",
+        "Friday: 8:00 AM – 4:00 PM",
+        "Saturday: 8:00 AM – 4:00 PM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 12,
+      "coordinates": {
+        "lat": 43.973179099999996,
+        "lng": -69.22936829999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=15874759696515796483&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:30.817Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJNXknTzHIrUwRAw6D_dV5Ttw",
+        "confidence": "high"
+      },
+      "tags": [
+        "transfer station",
+        "waste disposal",
+        "recycling",
+        "point of interest",
+        "establishment",
+        "st george",
+        "maine"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 8a-4p",
+        "Wednesday 8a-4p",
+        "Thursday 8a-4p",
+        "Friday 8a-4p",
+        "Saturday 8a-4p",
+        "Sunday Closed"
+      ]
+    },
+    {
+      "id": "tenants-harbor-post-office",
+      "name": "Tenants Harbor Post Office",
+      "type": "other",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Tenants Harbor post office (4 Main St, Tenants Harbor, ME 04860)",
+      "category": "Municipal Services",
+      "address": "4 Main St, Tenants Harbor, ME 04860, USA",
+      "rating": 4,
+      "googlePlacesTypes": [
+        "post_office",
+        "finance",
+        "government_office",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(800) 275-8777",
+      "website": "https://tools.usps.com/locations/details/1384423?utm_source=google-my-business-url&utm_medium=search&utm_campaign=yext",
+      "rawHours": [
+        "Monday: 9:00 AM – 12:30 PM, 1:30 – 4:00 PM",
+        "Tuesday: 9:00 AM – 12:30 PM, 1:30 – 4:00 PM",
+        "Wednesday: 9:00 AM – 12:30 PM, 1:30 – 4:00 PM",
+        "Thursday: 9:00 AM – 12:30 PM, 1:30 – 4:00 PM",
+        "Friday: 9:00 AM – 12:30 PM, 1:30 – 4:00 PM",
+        "Saturday: 9:30 – 11:30 AM",
+        "Sunday: Closed"
+      ],
+      "reviewCount": 5,
+      "coordinates": {
+        "lat": 43.9673444,
+        "lng": -69.2079214
+      },
+      "mapsLink": "https://maps.google.com/?cid=2154106684994673546&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:37.268Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJe_ZE7iS2rUwRittm953s5B0",
+        "confidence": "high"
+      },
+      "tags": [
+        "post office",
+        "government office",
+        "finance",
+        "tenants harbor",
+        "main street",
+        "mail services",
+        "point of interest"
+      ],
+      "hours": [
+        "Monday 9a-12:30p, 1:30p-4p",
+        "Tuesday 9a-12:30p, 1:30p-4p",
+        "Wednesday 9a-12:30p, 1:30p-4p",
+        "Thursday 9a-12:30p, 1:30p-4p",
+        "Friday 9a-12:30p, 1:30p-4p",
+        "Saturday 9:30a-11:30a",
+        "Sunday Closed"
+      ]
+    },
+    {
+      "id": "craignair-inn",
+      "name": "Craignair Inn",
+      "type": "accommodation",
+      "description": "The absolute best, cutest inn with views and complimentary brunch.",
+      "url": null,
+      "notes": null,
+      "origText": "Craignair - the absolute best, cutest inn with views and complimentary brunch",
+      "category": "Accommodations",
+      "address": "5 3rd St, Spruce Head, ME 04859, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "bed_and_breakfast",
+        "hotel",
+        "lodging",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 910-6622",
+      "website": "http://www.craignair.com/?utm_source=google&utm_medium=organic&utm_campaign=googlemybusiness",
+      "rawHours": [
+        "Monday: 8:00 AM – 8:00 PM",
+        "Tuesday: 8:00 AM – 8:00 PM",
+        "Wednesday: 8:00 AM – 8:00 PM",
+        "Thursday: 8:00 AM – 8:00 PM",
+        "Friday: 8:00 AM – 8:00 PM",
+        "Saturday: 8:00 AM – 8:00 PM",
+        "Sunday: 8:00 AM – 8:00 PM"
+      ],
+      "reviewCount": 254,
+      "coordinates": {
+        "lat": 43.991634999999995,
+        "lng": -69.182005
+      },
+      "mapsLink": "https://maps.google.com/?cid=10570868613049191785&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:44.708Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJdWlBLL7JrUwRaY0fKP9Es5I",
+        "confidence": "high"
+      },
+      "tags": [
+        "bed and breakfast",
+        "hotel",
+        "lodging",
+        "inn",
+        "brunch",
+        "scenic views",
+        "complimentary breakfast",
+        "cute"
+      ],
+      "hours": "Every day from 8a to 8p"
+    },
+    {
+      "id": "seaside-inn",
+      "name": "Seaside Inn",
+      "type": "accommodation",
+      "description": "One of the Bean family properties, right down in Port Clyde.",
+      "url": null,
+      "notes": null,
+      "origText": "Seaside inn - one of the Bean family properties, right down in port clyde",
+      "category": "Accommodations",
+      "address": "5 Cold Storage Rd, Port Clyde, ME 04855, USA",
+      "rating": 4.1,
+      "googlePlacesTypes": [
+        "bed_and_breakfast",
+        "inn",
+        "hotel",
+        "lodging",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 372-0700",
+      "website": "https://www.lindabeansperfectmaine.com/lodging/seaside-inn/",
+      "reviewCount": 28,
+      "coordinates": {
+        "lat": 43.9268522,
+        "lng": -69.2588298
+      },
+      "mapsLink": "https://maps.google.com/?cid=17892075774131711174&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:48.782Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJET_XQyC3rUwRxix-yx5sTfg",
+        "confidence": "high"
+      },
+      "tags": [
+        "bed and breakfast",
+        "inn",
+        "hotel",
+        "lodging",
+        "port clyde",
+        "family owned",
+        "bean family",
+        "seaside"
+      ]
+    },
+    {
+      "id": "marshall-point-lighthouse",
+      "name": "Marshall Point Lighthouse",
+      "type": "attraction",
+      "description": null,
+      "url": null,
+      "notes": "Set aside an hour or so to pour through the old photos and books in the back room of the museum.",
+      "origText": "Marshall point lighthouse - set aside an hour or so to pour through the old photos and books in the back room of the museum",
+      "category": "Additional Activities",
+      "address": "Marshall Point Rd, Port Clyde, ME 04855, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "museum",
+        "tourist_attraction",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 372-6450",
+      "website": "http://www.marshallpoint.org/",
+      "rawHours": [
+        "Monday: 12:00 – 4:00 PM",
+        "Tuesday: 10:00 AM – 4:00 PM",
+        "Wednesday: 10:00 AM – 4:00 PM",
+        "Thursday: 10:00 AM – 4:00 PM",
+        "Friday: 10:00 AM – 4:00 PM",
+        "Saturday: 10:00 AM – 4:00 PM",
+        "Sunday: 12:00 – 4:00 PM"
+      ],
+      "reviewCount": 1343,
+      "coordinates": {
+        "lat": 43.9174333,
+        "lng": -69.2612762
+      },
+      "mapsLink": "https://maps.google.com/?cid=4941656170015551256&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:52.479Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJj-oOX9m2rUwRGO_kxxpKlEQ",
+        "confidence": "high"
+      },
+      "tags": [
+        "museum",
+        "tourist attraction",
+        "point of interest",
+        "lighthouse",
+        "historic photos",
+        "books",
+        "local history",
+        "scenic view"
+      ],
+      "hours": [
+        "Monday 12p-4p",
+        "Tuesday 10a-4p",
+        "Wednesday 10a-4p",
+        "Thursday 10a-4p",
+        "Friday 10a-4p",
+        "Saturday 10a-4p",
+        "Sunday 12p-4p"
+      ]
+    },
+    {
+      "id": "owls-head-transportation-museum",
+      "name": "Owl's Head Transportation Museum",
+      "type": "attraction",
+      "description": null,
+      "url": null,
+      "notes": "For the dads.",
+      "origText": "Owls head transportation museum - for the dads",
+      "category": "Additional Activities",
+      "address": "117 Museum St, Owls Head, ME 04854, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "museum",
+        "tourist_attraction",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 594-4418",
+      "website": "http://owlshead.org/",
+      "rawHours": [
+        "Monday: 10:00 AM – 4:00 PM",
+        "Tuesday: 10:00 AM – 4:00 PM",
+        "Wednesday: 10:00 AM – 4:00 PM",
+        "Thursday: 10:00 AM – 4:00 PM",
+        "Friday: 10:00 AM – 4:00 PM",
+        "Saturday: 10:00 AM – 4:00 PM",
+        "Sunday: 10:00 AM – 4:00 PM"
+      ],
+      "reviewCount": 901,
+      "coordinates": {
+        "lat": 44.0655817,
+        "lng": -69.1025709
+      },
+      "mapsLink": "https://maps.google.com/?cid=1540344842091604918&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:37:58.838Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJN5t7T4HOrUwRtqt5CHlnYBU",
+        "confidence": "high"
+      },
+      "tags": [
+        "museum",
+        "tourist attraction",
+        "transportation",
+        "family friendly",
+        "car museum",
+        "dad friendly",
+        "point of interest"
+      ],
+      "hours": "Every day from 10a to 4p"
+    },
+    {
+      "id": "owls-head-lighthouse",
+      "name": "Owl's Head Lighthouse",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Owls head lighthouse",
+      "category": "Additional Activities",
+      "address": "186 Lighthouse Rd, Owls Head, ME 04854, USA",
+      "rating": 4.8,
+      "googlePlacesTypes": [
+        "historical_landmark",
+        "gift_shop",
+        "historical_place",
+        "store",
+        "museum",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 594-4174",
+      "website": "http://www.lighthousefoundation.org/",
+      "rawHours": [
+        "Monday: 10:00 AM – 5:00 PM",
+        "Tuesday: Closed",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 10:00 AM – 5:00 PM",
+        "Saturday: 10:00 AM – 5:00 PM",
+        "Sunday: 10:00 AM – 5:00 PM"
+      ],
+      "reviewCount": 1555,
+      "coordinates": {
+        "lat": 44.092185699999995,
+        "lng": -69.04409869999999
+      },
+      "mapsLink": "https://maps.google.com/?cid=10238911411349436534&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:38:03.221Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJdST0nTTNrUwRdjgtOK7rF44",
+        "confidence": "high"
+      },
+      "tags": [
+        "lighthouse",
+        "historical landmark",
+        "museum",
+        "gift shop",
+        "tourist attraction",
+        "point of interest",
+        "scenic view"
+      ],
+      "hours": [
+        "Monday 10a-5p",
+        "Tuesday Closed",
+        "Wednesday 10a-5p",
+        "Thursday 10a-5p",
+        "Friday 10a-5p",
+        "Saturday 10a-5p",
+        "Sunday 10a-5p"
+      ]
+    },
+    {
+      "id": "oakland-park-bowling-lanes",
+      "name": "Oakland Park Bowling Lanes",
+      "type": "activity",
+      "description": null,
+      "url": null,
+      "notes": "For a rainy day.",
+      "origText": "Oakland park bowling lanes - for a rainy day",
+      "category": "Additional Activities",
+      "address": "732 Commercial St, Rockport, ME 04856, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "bowling_alley",
+        "sports_complex",
+        "sports_activity_location",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 594-7525",
+      "website": "https://www.facebook.com/Oakland-Park-Bowling-Lanes-844881892240319/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: 9:30 AM – 10:00 PM",
+        "Wednesday: 9:30 AM – 10:00 PM",
+        "Thursday: 9:30 AM – 10:00 PM",
+        "Friday: 9:30 AM – 10:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: 12:00 – 9:00 PM"
+      ],
+      "reviewCount": 172,
+      "coordinates": {
+        "lat": 44.1528373,
+        "lng": -69.0861122
+      },
+      "mapsLink": "https://maps.google.com/?cid=4739184594130248920&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:38:07.760Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJRddbvOLQrUwR2CQjckf3xEE",
+        "confidence": "high"
+      },
+      "tags": [
+        "bowling alley",
+        "sports complex",
+        "indoor activity",
+        "rainy day",
+        "family friendly",
+        "kid friendly",
+        "recreation"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday 9:30a-10p",
+        "Wednesday 9:30a-10p",
+        "Thursday 9:30a-10p",
+        "Friday 9:30a-10p",
+        "Saturday 12p-11p",
+        "Sunday 12p-9p"
+      ]
+    },
+    {
+      "id": "montsweag-flea-market",
+      "name": "Montsweag Flea Market",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Montsweag Flea Market",
+      "category": "Furniture and Antiques",
+      "address": "6 Hunnewell Ln, Woolwich, ME 04579, USA",
+      "rating": 4.2,
+      "googlePlacesTypes": [
+        "market",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 443-2809",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 8:00 AM – 4:00 PM",
+        "Thursday: Closed",
+        "Friday: Closed",
+        "Saturday: 8:00 AM – 4:00 PM",
+        "Sunday: 8:00 AM – 4:00 PM"
+      ],
+      "reviewCount": 222,
+      "coordinates": {
+        "lat": 43.9624824,
+        "lng": -69.7257003
+      },
+      "mapsLink": "https://maps.google.com/?cid=1538609771430805147&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:38:12.046Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ3-EbngSOrUwRm_4Tam89WhU",
+        "confidence": "high"
+      },
+      "tags": [
+        "flea market",
+        "market",
+        "point of interest",
+        "establishment",
+        "shopping",
+        "antiques",
+        "outdoor market",
+        "local vendors"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday 8a-4p",
+        "Thursday Closed",
+        "Friday Closed",
+        "Saturday 8a-4p",
+        "Sunday 8a-4p"
+      ]
+    },
+    {
+      "id": "cabot-mill-antiques",
+      "name": "Cabot Mill Antiques",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": "Must.",
+      "origText": "Cabot mill antiques - must",
+      "category": "Furniture and Antiques",
+      "address": "14 Maine St, Brunswick, ME 04011, USA",
+      "rating": 4.4,
+      "googlePlacesTypes": [
+        "jewelry_store",
+        "home_goods_store",
+        "point_of_interest",
+        "store",
+        "establishment"
+      ],
+      "phone": "(207) 725-2855",
+      "website": "http://www.cabotiques.com/",
+      "reviewCount": 224,
+      "coordinates": {
+        "lat": 43.9191716,
+        "lng": -69.9674757
+      },
+      "mapsLink": "https://maps.google.com/?cid=17674556544168954183&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:38:16.305Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJd4bNXHCHrUwRRwm_eYijSPU",
+        "confidence": "high"
+      },
+      "tags": [
+        "antiques",
+        "home goods",
+        "jewelry",
+        "store",
+        "point of interest",
+        "must visit"
+      ]
+    },
+    {
+      "id": "leroux-kitchen",
+      "name": "Leroux Kitchen",
+      "type": "shopping",
+      "description": "Best comprehensive kitchen store.",
+      "url": null,
+      "notes": null,
+      "origText": "Leroux kitchen portland - best comprehensive kitchen store",
+      "category": "Furniture and Antiques Shopping",
+      "address": "161 Commercial St, Portland, ME 04101, USA",
+      "rating": 4.6,
+      "googlePlacesTypes": [
+        "liquor_store",
+        "grocery_store",
+        "food_store",
+        "furniture_store",
+        "home_improvement_store",
+        "home_goods_store",
+        "wholesaler",
+        "store",
+        "food",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 553-7665",
+      "website": "http://www.lerouxkitchen.com/",
+      "rawHours": [
+        "Monday: 10:00 AM – 7:00 PM",
+        "Tuesday: 10:00 AM – 7:00 PM",
+        "Wednesday: 10:00 AM – 7:00 PM",
+        "Thursday: 10:00 AM – 7:00 PM",
+        "Friday: 10:00 AM – 7:00 PM",
+        "Saturday: 10:00 AM – 7:00 PM",
+        "Sunday: 10:00 AM – 6:00 PM"
+      ],
+      "reviewCount": 184,
+      "coordinates": {
+        "lat": 43.6562607,
+        "lng": -70.2523003
+      },
+      "mapsLink": "https://maps.google.com/?cid=10614554752209952645&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:38:19.671Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJ9X7doj-cskwRhZ9oDk95TpM",
+        "confidence": "high"
+      },
+      "tags": [
+        "kitchen store",
+        "home goods store",
+        "grocery store",
+        "liquor store",
+        "comprehensive selection",
+        "portland",
+        "store",
+        "food store"
+      ],
+      "hours": [
+        "Monday 10a-7p",
+        "Tuesday 10a-7p",
+        "Wednesday 10a-7p",
+        "Thursday 10a-7p",
+        "Friday 10a-7p",
+        "Saturday 10a-7p",
+        "Sunday 10a-6p"
+      ]
+    },
+    {
+      "id": "blanch-and-mimis",
+      "name": "Blanch & Mimi's",
+      "type": "shopping",
+      "description": "Fancy and pricy, but great taste.",
+      "url": null,
+      "notes": null,
+      "origText": "Blanch & mimis - fancy and pricy, but great taste",
+      "category": "Furniture and Antiques",
+      "address": "195 Commercial St, Portland, ME 04101, USA",
+      "rating": 4.2,
+      "googlePlacesTypes": [
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 774-3900",
+      "website": "http://www.blancheandmimi.com/",
+      "rawHours": [
+        "Monday: 10:00 AM – 5:00 PM",
+        "Tuesday: 10:00 AM – 5:00 PM",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 10:00 AM – 5:00 PM",
+        "Saturday: 10:00 AM – 5:00 PM",
+        "Sunday: 11:00 AM – 5:00 PM"
+      ],
+      "reviewCount": 60,
+      "coordinates": {
+        "lat": 43.6558182,
+        "lng": -70.2532148
+      },
+      "mapsLink": "https://maps.google.com/?cid=8238929437450882392&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:38:24.146Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJnW7JTxWcskwRWM3E8KuOVnI",
+        "confidence": "high"
+      },
+      "tags": [
+        "store",
+        "fancy",
+        "pricy",
+        "great taste",
+        "point of interest",
+        "establishment"
+      ],
+      "hours": [
+        "Monday 10a-5p",
+        "Tuesday 10a-5p",
+        "Wednesday 10a-5p",
+        "Thursday 10a-5p",
+        "Friday 10a-5p",
+        "Saturday 10a-5p",
+        "Sunday 11a-5p"
+      ]
+    },
+    {
+      "id": "portland-flea-for-all",
+      "name": "Portland Flea-for-All",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Portland flea-for-all",
+      "category": "Furniture and Antiques",
+      "address": "585 Congress St, Portland, ME 04101, USA",
+      "rating": 4.5,
+      "googlePlacesTypes": [
+        "furniture_store",
+        "home_improvement_store",
+        "home_goods_store",
+        "clothing_store",
+        "jewelry_store",
+        "market",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 370-7570",
+      "website": "http://portlandfleaforall.com/",
+      "rawHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: Closed",
+        "Friday: 10:00 AM – 6:00 PM",
+        "Saturday: 10:00 AM – 6:00 PM",
+        "Sunday: 11:00 AM – 5:00 PM"
+      ],
+      "reviewCount": 323,
+      "coordinates": {
+        "lat": 43.6545175,
+        "lng": -70.2629013
+      },
+      "mapsLink": "https://maps.google.com/?cid=8426709269100175606&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:38:28.889Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJQ5hEPm2cskwR9iA1Am-v8XQ",
+        "confidence": "high"
+      },
+      "tags": [
+        "market",
+        "flea market",
+        "furniture store",
+        "home goods",
+        "vintage",
+        "clothing store",
+        "jewelry",
+        "local shopping"
+      ],
+      "hours": [
+        "Monday Closed",
+        "Tuesday Closed",
+        "Wednesday Closed",
+        "Thursday Closed",
+        "Friday 10a-6p",
+        "Saturday 10a-6p",
+        "Sunday 11a-5p"
+      ]
+    },
+    {
+      "id": "antiques-etc",
+      "name": "Antiques Etc.",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Antiques Etc. (rockland)",
+      "category": "Furniture and Antiques",
+      "address": "Rockland, ME 04841, USA",
+      "rating": 4.4,
+      "googlePlacesTypes": [
+        "home_goods_store",
+        "store",
+        "point_of_interest",
+        "establishment"
+      ],
+      "phone": "(207) 466-9284",
+      "website": "https://www.facebook.com/mainetiques/",
+      "rawHours": [
+        "Monday: 10:00 AM – 5:00 PM",
+        "Tuesday: 10:00 AM – 5:00 PM",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 10:00 AM – 5:00 PM",
+        "Saturday: 10:00 AM – 5:00 PM",
+        "Sunday: 10:00 AM – 5:00 PM"
+      ],
+      "reviewCount": 98,
+      "coordinates": {
+        "lat": 44.109105799999995,
+        "lng": -69.1095252
+      },
+      "mapsLink": "https://maps.google.com/?cid=397044569589984625&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:38:33.057Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJYe7LJdbRrUwRca1osu6VggU",
+        "confidence": "high"
+      },
+      "tags": [
+        "antiques",
+        "home goods store",
+        "store",
+        "rockland",
+        "vintage",
+        "collectibles",
+        "point of interest"
+      ],
+      "hours": "Every day from 10a to 5p"
+    },
+    {
+      "id": "antiques-at-10-mechanic",
+      "name": "Antiques at 10 Mechanic",
+      "type": "shopping",
+      "description": null,
+      "url": null,
+      "notes": null,
+      "origText": "Antiques at 10 mechanic (camden)",
+      "category": "Furniture and Antiques",
+      "address": "10 Mechanic St, Camden, ME 04843, USA",
+      "rating": 4.7,
+      "googlePlacesTypes": [
+        "home_goods_store",
+        "point_of_interest",
+        "store",
+        "establishment"
+      ],
+      "phone": "(207) 236-6010",
+      "website": "https://www.facebook.com/AntiquesAt10Mechanic",
+      "rawHours": [
+        "Monday: 10:00 AM – 5:00 PM",
+        "Tuesday: 10:00 AM – 5:00 PM",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 10:00 AM – 5:00 PM",
+        "Saturday: 10:00 AM – 5:00 PM",
+        "Sunday: 10:00 AM – 5:00 PM"
+      ],
+      "reviewCount": 68,
+      "coordinates": {
+        "lat": 44.209963699999996,
+        "lng": -69.065384
+      },
+      "mapsLink": "https://maps.google.com/?cid=12112512548878294243&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAAYBCAA",
+      "enrichmentStatus": {
+        "enriched": true,
+        "enrichedAt": "2025-07-08T12:38:41.218Z",
+        "enrichmentVersion": "2.0.0",
+        "source": "Google Places API",
+        "place_id": "ChIJq-uHdgzXrUwR4xxaBf1JGKg",
+        "confidence": "high"
+      },
+      "tags": [
+        "antiques",
+        "home goods store",
+        "store",
+        "point of interest",
+        "camden",
+        "vintage decor"
+      ],
+      "hours": "Every day from 10a to 5p"
     }
   ]
 }

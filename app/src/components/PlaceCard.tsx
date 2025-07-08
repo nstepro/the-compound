@@ -1,4 +1,4 @@
-import { Card, Text, Badge, Group, Tooltip, ActionIcon, Anchor, Stack } from '@mantine/core';
+import { Card, Text, Badge, Group, Tooltip, Anchor, Stack } from '@mantine/core';
 import { IconMapPin, IconPhone, IconClock, IconExternalLink } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
 import type { Place } from '../types';
@@ -23,6 +23,7 @@ export function PlaceCard({
 }: PlaceCardProps) {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [showAllTags, setShowAllTags] = useState(false);
+  const [showExpandedHours, setShowExpandedHours] = useState(false);
 
   useEffect(() => {
     // Detect if device supports touch
@@ -76,6 +77,22 @@ export function PlaceCard({
   const getDisplayedTagsCount = () => {
     if (isTouchDevice) return 4; // Show more tags on touch devices
     return compact ? 2 : 3;
+  };
+
+  const formatHoursText = (hoursText: string) => {
+    const firstSpaceIndex = hoursText.indexOf(' ');
+    if (firstSpaceIndex === -1) {
+      return hoursText; // No space found, return as is
+    }
+    
+    const beforeSpace = hoursText.substring(0, firstSpaceIndex);
+    const afterSpace = hoursText.substring(firstSpaceIndex + 1);
+    
+    return (
+      <>
+        {beforeSpace} <Text component="span" fw={700}>{afterSpace}</Text>
+      </>
+    );
   };
 
   const displayedTagsCount = getDisplayedTagsCount();
@@ -194,9 +211,33 @@ export function PlaceCard({
         {!hidePhoneHours && place.hours && (
           <div className={styles.infoGroup}>
             <IconClock size={16} className={styles.infoIcon} />
-            <Text size="sm">
-              {typeof place.hours === 'string' ? place.hours : 'See details'}
-            </Text>
+            <div>
+              {typeof place.hours === 'string' ? (
+                <Text size="sm">{place.hours}</Text>
+              ) : (
+                <div>
+                  <Text 
+                    size="sm" 
+                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowExpandedHours(!showExpandedHours);
+                    }}
+                  >
+                    {showExpandedHours ? 'Hide hours' : 'Show hours'}
+                  </Text>
+                  {showExpandedHours && (
+                    <Stack gap="xs" mt="xs">
+                      {Object.entries(place.hours as Record<string, string>).map(([day, hours]) => (
+                        <Group key={day} gap="xl">
+                          <Text size="sm" mt="none" mb="none">{formatHoursText(hours)}</Text>
+                        </Group>
+                      ))}
+                    </Stack>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </Stack>
@@ -206,8 +247,8 @@ export function PlaceCard({
       {!hideLinks && (
         <div className={styles.linkGroup}>
           <Group gap="xs">
-            {place.url && (
-              <Anchor href={place.url} target="_blank" size="sm" className={styles.customLink}>
+            {place.website && (
+              <Anchor href={place.website} target="_blank" size="sm" className={styles.customLink}>
                 <Group gap="xs">
                   <IconExternalLink size={16} />
                   Website

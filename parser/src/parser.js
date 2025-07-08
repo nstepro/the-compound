@@ -73,8 +73,12 @@ class Parser {
         throw new Error('Document content is empty');
       }
 
-      // Step 3: Parse with OpenAI
-      logger.info('Step 3: Parsing document with OpenAI');
+      // Step 3: Parse with OpenAI (Phase 1 of optimized flow)
+      // LLM extracts ONLY what it can reliably determine from text:
+      // - Place names, descriptions, notes, tags
+      // - Categories from document headers
+      // - Original text preservation
+      logger.info('Step 3: Parsing document with OpenAI (extracting context from text)');
       const parsedData = await openaiService.parseDocument(documentData.content, documentData.sections);
       
       if (!parsedData.places || parsedData.places.length === 0) {
@@ -88,28 +92,24 @@ class Parser {
         id: place.id || this.generatePlaceId(place.name)
       }));
 
-      // Step 5: Enrich with additional data
-      const useWebEnrichment = config.parsing.useWebEnrichment;
-      logger.info(`Step 5: Enriching place data (using ${useWebEnrichment ? 'web search' : 'LLM-based'} enrichment)`);
+      // Step 5: Enrich with Google Places API data and generate tags (Phases 2-3 of optimized flow)
+      // Phase 2: Google Places API provides accurate business data:
+      // - Address, phone, website, rating, review count, price level, hours, coordinates
+      // Phase 3: Tag generation using original text + Google Places API types
+      logger.info('Step 5: Enriching place data with Google Places API and generating comprehensive tags');
       
       let enrichedPlaces;
       try {
-        if (useWebEnrichment) {
-          enrichedPlaces = await webEnrichmentService.enrichPlaces(placesWithIds, existingPlaces);
-        } else {
-          // Fallback to old LLM-based enrichment (not recommended)
-          logger.warn('Using deprecated LLM-based enrichment. Consider switching to web enrichment.');
-          enrichedPlaces = await openaiService.enrichPlaceData(placesWithIds, existingPlaces);
-        }
+        enrichedPlaces = await webEnrichmentService.enrichPlaces(placesWithIds, existingPlaces);
       } catch (enrichError) {
-        logger.warn(`${useWebEnrichment ? 'Web' : 'LLM-based'} enrichment failed, using original data:`, enrichError);
+        logger.warn('Google Places API enrichment failed, using original data:', enrichError);
         enrichedPlaces = placesWithIds.map(place => ({
           ...place,
           enrichmentStatus: {
             enriched: false,
             enrichedAt: new Date().toISOString(),
             enrichmentVersion: config.parsing.enrichmentVersion,
-            reason: `${useWebEnrichment ? 'Web' : 'LLM-based'} enrichment failed: ${enrichError.message}`
+            reason: `Google Places API enrichment failed: ${enrichError.message}`
           }
         }));
       }
@@ -124,8 +124,9 @@ class Parser {
         summary = `Vacation compound guide with ${enrichedPlaces.length} places`;
       }
 
-      // Step 7: Build final output
-      logger.info('Step 7: Building final output');
+      // Step 7: Build final output (Phase 4 of optimized flow)
+      // Combines LLM-extracted context + Google Places API business data + comprehensive tags
+      logger.info('Step 7: Building final output (merging context + business data + tags)');
       const finalOutput = {
         metadata: {
           generatedAt: new Date().toISOString(),

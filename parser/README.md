@@ -21,9 +21,9 @@ A powerful document parsing system that extracts structured place data from Goog
 - **Comprehensive Logging**: Detailed logging and debugging information saved to logs directory
 - **Validation**: Built-in schema validation ensures data quality
 
-### Google Places API Enrichment
+### Google Places API (New) Enrichment
 
-The parser now uses **Google Places API** to find accurate information about places:
+The parser now uses **Google Places API (New)** to find accurate information about places:
 
 1. **Places Search**: Searches Google Places database for each place name + location context
 2. **Official Data**: Gets verified business information directly from Google
@@ -42,6 +42,7 @@ This replaces the previous LLM-based enrichment that generated hallucinated data
    - Go to "APIs & Services" > "Library"
    - Search for "Places API (New)"
    - Click "Enable"
+   - **⚠️ Important**: Make sure you enable the **NEW** Places API, not the legacy version
 4. **Create an API Key**:
    - Go to "APIs & Services" > "Credentials"
    - Click "Create Credentials" > "API Key"
@@ -62,6 +63,25 @@ Add your API key to your `.env` file:
 ```env
 GOOGLE_PLACES_API_KEY=your_api_key_here
 ```
+
+### Testing Your Setup
+
+Before running the full parser, test your Google Places API (New) configuration:
+
+```bash
+npm run test-google-places
+```
+
+This will:
+- Check if your API key is configured
+- Test the Places Search functionality
+- Test the Place Details functionality
+- Verify that the new API is working correctly
+
+If you see errors about "legacy API" or "REQUEST_DENIED", make sure you:
+1. Enabled the **NEW** Places API, not the legacy version
+2. Your API key has permissions for the Places API (New)
+3. Your API key is properly configured in your `.env` file
 
 ## Configuration
 
