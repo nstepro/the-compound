@@ -13,6 +13,11 @@ interface MapViewProps {
   isVisible: boolean;
 }
 
+// Function to detect if device supports touch
+const isTouchDevice = () => {
+  return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+};
+
 // Function to get icon and color based on place type
 const getTypeConfig = (type: string): { icon: string; backgroundColor: string } => {
   switch (type.toLowerCase()) {
@@ -39,6 +44,20 @@ interface MarkerTooltipProps {
 
 function MarkerTooltip({ place, children }: MarkerTooltipProps) {
   const [opened, setOpened] = useState(false);
+  const isTouch = isTouchDevice();
+
+  // Only show tooltip on hover for non-touch devices
+  const handleMouseEnter = () => {
+    if (!isTouch) {
+      setOpened(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isTouch) {
+      setOpened(false);
+    }
+  };
 
   return (
     <Popover 
@@ -53,8 +72,8 @@ function MarkerTooltip({ place, children }: MarkerTooltipProps) {
     >
       <Popover.Target>
         <div 
-          onMouseEnter={() => setOpened(true)}
-          onMouseLeave={() => setOpened(false)}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           {children}
         </div>
