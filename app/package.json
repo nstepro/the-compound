@@ -9,19 +9,33 @@
     "start": "node server.js",
     "lint": "eslint .",
     "preview": "vite preview",
-    "update-data": "node update-data.js"
+    "update-data": "node update-data.js",
+    "parse": "node src/parser/index.js",
+    "parse-debug": "LOG_LEVEL=debug node src/parser/debug.js"
   },
   "dependencies": {
+    "@langchain/openai": "^0.2.0",
     "@mantine/core": "^8.1.2",
     "@mantine/hooks": "^8.1.2",
     "@mantine/notifications": "^8.1.2",
     "@tabler/icons-react": "^3.34.0",
+    "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
+    "cheerio": "^1.1.0",
+    "dotenv": "^16.3.1",
     "express": "^4.21.2",
+    "googleapis": "^126.0.1",
+    "@google-cloud/storage": "^7.13.0",
+    "langchain": "^0.2.0",
     "mapbox-gl": "^3.13.0",
+    "openai": "^4.20.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-map-gl": "^8.0.4",
-    "react-router-dom": "^7.6.3"
+    "react-router-dom": "^7.6.3",
+    "turndown": "^7.1.2",
+    "winston": "^3.11.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
@@ -34,6 +48,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
+    "nodemon": "^3.0.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0"

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Container, LoadingOverlay, Alert, Modal, Popover } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 import Map, { Marker } from 'react-map-gl/mapbox';
@@ -23,10 +23,12 @@ const getTypeConfig = (type: string): { icon: string; backgroundColor: string } 
   switch (type.toLowerCase()) {
     case 'restaurant':
       return { icon: '🍜', backgroundColor: '#FFD700' }; // Yellow
+    case 'dining':
+      return { icon: '🍜', backgroundColor: '#FFD700' }; // Yellow
     case 'shopping':
       return { icon: '🛍️', backgroundColor: '#9B59B6' }; // Purple
     case 'activity':
-      return { icon: '🏃', backgroundColor: '#27AE60' }; // Green
+      return { icon: '🏖️', backgroundColor: '#3498DB' }; // Blue
     case 'attraction':
       return { icon: '🏖️', backgroundColor: '#3498DB' }; // Blue
     case 'accommodation':
@@ -97,12 +99,17 @@ export function MapView({ places, loading, error, isVisible }: MapViewProps) {
   const mapRef = useRef<any>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [modalOpened, setModalOpened] = useState(false);
+  const [initialBoundsSet, setInitialBoundsSet] = useState(false);
   
-  // Filter places that have coordinates
-  const placesWithCoordinates = places.filter(place => place.coordinates);
+  // Filter places that have coordinates - memoized to prevent unnecessary re-renders
+  const placesWithCoordinates = useMemo(() => 
+    places.filter(place => place.coordinates), 
+    [places]
+  );
 
   useEffect(() => {
-    if (mapRef.current && placesWithCoordinates.length > 0) {
+    // Only set initial bounds once when places are first loaded
+    if (mapRef.current && placesWithCoordinates.length > 0 && !initialBoundsSet) {
       if (placesWithCoordinates.length === 1) {
         // If there's only one place, center on it with a reasonable zoom
         const place = placesWithCoordinates[0];
@@ -134,8 +141,9 @@ export function MapView({ places, loading, error, isVisible }: MapViewProps) {
           });
         }
       }
+      setInitialBoundsSet(true);
     }
-  }, [placesWithCoordinates]);
+  }, [placesWithCoordinates, initialBoundsSet]);
 
   // Handle map resize when it becomes visible
   useEffect(() => {

@@ -125,7 +125,7 @@ export function PlaceCard({
               </Badge>
             ) : (
               // On desktop, use tooltip
-              <Tooltip label={place.tags.slice(displayedTagsCount).join(', ')}>
+              <Tooltip label={place.tags.slice(displayedTagsCount).join(', ').toUpperCase()}>
                 <Badge size="xs" variant="dot" className={styles.tagsBadge}>
                   +{place.tags.length - displayedTagsCount} MORE
                 </Badge>

@@ -19,13 +19,13 @@ export function PlacesList() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState<string | null>('list');
   const [hasMore, setHasMore] = useState(true);
-  const searchTimeoutRef = useRef<number | null>(null);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loadPlaces = async () => {
       try {
-        const response = await fetch('/compound-places.json');
+        const response = await fetch('/api/compound-places');
         if (!response.ok) {
           throw new Error('Failed to load places data');
         }

@@ -1,4 +1,4 @@
-import { Container, Stack, Box, Group, Button, Divider, Text } from '@mantine/core';
+import { Container, Stack, Box, Group, Button, Divider } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
 // Function to create a CSS filter for the brand color
@@ -59,21 +59,6 @@ export function Home() {
           ))}
         </Group>
       </Stack>
-
-      {/* Footer section - only on home page */}
-      <Box 
-        component="footer" 
-        mt="xl" 
-        pt="md" 
-        style={{
-          textAlign: 'center'
-        }}
-      >
-        <Text size="sm" c="dimmed">
-          {/* Add your addresses here */}
-          Teddy (Sheddy Resident), Webmaster • Hosted by Geocities
-        </Text>
-      </Box>
     </Container>
   );
 } 

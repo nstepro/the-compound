@@ -5,4 +5,6 @@ export { GettingHere } from './GettingHere';
 export { Lofty } from './Lofty';
 export { Shady } from './Shady';
 export { Navigation } from './Navigation';
-export { MapView } from './MapView'; 
+export { MapView } from './MapView';
+export { Admin } from './Admin';
+export { Footer } from './Footer'; 
