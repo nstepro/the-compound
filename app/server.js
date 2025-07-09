@@ -127,7 +127,7 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // Import the parser functions
-const { runParse } = require('./src/parser/index');
+const { runParse, runParseWithStreaming } = require('./src/parser/index');
 const { googleCloudStorageService } = require('./src/parser/google-cloud-storage');
 
 // API endpoint to serve compound places data from Google Cloud Storage
@@ -274,28 +274,46 @@ app.get('/api/admin/parse-stream', (req, res) => {
 });
 
 async function handleParseStream(req, res, user) {
-  // Set up SSE headers
+  // Set up SSE headers with Heroku-specific headers to prevent buffering
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
     'Connection': 'keep-alive',
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Cache-Control'
+    'Access-Control-Allow-Headers': 'Cache-Control',
+    'X-Accel-Buffering': 'no', // Disable nginx buffering (Heroku)
+    'Content-Encoding': 'none' // Prevent compression buffering
   });
 
-  // Send initial connection message
-  res.write(`data: ${JSON.stringify({ type: 'connected', message: 'Connected to parser stream' })}\n\n`);
+  // Send initial connection message with padding and flush
+  const initialMessage = `data: ${JSON.stringify({ type: 'connected', message: 'Connected to parser stream' })}\n\n`;
+  res.write(initialMessage);
+  
+  // Add padding to work around buffering and flush immediately
+  res.write(':' + ' '.repeat(2048) + '\n\n'); // 2KB padding comment
+  
+  // Ensure the response is flushed immediately
+  if (res.flush) {
+    res.flush();
+  }
 
-  // Function to send events to client
+  // Function to send events to client with immediate flushing
   const sendEvent = (type, message, data = null) => {
     const eventData = { type, message, timestamp: new Date().toISOString() };
     if (data) eventData.data = data;
-    res.write(`data: ${JSON.stringify(eventData)}\n\n`);
+    
+    const eventString = `data: ${JSON.stringify(eventData)}\n\n`;
+    res.write(eventString);
+    
+    // Flush immediately to prevent buffering
+    if (res.flush) {
+      res.flush();
+    }
   };
 
   try {
-    // Run the streaming parser
-    const result = await runStreamingParser(sendEvent);
+    // Run the main parser with streaming support
+    const result = await runParseWithStreaming(null, sendEvent);
     
     // Send final result
     sendEvent('completed', 'Parser completed successfully', result);
@@ -363,42 +381,49 @@ async function runParser() {
   try {
     console.log('Starting parser...');
     
-    // Use the imported runParse function
+    // Use the imported runParse function - it handles all the logic now
     await runParse();
     
     console.log('Parser completed successfully');
     
-    // Read the generated output file
-    const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
-    
-    if (!fs.existsSync(outputPath)) {
-      throw new Error('Parser output file not found at: ' + outputPath);
+    // Handle file copying for local development if needed
+    const config = require('./src/parser/config').config;
+    if (!config.googleCloudStorage.enabled) {
+      const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
+      const publicPath = path.join(__dirname, 'public', 'compound-places.json');
+      
+      if (fs.existsSync(outputPath)) {
+        try {
+          fs.copyFileSync(outputPath, publicPath);
+          console.log('Successfully copied output file to public directory');
+        } catch (copyError) {
+          console.error('Failed to copy file to public directory:', copyError);
+          // Don't fail the entire operation for copy errors
+        }
+      }
     }
-    
-    const outputData = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
-    
+
+    // Read the result data for response
+    let outputData;
+    if (config.googleCloudStorage.enabled) {
+      outputData = await googleCloudStorageService.downloadFile();
+    } else {
+      const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
+      if (fs.existsSync(outputPath)) {
+        outputData = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+      }
+    }
+
+    if (!outputData) {
+      throw new Error('Parser output not found after completion');
+    }
+
     // Calculate type breakdown
     const places = outputData.places || [];
     const typeBreakdown = places.reduce((acc, place) => {
       acc[place.type] = (acc[place.type] || 0) + 1;
       return acc;
     }, {});
-
-    // Copy the output to the public directory so the app can use it (only if not using GCS)
-    const config = require('./src/parser/config').config;
-    if (!config.googleCloudStorage.enabled) {
-      const publicPath = path.join(__dirname, 'public', 'compound-places.json');
-      
-      try {
-        fs.copyFileSync(outputPath, publicPath);
-        console.log('Successfully copied output file to public directory');
-      } catch (copyError) {
-        console.error('Failed to copy file to public directory:', copyError);
-        throw new Error(`Failed to copy file to public directory: ${copyError.message}`);
-      }
-    } else {
-      console.log('Using Google Cloud Storage - skipping local public directory copy');
-    }
 
     return {
       success: true,
@@ -407,7 +432,10 @@ async function runParser() {
         totalPlaces: places.length,
         sourceDocTitle: outputData.metadata?.sourceDocTitle || 'Unknown',
         generatedAt: outputData.metadata?.generatedAt || new Date().toISOString(),
-        typeBreakdown: typeBreakdown
+        typeBreakdown: typeBreakdown,
+        categories: outputData.metadata?.categories || [],
+        enrichmentStats: outputData.metadata?.enrichmentStats || {},
+        houseMechanics: outputData.metadata?.houseMechanics || { processed: false }
       }
     };
   } catch (error) {
@@ -416,166 +444,7 @@ async function runParser() {
   }
 }
 
-// Function to run the parser with streaming events
-async function runStreamingParser(sendEvent) {
-  try {
-    sendEvent('info', 'Starting parser...');
-    
-    // Import the parser and create a custom streaming version
-    const { parser } = require('./src/parser/parser');
-    const { googleDocsService } = require('./src/parser/google-docs');
-    const { openaiService } = require('./src/parser/openai-service');
-    const { webEnrichmentService } = require('./src/parser/web-enrichment-service');
-    const { validateOutput } = require('./src/parser/schema');
-    const config = require('./src/parser/config').config;
-    
-    const documentId = config.google.docId;
-    
-    sendEvent('info', `Parsing document: ${documentId}`);
-    
-    // Step 1: Load existing places
-    sendEvent('step', 'Step 1: Loading existing places');
-    const existingPlaces = await parser.loadExistingPlaces();
-    sendEvent('info', `Loaded ${existingPlaces.length} existing places`);
-    
-    // Step 2: Fetch document from Google Docs
-    sendEvent('step', 'Step 2: Fetching document from Google Docs');
-    const documentData = await googleDocsService.getDocumentAsMarkdown(documentId);
-    sendEvent('info', `Document fetched: "${documentData.title}"`);
-    sendEvent('info', `Document content length: ${documentData.content.length} characters`);
-    
-    if (!documentData.content || documentData.content.trim().length === 0) {
-      throw new Error('Document content is empty');
-    }
 
-    // Step 3: Parse with OpenAI
-    sendEvent('step', 'Step 3: Parsing document with OpenAI');
-    const parsedData = await openaiService.parseDocument(documentData.content, documentData.sections);
-    sendEvent('info', `Found ${parsedData.places.length} places in document`);
-    
-    if (!parsedData.places || parsedData.places.length === 0) {
-      throw new Error('No places found in document');
-    }
-
-    // Step 4: Generate unique IDs
-    sendEvent('step', 'Step 4: Generating unique IDs for places');
-    const placesWithIds = parsedData.places.map(place => ({
-      ...place,
-      id: place.id || parser.generatePlaceId(place.name)
-    }));
-    sendEvent('info', `Generated IDs for ${placesWithIds.length} places`);
-
-    // Step 5: Enrich with Google Places API
-    sendEvent('step', 'Step 5: Enriching places with Google Places API');
-    let enrichedPlaces;
-    try {
-      enrichedPlaces = await webEnrichmentService.enrichPlaces(placesWithIds, existingPlaces);
-      const enrichedCount = enrichedPlaces.filter(p => p.enrichmentStatus?.enriched).length;
-      sendEvent('info', `Enriched ${enrichedCount} places with Google Places API data`);
-    } catch (enrichError) {
-      sendEvent('warning', `Google Places API enrichment failed: ${enrichError.message}`);
-      enrichedPlaces = placesWithIds.map(place => ({
-        ...place,
-        enrichmentStatus: {
-          enriched: false,
-          enrichedAt: new Date().toISOString(),
-          enrichmentVersion: config.parsing.enrichmentVersion,
-          reason: `Google Places API enrichment failed: ${enrichError.message}`
-        }
-      }));
-    }
-
-    // Step 6: Generate summary
-    sendEvent('step', 'Step 6: Generating summary');
-    let summary;
-    try {
-      summary = await openaiService.generateSummary(enrichedPlaces);
-      sendEvent('info', 'Summary generated successfully');
-    } catch (summaryError) {
-      sendEvent('warning', `Summary generation failed: ${summaryError.message}`);
-      summary = `Vacation compound guide with ${enrichedPlaces.length} places`;
-    }
-
-    // Step 7: Build final output
-    sendEvent('step', 'Step 7: Building final output');
-    const finalOutput = {
-      metadata: {
-        generatedAt: new Date().toISOString(),
-        totalPlaces: enrichedPlaces.length,
-        sourceDocId: documentId,
-        sourceDocTitle: documentData.title,
-        parserVersion: '1.0.0',
-        enrichmentVersion: config.parsing.enrichmentVersion,
-        summary: summary,
-        lastModified: documentData.lastModified,
-        categories: [...new Set(enrichedPlaces.map(p => p.category).filter(Boolean))],
-        enrichmentStats: {
-          totalPlaces: enrichedPlaces.length,
-          enrichedPlaces: enrichedPlaces.filter(p => p.enrichmentStatus?.enriched).length,
-          skippedPlaces: enrichedPlaces.filter(p => p.enrichmentStatus?.enriched === false).length
-        }
-      },
-      places: enrichedPlaces
-    };
-
-    // Step 8: Validate output
-    sendEvent('step', 'Step 8: Validating output');
-    try {
-      validateOutput(finalOutput);
-      sendEvent('info', 'Output validation successful');
-    } catch (validationError) {
-      sendEvent('warning', `Output validation failed: ${validationError.message}`);
-    }
-
-    // Step 9: Save output
-    sendEvent('step', 'Step 9: Saving output');
-    await parser.saveOutput(finalOutput);
-    sendEvent('info', 'Output saved successfully');
-
-    // Calculate type breakdown
-    const places = finalOutput.places || [];
-    const typeBreakdown = places.reduce((acc, place) => {
-      acc[place.type] = (acc[place.type] || 0) + 1;
-      return acc;
-    }, {});
-
-    // Copy to public directory if not using GCS
-    if (!config.googleCloudStorage.enabled) {
-      const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
-      const publicPath = path.join(__dirname, 'public', 'compound-places.json');
-      
-      try {
-        fs.copyFileSync(outputPath, publicPath);
-        sendEvent('info', 'Successfully copied output file to public directory');
-      } catch (copyError) {
-        sendEvent('warning', `Failed to copy file to public directory: ${copyError.message}`);
-      }
-    } else {
-      sendEvent('info', 'Using Google Cloud Storage - skipping local public directory copy');
-    }
-
-    const result = {
-      success: true,
-      message: 'Parser completed successfully',
-      data: {
-        totalPlaces: places.length,
-        sourceDocTitle: finalOutput.metadata?.sourceDocTitle || 'Unknown',
-        generatedAt: finalOutput.metadata?.generatedAt || new Date().toISOString(),
-        typeBreakdown: typeBreakdown
-      }
-    };
-
-    sendEvent('info', `🎉 Parsing completed successfully! Generated ${result.data.totalPlaces} places`);
-    sendEvent('info', `📊 Categories: ${finalOutput.metadata.categories.join(', ')}`);
-    sendEvent('info', `📈 Enrichment stats: ${finalOutput.metadata.enrichmentStats.enrichedPlaces} enriched, ${finalOutput.metadata.enrichmentStats.skippedPlaces} skipped`);
-    
-    return result;
-    
-  } catch (error) {
-    sendEvent('error', `Parser execution failed: ${error.message}`);
-    throw new Error(`Parser failed: ${error.message}`);
-  }
-}
 
 // Handle client-side routing - serve index.html for all routes
 app.get('*', (req, res) => {

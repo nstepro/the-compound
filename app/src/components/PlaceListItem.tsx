@@ -121,9 +121,6 @@ export function PlaceListItem({ place }: PlaceListItemProps) {
             <Text fw={700} c="brand" truncate style={{ flex: 1, minWidth: 0 }}>
               {place.name}
             </Text>
-            <Badge variant="light" size="xs" style={{ flexShrink: 0 }}>
-              {place.category}
-            </Badge>
             {place.description && (
               <Text 
                 size="xs" 
@@ -134,11 +131,17 @@ export function PlaceListItem({ place }: PlaceListItemProps) {
                   minWidth: 0,
                   display: 'none' 
                 }} 
-                className="medium-screen-only"
+                className="wide-screen-only"
               >
                 {place.description.length > 80 ? place.description.substring(0, 80) + '...' : place.description}
               </Text>
             )}
+            <Badge color={typeColor} variant="light" size="xs" style={{ flexShrink: 0 }}>
+              {place.type.toUpperCase()}
+            </Badge>
+            <Badge variant="light" size="xs" style={{ flexShrink: 0 }}>
+              {place.category}
+            </Badge>
             {place.tags.length > 0 && (
               <div 
                 style={{ 

@@ -83,6 +83,44 @@ async function runParse(docId = null) {
   }
 }
 
+async function runParseWithStreaming(docId = null, streamCallback = null) {
+  try {
+    const documentId = docId || config.google.docId;
+    
+    if (!documentId) {
+      throw new Error('No document ID provided. Set GOOGLE_DOC_ID environment variable or provide as argument.');
+    }
+
+    logger.info(`Parsing document with streaming: ${documentId}`);
+    
+    const result = await parser.parseDocument(documentId, streamCallback);
+    
+    // Calculate type breakdown for result
+    const typeBreakdown = result.places.reduce((acc, place) => {
+      acc[place.type] = (acc[place.type] || 0) + 1;
+      return acc;
+    }, {});
+
+    return {
+      success: true,
+      message: 'Parser completed successfully',
+      data: {
+        totalPlaces: result.places.length,
+        sourceDocTitle: result.metadata?.sourceDocTitle || 'Unknown',
+        generatedAt: result.metadata?.generatedAt || new Date().toISOString(),
+        typeBreakdown: typeBreakdown,
+        categories: result.metadata?.categories || [],
+        enrichmentStats: result.metadata?.enrichmentStats || {},
+        houseMechanics: result.metadata?.houseMechanics || { processed: false }
+      }
+    };
+    
+  } catch (error) {
+    logger.error('Parse with streaming failed:', error);
+    throw error;
+  }
+}
+
 async function showStats() {
   try {
     const stats = await parser.getParsingStats();
@@ -155,6 +193,7 @@ process.on('uncaughtException', (error) => {
 module.exports = {
   main,
   runParse,
+  runParseWithStreaming,
   showStats,
   showHelp
 };

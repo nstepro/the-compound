@@ -67,24 +67,38 @@ class Parser {
     }
   }
 
-  async parseDocument(docId = null) {
+  async parseDocument(docId = null, streamCallback = null) {
     try {
       const documentId = docId || config.google.docId;
       
+      const sendEvent = (type, message, data = null) => {
+        if (streamCallback) {
+          streamCallback(type, message, data);
+        }
+      };
+
       logger.info(`Starting parsing process for document: ${documentId}`);
       logger.info(`Configuration: fullRefresh=${config.parsing.fullRefresh}, skipEnrichmentIfExists=${config.parsing.skipEnrichmentIfExists}`);
       
+      sendEvent('info', `Starting parser for document: ${documentId}`);
+      
       // Step 1: Load existing places for enrichment optimization
       logger.info('Step 1: Loading existing places');
+      sendEvent('step', 'Step 1: Loading existing places');
       const existingPlaces = await this.loadExistingPlaces();
+      sendEvent('info', `Loaded ${existingPlaces.length} existing places`);
       
       // Step 2: Fetch document from Google Docs
       logger.info('Step 2: Fetching document from Google Docs');
+      sendEvent('step', 'Step 2: Fetching document from Google Docs');
       const documentData = await googleDocsService.getDocumentAsMarkdown(documentId);
       
       logger.info(`Document fetched: "${documentData.title}"`);
       logger.info(`Document content length: ${documentData.content.length} characters`);
       logger.info(`Document sections: ${documentData.sections?.length || 0}`);
+      
+      sendEvent('info', `Document fetched: "${documentData.title}"`);
+      sendEvent('info', `Document content length: ${documentData.content.length} characters`);
       
       if (!documentData.content || documentData.content.trim().length === 0) {
         throw new Error('Document content is empty');
@@ -92,6 +106,7 @@ class Parser {
 
       // Step 2.5: Process House Mechanics section
       logger.info('Step 2.5: Processing House Mechanics section');
+      sendEvent('step', 'Step 2.5: Processing House Mechanics section');
       let houseMechanicsResults = null;
       try {
         const houseMechanicsData = await houseMechanicsService.processHouseMechanics(documentData.content);
@@ -100,11 +115,14 @@ class Parser {
           // Upload house mechanics files to Google Cloud Storage
           houseMechanicsResults = await googleCloudStorageService.uploadHouseMechanicsFiles(houseMechanicsData);
           logger.info(`House mechanics files processed and uploaded: ${Object.keys(houseMechanicsResults).join(', ')}`);
+          sendEvent('info', `House mechanics files processed and uploaded: ${Object.keys(houseMechanicsResults).join(', ')}`);
         } else {
           logger.info('No house mechanics data found in document');
+          sendEvent('info', 'No house mechanics data found in document');
         }
       } catch (houseMechanicsError) {
         logger.warn('Failed to process house mechanics:', houseMechanicsError);
+        sendEvent('warning', `Failed to process house mechanics: ${houseMechanicsError.message}`);
         // Continue with normal parsing even if house mechanics fails
       }
 
@@ -114,30 +132,39 @@ class Parser {
       // - Categories from document headers
       // - Original text preservation
       logger.info('Step 3: Parsing document with OpenAI (extracting context from text)');
+      sendEvent('step', 'Step 3: Parsing document with OpenAI');
       const parsedData = await openaiService.parseDocument(documentData.content, documentData.sections);
       
       if (!parsedData.places || parsedData.places.length === 0) {
         throw new Error('No places found in document');
       }
 
+      sendEvent('info', `Found ${parsedData.places.length} places in document`);
+
       // Step 4: Generate unique IDs for places
       logger.info('Step 4: Generating unique IDs for places');
+      sendEvent('step', 'Step 4: Generating unique IDs for places');
       const placesWithIds = parsedData.places.map(place => ({
         ...place,
         id: place.id || this.generatePlaceId(place.name)
       }));
+      sendEvent('info', `Generated IDs for ${placesWithIds.length} places`);
 
       // Step 5: Enrich with Google Places API data and generate tags (Phases 2-3 of optimized flow)
       // Phase 2: Google Places API provides accurate business data:
       // - Address, phone, website, rating, review count, price level, hours, coordinates
       // Phase 3: Tag generation using original text + Google Places API types
       logger.info('Step 5: Enriching place data with Google Places API and generating comprehensive tags');
+      sendEvent('step', 'Step 5: Enriching places with Google Places API');
       
       let enrichedPlaces;
       try {
         enrichedPlaces = await webEnrichmentService.enrichPlaces(placesWithIds, existingPlaces);
+        const enrichedCount = enrichedPlaces.filter(p => p.enrichmentStatus?.enriched).length;
+        sendEvent('info', `Enriched ${enrichedCount} places with Google Places API data`);
       } catch (enrichError) {
         logger.warn('Google Places API enrichment failed, using original data:', enrichError);
+        sendEvent('warning', `Google Places API enrichment failed: ${enrichError.message}`);
         enrichedPlaces = placesWithIds.map(place => ({
           ...place,
           enrichmentStatus: {
@@ -151,17 +178,21 @@ class Parser {
 
       // Step 6: Generate summary
       logger.info('Step 6: Generating summary');
+      sendEvent('step', 'Step 6: Generating summary');
       let summary;
       try {
         summary = await openaiService.generateSummary(enrichedPlaces);
+        sendEvent('info', 'Summary generated successfully');
       } catch (summaryError) {
         logger.warn('Summary generation failed:', summaryError);
+        sendEvent('warning', `Summary generation failed: ${summaryError.message}`);
         summary = `Vacation compound guide with ${enrichedPlaces.length} places`;
       }
 
       // Step 7: Build final output (Phase 4 of optimized flow)
       // Combines LLM-extracted context + Google Places API business data + comprehensive tags
       logger.info('Step 7: Building final output (merging context + business data + tags)');
+      sendEvent('step', 'Step 7: Building final output');
       const finalOutput = {
         metadata: {
           generatedAt: new Date().toISOString(),
@@ -193,17 +224,22 @@ class Parser {
 
       // Step 8: Validate output
       logger.info('Step 8: Validating output');
+      sendEvent('step', 'Step 8: Validating output');
       try {
         validateOutput(finalOutput);
         logger.info('Output validation successful');
+        sendEvent('info', 'Output validation successful');
       } catch (validationError) {
         logger.warn('Output validation failed:', validationError);
+        sendEvent('warning', `Output validation failed: ${validationError.message}`);
         // Continue with output but log the validation issue
       }
 
       // Step 9: Save to file
       logger.info('Step 9: Saving to file');
+      sendEvent('step', 'Step 9: Saving output');
       await this.saveOutput(finalOutput);
+      sendEvent('info', 'Output saved successfully');
       
       logger.info(`Parsing completed successfully! Generated ${finalOutput.places.length} places`);
       logger.info(`Categories found: ${finalOutput.metadata.categories.join(', ')}`);
@@ -213,11 +249,30 @@ class Parser {
         const processedHouses = Object.keys(houseMechanicsResults).filter(house => houseMechanicsResults[house].success);
         logger.info(`House mechanics processed and uploaded to Google Cloud Storage: ${processedHouses.join(', ')}`);
       }
+
+      // Calculate type breakdown for result
+      const typeBreakdown = finalOutput.places.reduce((acc, place) => {
+        acc[place.type] = (acc[place.type] || 0) + 1;
+        return acc;
+      }, {});
+
+      // Send final completion events
+      sendEvent('info', `🎉 Parsing completed successfully! Generated ${finalOutput.places.length} places`);
+      sendEvent('info', `📊 Categories: ${finalOutput.metadata.categories.join(', ')}`);
+      sendEvent('info', `📈 Enrichment stats: ${finalOutput.metadata.enrichmentStats.enrichedPlaces} enriched, ${finalOutput.metadata.enrichmentStats.skippedPlaces} skipped`);
+      
+      if (houseMechanicsResults) {
+        const processedHouses = Object.keys(houseMechanicsResults).filter(house => houseMechanicsResults[house].success);
+        sendEvent('info', `🏠 House mechanics processed: ${processedHouses.join(', ')}`);
+      }
       
       return finalOutput;
 
     } catch (error) {
       logger.error('Parsing failed:', error);
+      if (streamCallback) {
+        streamCallback('error', `Parsing failed: ${error.message}`);
+      }
       throw error;
     }
   }
