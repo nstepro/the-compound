@@ -110,7 +110,8 @@ class WebEnrichmentService {
         opening_hours: place.regularOpeningHours?.weekdayDescriptions,
         phone: place.nationalPhoneNumber,
         website: place.websiteUri,
-        user_rating_count: place.userRatingCount
+        user_rating_count: place.userRatingCount,
+        other_attributes: place
       }));
 
       logger.debug(`Found ${results.length} places for: ${query}`);

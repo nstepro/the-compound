@@ -17,8 +17,31 @@ class GoogleDocsService {
 
   async authenticate() {
     try {
-      // Load credentials from file
-      const credentials = JSON.parse(fs.readFileSync(config.google.credentialsPath, 'utf8'));
+      let credentials;
+      
+      // Check if credentials are provided as environment variable (for Heroku)
+      if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+        try {
+          credentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+          logger.info('Using Google credentials from environment variable');
+        } catch (parseError) {
+          logger.error('Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON:', parseError);
+          throw new Error('Invalid JSON in GOOGLE_APPLICATION_CREDENTIALS_JSON');
+        }
+      } else if (process.env.GOOGLE_APPLICATION_CREDENTIALS_BASE64) {
+        try {
+          const credentialsString = Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS_BASE64, 'base64').toString('utf8');
+          credentials = JSON.parse(credentialsString);
+          logger.info('Using Google credentials from base64 environment variable');
+        } catch (parseError) {
+          logger.error('Failed to parse GOOGLE_APPLICATION_CREDENTIALS_BASE64:', parseError);
+          throw new Error('Invalid base64 or JSON in GOOGLE_APPLICATION_CREDENTIALS_BASE64');
+        }
+      } else {
+        // Fall back to file-based credentials for local development
+        credentials = JSON.parse(fs.readFileSync(config.google.credentialsPath, 'utf8'));
+        logger.info('Using Google credentials from file');
+      }
       
       // Create auth instance
       const auth = new google.auth.GoogleAuth({

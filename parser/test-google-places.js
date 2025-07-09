@@ -18,7 +18,7 @@ async function testGooglePlacesAPI() {
   // Test 2: Try to search for a well-known place
   try {
     console.log('🔍 Testing Places Search...');
-    const results = await webEnrichmentService.searchGooglePlaces('McDonalds Maine United States', 1);
+    const results = await webEnrichmentService.searchGooglePlaces('Ancho Honey Maine', 1);
     
     // Save full response to JSON file in logs folder
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');

@@ -19,6 +19,7 @@
     "cheerio": "^1.1.0",
     "dotenv": "^16.3.1",
     "googleapis": "^126.0.1",
+    "jsonwebtoken": "^9.0.2",
     "langchain": "^0.2.0",
     "openai": "^4.20.1",
     "turndown": "^7.1.2",
