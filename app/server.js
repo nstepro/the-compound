@@ -251,9 +251,37 @@ app.post('/api/admin/parse', authenticateAdmin, async (req, res) => {
 });
 
 // Debug endpoint to test SSE connection
-app.get('/api/admin/debug/sse-test', authenticateAdmin, (req, res) => {
+app.get('/api/admin/debug/sse-test', (req, res) => {
   console.log('[DEBUG] SSE Test endpoint called');
   console.log('[DEBUG] Request headers:', JSON.stringify(req.headers, null, 2));
+  
+  // Use the same query parameter authentication as the main SSE endpoint
+  const token = req.query.token;
+  
+  if (!token) {
+    console.log('[DEBUG] No token provided');
+    return res.status(401).json({ success: false, message: 'Access token required' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      console.log('[DEBUG] Token verification failed:', err.message);
+      return res.status(403).json({ success: false, message: 'Invalid or expired token' });
+    }
+    
+    if (user.role !== 'admin') {
+      console.log('[DEBUG] Non-admin user attempted access:', user.role);
+      return res.status(403).json({ success: false, message: 'Admin access required' });
+    }
+    
+    console.log('[DEBUG] Token verified successfully for admin user');
+    // Token is valid, proceed with SSE test
+    handleSSETest(req, res, user);
+  });
+});
+
+function handleSSETest(req, res, user) {
+  console.log('[DEBUG] Setting up SSE test headers...');
   
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
@@ -323,7 +351,7 @@ app.get('/api/admin/debug/sse-test', authenticateAdmin, (req, res) => {
     console.error('[DEBUG] Test SSE request error:', err);
     clearInterval(testInterval);
   });
-});
+}
 
 // Debug endpoint to check server environment
 app.get('/api/admin/debug/server-info', authenticateAdmin, (req, res) => {
