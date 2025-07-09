@@ -8,6 +8,7 @@ const { openaiService } = require('./openai-service');
 const { webEnrichmentService } = require('./web-enrichment-service');
 const { validateOutput } = require('./schema');
 const { googleCloudStorageService } = require('./google-cloud-storage');
+const { houseMechanicsService } = require('./house-mechanics-service');
 
 class Parser {
   constructor() {
@@ -89,6 +90,24 @@ class Parser {
         throw new Error('Document content is empty');
       }
 
+      // Step 2.5: Process House Mechanics section
+      logger.info('Step 2.5: Processing House Mechanics section');
+      let houseMechanicsResults = null;
+      try {
+        const houseMechanicsData = await houseMechanicsService.processHouseMechanics(documentData.content);
+        
+        if (Object.keys(houseMechanicsData).length > 0) {
+          // Upload house mechanics files to Google Cloud Storage
+          houseMechanicsResults = await googleCloudStorageService.uploadHouseMechanicsFiles(houseMechanicsData);
+          logger.info(`House mechanics files processed and uploaded: ${Object.keys(houseMechanicsResults).join(', ')}`);
+        } else {
+          logger.info('No house mechanics data found in document');
+        }
+      } catch (houseMechanicsError) {
+        logger.warn('Failed to process house mechanics:', houseMechanicsError);
+        // Continue with normal parsing even if house mechanics fails
+      }
+
       // Step 3: Parse with OpenAI (Phase 1 of optimized flow)
       // LLM extracts ONLY what it can reliably determine from text:
       // - Place names, descriptions, notes, tags
@@ -158,6 +177,15 @@ class Parser {
             totalPlaces: enrichedPlaces.length,
             enrichedPlaces: enrichedPlaces.filter(p => p.enrichmentStatus?.enriched).length,
             skippedPlaces: enrichedPlaces.filter(p => p.enrichmentStatus?.enriched === false).length
+          },
+          houseMechanics: houseMechanicsResults ? {
+            processed: true,
+            files: houseMechanicsResults,
+            processedAt: new Date().toISOString(),
+            storage: 'google-cloud-storage'
+          } : {
+            processed: false,
+            reason: 'No house mechanics section found or processing failed'
           }
         },
         places: enrichedPlaces
@@ -180,6 +208,11 @@ class Parser {
       logger.info(`Parsing completed successfully! Generated ${finalOutput.places.length} places`);
       logger.info(`Categories found: ${finalOutput.metadata.categories.join(', ')}`);
       logger.info(`Enrichment stats: ${finalOutput.metadata.enrichmentStats.enrichedPlaces} enriched, ${finalOutput.metadata.enrichmentStats.skippedPlaces} skipped`);
+      
+      if (houseMechanicsResults) {
+        const processedHouses = Object.keys(houseMechanicsResults).filter(house => houseMechanicsResults[house].success);
+        logger.info(`House mechanics processed and uploaded to Google Cloud Storage: ${processedHouses.join(', ')}`);
+      }
       
       return finalOutput;
 
@@ -273,7 +306,8 @@ class Parser {
           sourceDocId: content.metadata?.sourceDocId,
           sourceDocTitle: content.metadata?.sourceDocTitle,
           categories: content.metadata?.categories || [],
-          enrichmentStats: content.metadata?.enrichmentStats || {}
+          enrichmentStats: content.metadata?.enrichmentStats || {},
+          houseMechanics: content.metadata?.houseMechanics || { processed: false }
         };
       } else {
         // Fallback to local file system
@@ -297,7 +331,8 @@ class Parser {
           sourceDocId: content.metadata?.sourceDocId,
           sourceDocTitle: content.metadata?.sourceDocTitle,
           categories: content.metadata?.categories || [],
-          enrichmentStats: content.metadata?.enrichmentStats || {}
+          enrichmentStats: content.metadata?.enrichmentStats || {},
+          houseMechanics: content.metadata?.houseMechanics || { processed: false }
         };
       }
     } catch (error) {

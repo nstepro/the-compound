@@ -4,7 +4,7 @@ const { z } = require('zod');
 const PlaceSchema = z.object({
   id: z.string().describe('Unique identifier for the place'),
   name: z.string().describe('Name of the place or activity'),
-  type: z.enum(['dining', 'activity', 'accommodation', 'shopping', 'other']).describe('Category of the place'),
+  type: z.enum(['dining', 'restaurant', 'activity', 'accommodation', 'shopping', 'other']).describe('Category of the place'),
   description: z.string().nullish().describe('Brief description of the place'),
   url: z.string().url().nullish().describe('Website URL if available'),
   address: z.string().optional().describe('Physical address'),

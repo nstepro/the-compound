@@ -39,6 +39,18 @@ GOOGLE_APPLICATION_CREDENTIALS_BASE64=base64_encoded_json
 ### Security Configuration
 - `JWT_SECRET` - Secret key for JWT token generation
 - `ADMIN_PASSWORD_HASH` - Bcrypt hash of admin password
+- `GUEST_PASSWORD_HASH` - Bcrypt hash of guest password (for accessing Lofty/Shady content)
+
+**Generate password hashes:**
+```bash
+# Interactive mode (prompts for password)
+node generate-password.js admin
+node generate-password.js guest
+
+# Direct mode (password as argument)
+node generate-password.js admin mySecurePassword123
+node generate-password.js guest myGuestPassword456
+```
 
 ## Optional Environment Variables
 
@@ -87,6 +99,7 @@ OPENAI_API_KEY=your_openai_api_key
 # Security Configuration
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-make-it-long-and-random
 ADMIN_PASSWORD_HASH=your_bcrypt_password_hash
+GUEST_PASSWORD_HASH=your_bcrypt_guest_password_hash
 
 # Google Cloud Storage Configuration (optional)
 GOOGLE_CLOUD_STORAGE_BUCKET=compound-places-storage
@@ -108,6 +121,7 @@ heroku config:set \
   OPENAI_API_KEY=your_openai_api_key \
   JWT_SECRET=your-super-secret-jwt-key-change-this-in-production \
   ADMIN_PASSWORD_HASH=your_bcrypt_password_hash \
+  GUEST_PASSWORD_HASH=your_bcrypt_guest_password_hash \
   GOOGLE_CLOUD_STORAGE_BUCKET=your-bucket-name \
   GOOGLE_CLOUD_STORAGE_FILE_NAME=compound-places.json \
   GOOGLE_CLOUD_STORAGE_ENABLED=true

@@ -48,7 +48,8 @@ class GoogleDocsService {
         credentials,
         scopes: [
           'https://www.googleapis.com/auth/documents.readonly',
-          'https://www.googleapis.com/auth/drive.readonly'
+          'https://www.googleapis.com/auth/drive.readonly',
+          'https://www.googleapis.com/auth/drive.file'
         ]
       });
 
@@ -86,6 +87,245 @@ class GoogleDocsService {
     } catch (error) {
       logger.error(`Failed to fetch document ${docId}:`, error);
       throw new Error(`Failed to fetch document: ${error.message}`);
+    }
+  }
+
+  async createFolder(name, parentFolderId = null) {
+    try {
+      if (!this.drive) {
+        await this.authenticate();
+      }
+
+      const fileMetadata = {
+        name: name,
+        mimeType: 'application/vnd.google-apps.folder'
+      };
+
+      if (parentFolderId) {
+        fileMetadata.parents = [parentFolderId];
+      }
+
+      const response = await this.drive.files.create({
+        resource: fileMetadata,
+        fields: 'id'
+      });
+
+      logger.info(`Created folder "${name}" with ID: ${response.data.id}`);
+      return response.data.id;
+    } catch (error) {
+      logger.error(`Failed to create folder "${name}":`, error);
+      throw new Error(`Failed to create folder: ${error.message}`);
+    }
+  }
+
+  async findFolder(name, parentFolderId = null) {
+    try {
+      if (!this.drive) {
+        await this.authenticate();
+      }
+
+      let query = `name='${name}' and mimeType='application/vnd.google-apps.folder' and trashed=false`;
+      
+      if (parentFolderId) {
+        query += ` and '${parentFolderId}' in parents`;
+      }
+
+      const response = await this.drive.files.list({
+        q: query,
+        fields: 'files(id, name)'
+      });
+
+      const folders = response.data.files;
+      
+      if (folders.length > 0) {
+        logger.info(`Found folder "${name}" with ID: ${folders[0].id}`);
+        return folders[0].id;
+      }
+
+      return null;
+    } catch (error) {
+      logger.error(`Failed to find folder "${name}":`, error);
+      throw new Error(`Failed to find folder: ${error.message}`);
+    }
+  }
+
+  async findOrCreateFolder(name, parentFolderId = null) {
+    try {
+      // First try to find existing folder
+      const existingFolderId = await this.findFolder(name, parentFolderId);
+      
+      if (existingFolderId) {
+        return existingFolderId;
+      }
+
+      // If not found, create new folder
+      return await this.createFolder(name, parentFolderId);
+    } catch (error) {
+      logger.error(`Failed to find or create folder "${name}":`, error);
+      throw error;
+    }
+  }
+
+  async uploadFile(fileName, content, mimeType = 'text/plain', folderId = null) {
+    try {
+      if (!this.drive) {
+        await this.authenticate();
+      }
+
+      const fileMetadata = {
+        name: fileName
+      };
+
+      if (folderId) {
+        fileMetadata.parents = [folderId];
+      }
+
+      const media = {
+        mimeType: mimeType,
+        body: content
+      };
+
+      const response = await this.drive.files.create({
+        resource: fileMetadata,
+        media: media,
+        fields: 'id, name, webViewLink'
+      });
+
+      logger.info(`Uploaded file "${fileName}" with ID: ${response.data.id}`);
+      return {
+        id: response.data.id,
+        name: response.data.name,
+        webViewLink: response.data.webViewLink
+      };
+    } catch (error) {
+      logger.error(`Failed to upload file "${fileName}":`, error);
+      throw new Error(`Failed to upload file: ${error.message}`);
+    }
+  }
+
+  async updateFile(fileId, content, mimeType = 'text/plain') {
+    try {
+      if (!this.drive) {
+        await this.authenticate();
+      }
+
+      const media = {
+        mimeType: mimeType,
+        body: content
+      };
+
+      const response = await this.drive.files.update({
+        fileId: fileId,
+        media: media,
+        fields: 'id, name, webViewLink'
+      });
+
+      logger.info(`Updated file with ID: ${fileId}`);
+      return {
+        id: response.data.id,
+        name: response.data.name,
+        webViewLink: response.data.webViewLink
+      };
+    } catch (error) {
+      logger.error(`Failed to update file with ID ${fileId}:`, error);
+      throw new Error(`Failed to update file: ${error.message}`);
+    }
+  }
+
+  async findFile(fileName, folderId = null) {
+    try {
+      if (!this.drive) {
+        await this.authenticate();
+      }
+
+      let query = `name='${fileName}' and trashed=false`;
+      
+      if (folderId) {
+        query += ` and '${folderId}' in parents`;
+      }
+
+      const response = await this.drive.files.list({
+        q: query,
+        fields: 'files(id, name, webViewLink)'
+      });
+
+      const files = response.data.files;
+      
+      if (files.length > 0) {
+        logger.info(`Found file "${fileName}" with ID: ${files[0].id}`);
+        return files[0];
+      }
+
+      return null;
+    } catch (error) {
+      logger.error(`Failed to find file "${fileName}":`, error);
+      throw new Error(`Failed to find file: ${error.message}`);
+    }
+  }
+
+  async uploadOrUpdateFile(fileName, content, mimeType = 'text/plain', folderId = null) {
+    try {
+      // First try to find existing file
+      const existingFile = await this.findFile(fileName, folderId);
+      
+      if (existingFile) {
+        // Update existing file
+        return await this.updateFile(existingFile.id, content, mimeType);
+      } else {
+        // Upload new file
+        return await this.uploadFile(fileName, content, mimeType, folderId);
+      }
+    } catch (error) {
+      logger.error(`Failed to upload or update file "${fileName}":`, error);
+      throw error;
+    }
+  }
+
+  async uploadHouseMechanicsFiles(houseMechanicsData) {
+    try {
+      logger.info('Uploading house mechanics files to Google Drive');
+      
+      // Create or find the house mechanics folder
+      const houseMechanicsFolderId = await this.findOrCreateFolder(
+        config.google.houseMechanicsFolder || 'House Mechanics'
+      );
+
+      const uploadResults = {};
+
+      // Upload each house's markdown file
+      for (const [houseName, markdownContent] of Object.entries(houseMechanicsData)) {
+        const fileName = `${houseName}.md`;
+        
+        try {
+          const result = await this.uploadOrUpdateFile(
+            fileName,
+            markdownContent,
+            'text/plain',
+            houseMechanicsFolderId
+          );
+          
+          uploadResults[houseName] = {
+            success: true,
+            fileId: result.id,
+            fileName: result.name,
+            webViewLink: result.webViewLink
+          };
+          
+          logger.info(`Successfully uploaded ${fileName} to Google Drive`);
+        } catch (fileError) {
+          uploadResults[houseName] = {
+            success: false,
+            error: fileError.message
+          };
+          
+          logger.error(`Failed to upload ${fileName}:`, fileError);
+        }
+      }
+
+      return uploadResults;
+    } catch (error) {
+      logger.error('Failed to upload house mechanics files:', error);
+      throw new Error(`Failed to upload house mechanics files: ${error.message}`);
     }
   }
 

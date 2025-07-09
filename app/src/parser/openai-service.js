@@ -258,6 +258,30 @@ ${parsedData.places.map((p, i) => `${i + 1}. ${p.name} (${p.type}) - Category: $
       return `Vacation compound guide with ${places.length} places in ${config.location.region} including restaurants, activities, and attractions.`;
     }
   }
+
+  async generateCompletion(prompt) {
+    try {
+      if (!this.model) {
+        this.initialize();
+      }
+
+      logger.info('Generating completion with OpenAI');
+      
+      const messages = [
+        new SystemMessage("You are a helpful assistant that follows instructions precisely."),
+        new HumanMessage(prompt)
+      ];
+
+      const response = await this.model.invoke(messages);
+      
+      logger.info('Generated completion');
+      return response.content.trim();
+
+    } catch (error) {
+      logger.error('Completion generation failed:', error);
+      throw new Error(`Completion generation failed: ${error.message}`);
+    }
+  }
 }
 
 const openaiService = new OpenAIService();

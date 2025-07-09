@@ -15,7 +15,8 @@ const config = {
   // Google API Configuration  
   google: {
     credentialsPath: process.env.GOOGLE_APPLICATION_CREDENTIALS || './credentials.json',
-    docId: process.env.GOOGLE_DOC_ID
+    docId: process.env.GOOGLE_DOC_ID,
+    houseMechanicsFolder: process.env.GOOGLE_HOUSE_MECHANICS_FOLDER || 'House Mechanics'
   },
 
   // Google Places API Configuration

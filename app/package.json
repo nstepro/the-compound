@@ -33,6 +33,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-map-gl": "^8.0.4",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.6.3",
     "turndown": "^7.1.2",
     "winston": "^3.11.0",

@@ -63,20 +63,29 @@ class GoogleCloudStorageService {
     }
   }
 
-  async uploadFile(data, filename = null) {
+  async uploadFile(data, filename = null, contentType = null) {
     await this.initialize();
 
     try {
       const fileName = filename || config.googleCloudStorage.fileName;
       const file = this.bucket.file(fileName);
       
-      // Convert data to JSON string if it's an object
-      const content = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+      // Convert data to JSON string if it's an object and no specific content type is provided
+      let content;
+      let fileContentType;
+      
+      if (typeof data === 'string') {
+        content = data;
+        fileContentType = contentType || 'text/plain';
+      } else {
+        content = JSON.stringify(data, null, 2);
+        fileContentType = contentType || 'application/json';
+      }
       
       // Upload the file
       await file.save(content, {
         metadata: {
-          contentType: 'application/json',
+          contentType: fileContentType,
           metadata: {
             uploadedAt: new Date().toISOString(),
             source: 'compound-parser'
@@ -93,6 +102,72 @@ class GoogleCloudStorageService {
     } catch (error) {
       logger.error('Failed to upload file to GCS:', error);
       throw new Error(`Failed to upload file to Google Cloud Storage: ${error.message}`);
+    }
+  }
+
+  async uploadMarkdownFile(content, filename) {
+    await this.initialize();
+
+    try {
+      const file = this.bucket.file(filename);
+      
+      // Upload the markdown file
+      await file.save(content, {
+        metadata: {
+          contentType: 'text/markdown',
+          metadata: {
+            uploadedAt: new Date().toISOString(),
+            source: 'compound-parser-house-mechanics'
+          }
+        }
+      });
+
+      logger.info(`Markdown file uploaded successfully to GCS: ${filename}`);
+      return {
+        success: true,
+        fileName: filename,
+        url: `gs://${config.googleCloudStorage.bucketName}/${filename}`
+      };
+    } catch (error) {
+      logger.error(`Failed to upload markdown file ${filename} to GCS:`, error);
+      throw new Error(`Failed to upload markdown file to Google Cloud Storage: ${error.message}`);
+    }
+  }
+
+  async uploadHouseMechanicsFiles(houseMechanicsData) {
+    try {
+      logger.info('Uploading house mechanics files to Google Cloud Storage');
+      
+      const uploadResults = {};
+
+      // Upload each house's markdown file
+      for (const [houseName, markdownContent] of Object.entries(houseMechanicsData)) {
+        const fileName = `house-mechanics-${houseName}.md`;
+        
+        try {
+          const result = await this.uploadMarkdownFile(markdownContent, fileName);
+          
+          uploadResults[houseName] = {
+            success: true,
+            fileName: result.fileName,
+            url: result.url
+          };
+          
+          logger.info(`Successfully uploaded ${fileName} to Google Cloud Storage`);
+        } catch (fileError) {
+          uploadResults[houseName] = {
+            success: false,
+            error: fileError.message
+          };
+          
+          logger.error(`Failed to upload ${fileName}:`, fileError);
+        }
+      }
+
+      return uploadResults;
+    } catch (error) {
+      logger.error('Failed to upload house mechanics files:', error);
+      throw new Error(`Failed to upload house mechanics files: ${error.message}`);
     }
   }
 
@@ -123,6 +198,35 @@ class GoogleCloudStorageService {
       }
       logger.error('Failed to download file from GCS:', error);
       throw new Error(`Failed to download file from Google Cloud Storage: ${error.message}`);
+    }
+  }
+
+  async downloadMarkdownFile(filename) {
+    await this.initialize();
+
+    try {
+      const file = this.bucket.file(filename);
+      
+      // Check if file exists
+      const [exists] = await file.exists();
+      if (!exists) {
+        logger.info(`Markdown file ${filename} does not exist in GCS`);
+        return null;
+      }
+
+      // Download the file as text
+      const [contents] = await file.download();
+      const markdownContent = contents.toString('utf8');
+      
+      logger.info(`Markdown file downloaded successfully from GCS: ${filename}`);
+      return markdownContent;
+    } catch (error) {
+      if (error.code === 404) {
+        logger.info(`Markdown file ${filename} not found in GCS`);
+        return null;
+      }
+      logger.error('Failed to download markdown file from GCS:', error);
+      throw new Error(`Failed to download markdown file from Google Cloud Storage: ${error.message}`);
     }
   }
 

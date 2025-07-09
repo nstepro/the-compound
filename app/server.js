@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 // Security configuration
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production';
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '$2b$10$example.hash.replace.with.real.hash';
+const GUEST_PASSWORD_HASH = process.env.GUEST_PASSWORD_HASH || '$2b$10$example.guest.hash.replace.with.real.hash';
 
 // Middleware for JSON parsing
 app.use(express.json());
@@ -36,6 +37,52 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
+// Admin-only authentication middleware
+const authenticateAdmin = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: 'Access token required' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ success: false, message: 'Invalid or expired token' });
+    }
+    
+    if (user.role !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Admin access required' });
+    }
+    
+    req.user = user;
+    next();
+  });
+};
+
+// Guest or admin authentication middleware
+const authenticateGuestOrAdmin = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: 'Access token required' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ success: false, message: 'Invalid or expired token' });
+    }
+    
+    if (user.role !== 'admin' && user.role !== 'guest') {
+      return res.status(403).json({ success: false, message: 'Guest or admin access required' });
+    }
+    
+    req.user = user;
+    next();
+  });
+};
+
 // Authentication endpoint
 app.post('/api/auth/login', async (req, res) => {
   try {
@@ -45,16 +92,24 @@ app.post('/api/auth/login', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Password is required' });
     }
 
-    // Compare password with hash
-    const isValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
+    // Check both admin and guest passwords
+    const isAdminValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
+    const isGuestValid = await bcrypt.compare(password, GUEST_PASSWORD_HASH);
     
-    if (!isValid) {
+    let userRole = null;
+    if (isAdminValid) {
+      userRole = 'admin';
+    } else if (isGuestValid) {
+      userRole = 'guest';
+    }
+    
+    if (!userRole) {
       return res.status(401).json({ success: false, message: 'Invalid password' });
     }
 
-    // Generate JWT token
+    // Generate JWT token with role
     const token = jwt.sign(
-      { admin: true, timestamp: Date.now() },
+      { role: userRole, timestamp: Date.now() },
       JWT_SECRET,
       { expiresIn: '1h' } // Token expires in 1 hour
     );
@@ -62,7 +117,8 @@ app.post('/api/auth/login', async (req, res) => {
     res.json({
       success: true,
       message: 'Login successful',
-      token: token
+      token: token,
+      role: userRole
     });
   } catch (error) {
     console.error('Login error:', error);
@@ -115,8 +171,70 @@ app.get('/api/compound-places', async (req, res) => {
   }
 });
 
+// API endpoint to serve house mechanics markdown files (protected with guest/admin auth)
+app.get('/api/house-mechanics/:house', authenticateGuestOrAdmin, async (req, res) => {
+  try {
+    const { house } = req.params;
+    
+    // Validate house parameter
+    if (!['lofty', 'shady'].includes(house)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid house parameter. Must be "lofty" or "shady".'
+      });
+    }
+    
+    const config = require('./src/parser/config').config;
+    const filename = `house-mechanics-${house}.md`;
+    
+    if (config.googleCloudStorage.enabled) {
+      // Fetch from Google Cloud Storage
+      const markdownContent = await googleCloudStorageService.downloadMarkdownFile(filename);
+      
+      if (!markdownContent) {
+        return res.status(404).json({
+          success: false,
+          message: `House mechanics file for ${house} not found. Please ensure the file exists in Google Cloud Storage.`
+        });
+      }
+
+      res.json({
+        success: true,
+        content: markdownContent,
+        house: house,
+        filename: filename
+      });
+    } else {
+      // Fallback to local file system (for development)
+      const localPath = path.join(__dirname, 'public', filename);
+      
+      if (!fs.existsSync(localPath)) {
+        return res.status(404).json({
+          success: false,
+          message: `House mechanics file for ${house} not found locally. Please ensure the file exists or enable Google Cloud Storage.`
+        });
+      }
+
+      const markdownContent = fs.readFileSync(localPath, 'utf8');
+      res.json({
+        success: true,
+        content: markdownContent,
+        house: house,
+        filename: filename
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching house mechanics:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch house mechanics data',
+      error: error.message
+    });
+  }
+});
+
 // Admin API endpoints (now protected)
-app.post('/api/admin/parse', authenticateToken, async (req, res) => {
+app.post('/api/admin/parse', authenticateAdmin, async (req, res) => {
   try {
     console.log('Running parser...');
     
@@ -144,6 +262,10 @@ app.get('/api/admin/parse-stream', (req, res) => {
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) {
       return res.status(403).json({ success: false, message: 'Invalid or expired token' });
+    }
+    
+    if (user.role !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Admin access required' });
     }
     
     // Token is valid, proceed with SSE
@@ -186,7 +308,7 @@ async function handleParseStream(req, res, user) {
   }
 }
 
-app.get('/api/admin/download-output', authenticateToken, async (req, res) => {
+app.get('/api/admin/download-output', authenticateAdmin, async (req, res) => {
   try {
     const config = require('./src/parser/config').config;
     
