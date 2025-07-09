@@ -15,7 +15,7 @@ interface ParseResult {
 }
 
 interface StreamEvent {
-  type: 'connected' | 'step' | 'info' | 'warning' | 'error' | 'completed';
+  type: 'connected' | 'step' | 'info' | 'warning' | 'error' | 'completed' | 'heartbeat';
   message: string;
   timestamp: string;
   data?: any;
@@ -61,6 +61,7 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
       return;
     }
 
+    console.log('[CLIENT] Starting streaming parser...');
     setIsRunning(true);
     setIsStreaming(true);
     setStreamingLogs([]);
@@ -68,20 +69,37 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
     setLastResult(null);
 
     try {
-      const eventSource = new EventSource(
-        `/api/admin/parse-stream?token=${encodeURIComponent(authToken)}`
-      );
+      const streamUrl = `/api/admin/parse-stream?token=${encodeURIComponent(authToken)}`;
+      console.log('[CLIENT] Connecting to stream URL:', streamUrl);
+      
+      const eventSource = new EventSource(streamUrl);
       eventSourceRef.current = eventSource;
 
+      console.log('[CLIENT] EventSource created, readyState:', eventSource.readyState);
+
+      eventSource.onopen = (event) => {
+        console.log('[CLIENT] EventSource connection opened:', event);
+        console.log('[CLIENT] EventSource readyState after open:', eventSource.readyState);
+      };
+
       eventSource.onmessage = (event) => {
+        console.log('[CLIENT] Received SSE message:', event.data);
+        
         try {
           const data: StreamEvent = JSON.parse(event.data);
+          console.log('[CLIENT] Parsed SSE data:', data);
           
-          setStreamingLogs(prev => [...prev, data]);
+          setStreamingLogs(prev => {
+            const newLogs = [...prev, data];
+            console.log('[CLIENT] Updated streaming logs count:', newLogs.length);
+            return newLogs;
+          });
           
           if (data.type === 'step') {
+            console.log('[CLIENT] Setting current step:', data.message);
             setCurrentStep(data.message);
           } else if (data.type === 'completed') {
+            console.log('[CLIENT] Parser completed:', data.data);
             setLastResult(data.data);
             setCurrentStep('Completed');
             setIsRunning(false);
@@ -95,6 +113,7 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
               icon: <IconCheck size={16} />,
             });
           } else if (data.type === 'error') {
+            console.log('[CLIENT] Parser error:', data.message);
             setCurrentStep('Error');
             setIsRunning(false);
             setIsStreaming(false);
@@ -106,29 +125,71 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
               color: 'red',
               icon: <IconX size={16} />,
             });
+          } else if (data.type === 'heartbeat') {
+            console.log('[CLIENT] Heartbeat received at', data.timestamp);
+          } else {
+            console.log('[CLIENT] Other event type:', data.type, data.message);
           }
         } catch (error) {
-          console.error('Error parsing stream event:', error);
+          console.error('[CLIENT] Error parsing stream event:', error);
+          console.error('[CLIENT] Raw event data:', event.data);
         }
       };
 
       eventSource.onerror = (error) => {
-        console.error('EventSource error:', error);
+        console.error('[CLIENT] EventSource error:', error);
+        console.error('[CLIENT] EventSource readyState:', eventSource.readyState);
+        console.error('[CLIENT] EventSource url:', eventSource.url);
+        
         setIsRunning(false);
         setIsStreaming(false);
-        eventSource.close();
         
         if (eventSource.readyState === EventSource.CLOSED) {
+          console.log('[CLIENT] Connection was closed');
           notifications.show({
             title: 'Connection lost',
             message: 'Lost connection to parser stream',
             color: 'red',
             icon: <IconX size={16} />,
           });
+        } else if (eventSource.readyState === EventSource.CONNECTING) {
+          console.log('[CLIENT] Still trying to connect...');
+        } else {
+          console.log('[CLIENT] Unknown connection state');
         }
+        
+        eventSource.close();
       };
+
+      // Add a timeout to detect if connection never establishes
+      const connectionTimeout = setTimeout(() => {
+        if (eventSource.readyState === EventSource.CONNECTING) {
+          console.error('[CLIENT] Connection timeout - never established');
+          eventSource.close();
+          setIsRunning(false);
+          setIsStreaming(false);
+          
+          notifications.show({
+            title: 'Connection timeout',
+            message: 'Could not establish connection to parser stream',
+            color: 'red',
+            icon: <IconX size={16} />,
+          });
+        }
+      }, 30000); // 30 second timeout
+
+      // Clear timeout when connection is established
+      eventSource.addEventListener('open', () => {
+        clearTimeout(connectionTimeout);
+      });
+
+      // Clear timeout when connection fails
+      eventSource.addEventListener('error', () => {
+        clearTimeout(connectionTimeout);
+      });
+
     } catch (error) {
-      console.error('Error starting stream:', error);
+      console.error('[CLIENT] Error starting stream:', error);
       setIsRunning(false);
       setIsStreaming(false);
       
@@ -249,6 +310,150 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
     }
   };
 
+  const handleDebugServerInfo = async () => {
+    try {
+      const response = await fetch('/api/admin/debug/server-info', {
+        headers: getAuthHeaders(),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch server info');
+      }
+      
+      const info = await response.json();
+      console.log('[DEBUG] Server info:', info);
+      
+      notifications.show({
+        title: 'Server Info',
+        message: `Node: ${info.nodeVersion}, Platform: ${info.platform}, SSE: ${info.serverCapabilities.sse}`,
+        color: 'blue',
+      });
+    } catch (error) {
+      console.error('[DEBUG] Error fetching server info:', error);
+      notifications.show({
+        title: 'Debug failed',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        color: 'red',
+      });
+    }
+  };
+
+  const handleDebugSSETest = async () => {
+    if (!authToken) {
+      notifications.show({
+        title: 'Authentication Error',
+        message: 'No authentication token found',
+        color: 'red',
+        icon: <IconX size={16} />,
+      });
+      return;
+    }
+
+    console.log('[DEBUG] Starting SSE test...');
+    
+    try {
+      const testUrl = `/api/admin/debug/sse-test?token=${encodeURIComponent(authToken)}`;
+      console.log('[DEBUG] Connecting to test URL:', testUrl);
+      
+      const eventSource = new EventSource(testUrl);
+      let messageCount = 0;
+
+      eventSource.onopen = (event) => {
+        console.log('[DEBUG] Test SSE connection opened:', event);
+        notifications.show({
+          title: 'SSE Test',
+          message: 'Test connection established',
+          color: 'green',
+        });
+      };
+
+      eventSource.onmessage = (event) => {
+        messageCount++;
+        console.log(`[DEBUG] Test SSE message ${messageCount}:`, event.data);
+        
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === 'test-complete') {
+            eventSource.close();
+            notifications.show({
+              title: 'SSE Test Complete',
+              message: `Received ${messageCount} messages successfully`,
+              color: 'green',
+            });
+          }
+        } catch (error) {
+          console.error('[DEBUG] Error parsing test message:', error);
+        }
+      };
+
+      eventSource.onerror = (error) => {
+        console.error('[DEBUG] Test SSE error:', error);
+        console.error('[DEBUG] Test SSE readyState:', eventSource.readyState);
+        eventSource.close();
+        
+        notifications.show({
+          title: 'SSE Test Failed',
+          message: `Connection failed after ${messageCount} messages`,
+          color: 'red',
+        });
+      };
+
+    } catch (error) {
+      console.error('[DEBUG] Error starting SSE test:', error);
+      notifications.show({
+        title: 'SSE Test Failed',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        color: 'red',
+      });
+    }
+  };
+
+  const handleDebugSimpleStream = async () => {
+    try {
+      const response = await fetch('/api/admin/debug/simple-stream', {
+        headers: getAuthHeaders(),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to start simple stream');
+      }
+      
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let messageCount = 0;
+      
+      if (reader) {
+        console.log('[DEBUG] Starting simple stream reader...');
+        
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            
+            const chunk = decoder.decode(value);
+            messageCount++;
+            console.log(`[DEBUG] Simple stream chunk ${messageCount}:`, chunk);
+          }
+          
+          notifications.show({
+            title: 'Simple Stream Test',
+            message: `Received ${messageCount} chunks successfully`,
+            color: 'green',
+          });
+        } finally {
+          reader.releaseLock();
+        }
+      }
+    } catch (error) {
+      console.error('[DEBUG] Error with simple stream:', error);
+      notifications.show({
+        title: 'Simple Stream Test Failed',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        color: 'red',
+      });
+    }
+  };
+
   return (
     <Container size="lg" mt="xl">
       <Stack gap="xl">
@@ -310,6 +515,38 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
               >
                 Download Output
               </Button>
+            </div>
+            
+            <div style={{ marginTop: '1rem' }}>
+              <Text size="sm" fw={500} mb="xs" c="dimmed">Debug Tools:</Text>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <Button
+                  onClick={handleDebugServerInfo}
+                  size="xs"
+                  variant="light"
+                  color="blue"
+                >
+                  Server Info
+                </Button>
+                
+                <Button
+                  onClick={handleDebugSSETest}
+                  size="xs"
+                  variant="light"
+                  color="green"
+                >
+                  Test SSE
+                </Button>
+                
+                <Button
+                  onClick={handleDebugSimpleStream}
+                  size="xs"
+                  variant="light"
+                  color="orange"
+                >
+                  Test Simple Stream
+                </Button>
+              </div>
             </div>
 
             {isRunning && !isStreaming && (

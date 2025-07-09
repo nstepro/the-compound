@@ -250,30 +250,174 @@ app.post('/api/admin/parse', authenticateAdmin, async (req, res) => {
   }
 });
 
+// Debug endpoint to test SSE connection
+app.get('/api/admin/debug/sse-test', authenticateAdmin, (req, res) => {
+  console.log('[DEBUG] SSE Test endpoint called');
+  console.log('[DEBUG] Request headers:', JSON.stringify(req.headers, null, 2));
+  
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Cache-Control',
+    'X-Accel-Buffering': 'no',
+    'Content-Encoding': 'none'
+  });
+
+  console.log('[DEBUG] Headers sent');
+
+  // Send initial message
+  const initialMessage = `data: ${JSON.stringify({ type: 'test', message: 'SSE test connection established', timestamp: new Date().toISOString() })}\n\n`;
+  res.write(initialMessage);
+  console.log('[DEBUG] Initial message sent');
+
+  // Add padding
+  res.write(':' + ' '.repeat(2048) + '\n\n');
+  console.log('[DEBUG] Padding sent');
+
+  if (res.flush) {
+    res.flush();
+    console.log('[DEBUG] Response flushed');
+  }
+
+  let counter = 0;
+  const testInterval = setInterval(() => {
+    counter++;
+    const testMessage = `data: ${JSON.stringify({ 
+      type: 'test-message', 
+      message: `Test message ${counter}`, 
+      timestamp: new Date().toISOString(),
+      counter: counter
+    })}\n\n`;
+    
+    try {
+      res.write(testMessage);
+      if (res.flush) {
+        res.flush();
+      }
+      console.log(`[DEBUG] Test message ${counter} sent`);
+      
+      if (counter >= 5) {
+        clearInterval(testInterval);
+        res.write(`data: ${JSON.stringify({ type: 'test-complete', message: 'Test completed', timestamp: new Date().toISOString() })}\n\n`);
+        if (res.flush) {
+          res.flush();
+        }
+        console.log('[DEBUG] Test completed, ending connection');
+        res.end();
+      }
+    } catch (error) {
+      console.error('[DEBUG] Error sending test message:', error);
+      clearInterval(testInterval);
+      res.end();
+    }
+  }, 1000);
+
+  req.on('close', () => {
+    console.log('[DEBUG] Test SSE client disconnected');
+    clearInterval(testInterval);
+  });
+
+  req.on('error', (err) => {
+    console.error('[DEBUG] Test SSE request error:', err);
+    clearInterval(testInterval);
+  });
+});
+
+// Debug endpoint to check server environment
+app.get('/api/admin/debug/server-info', authenticateAdmin, (req, res) => {
+  const serverInfo = {
+    nodeVersion: process.version,
+    platform: process.platform,
+    environment: process.env.NODE_ENV || 'development',
+    port: PORT,
+    headers: req.headers,
+    timestamp: new Date().toISOString(),
+    hasFlushMethod: typeof res.flush === 'function',
+    serverCapabilities: {
+      sse: true,
+      compression: !!process.env.COMPRESSION_ENABLED,
+      proxy: !!req.headers['x-forwarded-for'],
+      heroku: !!process.env.DYNO,
+      cloudflare: !!req.headers['cf-ray']
+    }
+  };
+  
+  console.log('[DEBUG] Server info requested:', JSON.stringify(serverInfo, null, 2));
+  res.json(serverInfo);
+});
+
+// Debug endpoint to test simple streaming
+app.get('/api/admin/debug/simple-stream', authenticateAdmin, (req, res) => {
+  console.log('[DEBUG] Simple stream test started');
+  
+  res.writeHead(200, {
+    'Content-Type': 'text/plain',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+    'X-Accel-Buffering': 'no'
+  });
+
+  let count = 0;
+  const interval = setInterval(() => {
+    count++;
+    const message = `Message ${count} at ${new Date().toISOString()}\n`;
+    res.write(message);
+    
+    if (res.flush) {
+      res.flush();
+    }
+    
+    console.log(`[DEBUG] Simple stream message ${count} sent`);
+    
+    if (count >= 5) {
+      clearInterval(interval);
+      res.write('Stream completed\n');
+      res.end();
+      console.log('[DEBUG] Simple stream completed');
+    }
+  }, 1000);
+
+  req.on('close', () => {
+    console.log('[DEBUG] Simple stream client disconnected');
+    clearInterval(interval);
+  });
+});
+
 // SSE endpoint for streaming parser output
 app.get('/api/admin/parse-stream', (req, res) => {
+  console.log('[SSE] New connection attempt from:', req.headers['user-agent']);
+  console.log('[SSE] Request headers:', JSON.stringify(req.headers, null, 2));
+  
   // Custom authentication for SSE (query parameter)
   const token = req.query.token;
   
   if (!token) {
+    console.log('[SSE] No token provided');
     return res.status(401).json({ success: false, message: 'Access token required' });
   }
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) {
+      console.log('[SSE] Token verification failed:', err.message);
       return res.status(403).json({ success: false, message: 'Invalid or expired token' });
     }
     
     if (user.role !== 'admin') {
+      console.log('[SSE] Non-admin user attempted access:', user.role);
       return res.status(403).json({ success: false, message: 'Admin access required' });
     }
     
+    console.log('[SSE] Token verified successfully for admin user');
     // Token is valid, proceed with SSE
     handleParseStream(req, res, user);
   });
 });
 
 async function handleParseStream(req, res, user) {
+  console.log('[SSE] Setting up SSE headers...');
+  
   // Set up SSE headers with Heroku-specific headers to prevent buffering
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
@@ -285,44 +429,103 @@ async function handleParseStream(req, res, user) {
     'Content-Encoding': 'none' // Prevent compression buffering
   });
 
+  console.log('[SSE] Headers set, sending initial message...');
+
   // Send initial connection message with padding and flush
   const initialMessage = `data: ${JSON.stringify({ type: 'connected', message: 'Connected to parser stream' })}\n\n`;
   res.write(initialMessage);
+  console.log('[SSE] Initial message sent');
   
   // Add padding to work around buffering and flush immediately
-  res.write(':' + ' '.repeat(2048) + '\n\n'); // 2KB padding comment
+  const padding = ':' + ' '.repeat(2048) + '\n\n'; // 2KB padding comment
+  res.write(padding);
+  console.log('[SSE] Padding sent');
   
   // Ensure the response is flushed immediately
   if (res.flush) {
     res.flush();
+    console.log('[SSE] Response flushed');
+  } else {
+    console.log('[SSE] Warning: res.flush() not available');
   }
+
+  // Test if the connection is working by sending periodic heartbeats
+  let heartbeatInterval;
+  let eventCount = 0;
 
   // Function to send events to client with immediate flushing
   const sendEvent = (type, message, data = null) => {
-    const eventData = { type, message, timestamp: new Date().toISOString() };
+    eventCount++;
+    const eventData = { type, message, timestamp: new Date().toISOString(), eventId: eventCount };
     if (data) eventData.data = data;
     
     const eventString = `data: ${JSON.stringify(eventData)}\n\n`;
-    res.write(eventString);
+    console.log(`[SSE] Sending event #${eventCount}:`, type, message);
     
-    // Flush immediately to prevent buffering
-    if (res.flush) {
-      res.flush();
+    try {
+      res.write(eventString);
+      
+      // Flush immediately to prevent buffering
+      if (res.flush) {
+        res.flush();
+      }
+      
+      console.log(`[SSE] Event #${eventCount} sent and flushed`);
+    } catch (writeError) {
+      console.error(`[SSE] Error sending event #${eventCount}:`, writeError);
+      throw writeError;
     }
   };
 
+  // Handle client disconnect
+  req.on('close', () => {
+    console.log('[SSE] Client disconnected');
+    if (heartbeatInterval) {
+      clearInterval(heartbeatInterval);
+    }
+  });
+
+  req.on('error', (err) => {
+    console.error('[SSE] Request error:', err);
+    if (heartbeatInterval) {
+      clearInterval(heartbeatInterval);
+    }
+  });
+
+  // Send heartbeat every 10 seconds to keep connection alive
+  heartbeatInterval = setInterval(() => {
+    try {
+      sendEvent('heartbeat', 'Connection alive');
+    } catch (error) {
+      console.error('[SSE] Heartbeat failed:', error);
+      clearInterval(heartbeatInterval);
+    }
+  }, 10000);
+
   try {
+    console.log('[SSE] Starting parser with streaming...');
+    
+    // Send initial status
+    sendEvent('status', 'Starting parser...');
+    
     // Run the main parser with streaming support
     const result = await runParseWithStreaming(null, sendEvent);
+    
+    console.log('[SSE] Parser completed successfully');
     
     // Send final result
     sendEvent('completed', 'Parser completed successfully', result);
     
   } catch (error) {
-    console.error('Streaming parser error:', error);
+    console.error('[SSE] Streaming parser error:', error);
     sendEvent('error', `Parser failed: ${error.message}`);
   } finally {
+    console.log('[SSE] Cleaning up connection...');
+    if (heartbeatInterval) {
+      clearInterval(heartbeatInterval);
+    }
     res.end();
+    console.log('[SSE] Connection ended');
   }
 }
 
