@@ -233,6 +233,140 @@ app.get('/api/house-mechanics/:house', authenticateGuestOrAdmin, async (req, res
   }
 });
 
+// Parser status tracking for polling approach
+let parserStatus = {
+  isRunning: false,
+  currentStep: '',
+  logs: [],
+  result: null,
+  error: null,
+  startTime: null,
+  lastUpdate: null
+};
+
+// Add status event to parser status
+const addStatusEvent = (type, message, data = null) => {
+  const event = {
+    type,
+    message,
+    timestamp: new Date().toISOString(),
+    data
+  };
+  
+  parserStatus.logs.push(event);
+  parserStatus.lastUpdate = new Date().toISOString();
+  
+  if (type === 'step') {
+    parserStatus.currentStep = message;
+  }
+  
+  // Keep only last 100 log entries to prevent memory issues
+  if (parserStatus.logs.length > 100) {
+    parserStatus.logs = parserStatus.logs.slice(-100);
+  }
+  
+  console.log(`[PARSER-STATUS] ${type}: ${message}`);
+};
+
+// Polling-based parser endpoint
+app.post('/api/admin/parse-polling', authenticateAdmin, async (req, res) => {
+  if (parserStatus.isRunning) {
+    return res.json({
+      success: false,
+      message: 'Parser is already running'
+    });
+  }
+
+  // Reset status
+  parserStatus = {
+    isRunning: true,
+    currentStep: 'Starting...',
+    logs: [],
+    result: null,
+    error: null,
+    startTime: new Date().toISOString(),
+    lastUpdate: new Date().toISOString()
+  };
+
+  // Start parser in background
+  runParserAsync();
+
+  res.json({
+    success: true,
+    message: 'Parser started successfully',
+    data: {
+      isRunning: true,
+      startTime: parserStatus.startTime
+    }
+  });
+});
+
+// Get parser status for polling
+app.get('/api/admin/parse-status', authenticateAdmin, (req, res) => {
+  res.json({
+    success: true,
+    data: parserStatus
+  });
+});
+
+// Stop parser (if possible)
+app.post('/api/admin/parse-stop', authenticateAdmin, (req, res) => {
+  if (!parserStatus.isRunning) {
+    return res.json({
+      success: false,
+      message: 'Parser is not running'
+    });
+  }
+
+  // Mark as stopped (the actual parser may continue but we'll ignore its updates)
+  parserStatus.isRunning = false;
+  parserStatus.currentStep = 'Stopped by user';
+  addStatusEvent('info', 'Parser stopped by user');
+
+  res.json({
+    success: true,
+    message: 'Parser stop requested'
+  });
+});
+
+// Async parser function that updates status
+async function runParserAsync() {
+  try {
+    addStatusEvent('info', 'Starting parser...');
+    
+    // Use the parser with status callback
+    const result = await runParseWithStreaming(null, addStatusEvent);
+    
+    parserStatus.isRunning = false;
+    parserStatus.result = result;
+    parserStatus.currentStep = 'Completed';
+    addStatusEvent('completed', 'Parser completed successfully', result);
+    
+    // Handle file copying for local development if needed
+    const config = require('./src/parser/config').config;
+    if (!config.googleCloudStorage.enabled) {
+      const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
+      const publicPath = path.join(__dirname, 'public', 'compound-places.json');
+      
+      if (fs.existsSync(outputPath)) {
+        try {
+          fs.copyFileSync(outputPath, publicPath);
+          console.log('Successfully copied output file to public directory');
+        } catch (copyError) {
+          console.error('Failed to copy file to public directory:', copyError);
+        }
+      }
+    }
+    
+  } catch (error) {
+    console.error('Async parser execution failed:', error);
+    parserStatus.isRunning = false;
+    parserStatus.error = error.message;
+    parserStatus.currentStep = 'Error';
+    addStatusEvent('error', `Parser failed: ${error.message}`);
+  }
+}
+
 // Admin API endpoints (now protected)
 app.post('/api/admin/parse', authenticateAdmin, async (req, res) => {
   try {

@@ -32,16 +32,21 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
   const [streamingLogs, setStreamingLogs] = useState<StreamEvent[]>([]);
   const [currentStep, setCurrentStep] = useState<string>('');
   const [isStreaming, setIsStreaming] = useState(false);
+  const [isPolling, setIsPolling] = useState(false);
+  const [pollingInterval, setPollingInterval] = useState<NodeJS.Timeout | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
 
-  // Cleanup EventSource on component unmount
+  // Cleanup EventSource and polling on component unmount
   useEffect(() => {
     return () => {
       if (eventSourceRef.current) {
         eventSourceRef.current.close();
       }
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
     };
-  }, []);
+  }, [pollingInterval]);
 
   const getAuthHeaders = () => {
     return {
@@ -199,6 +204,158 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
         color: 'red',
         icon: <IconX size={16} />,
       });
+    }
+  };
+
+  const handleRunPollingParser = async () => {
+    if (!authToken) {
+      notifications.show({
+        title: 'Authentication Error',
+        message: 'No authentication token found',
+        color: 'red',
+        icon: <IconX size={16} />,
+      });
+      return;
+    }
+
+    console.log('[CLIENT] Starting polling parser...');
+    setIsRunning(true);
+    setIsPolling(true);
+    setStreamingLogs([]);
+    setCurrentStep('');
+    setLastResult(null);
+
+    try {
+      // Start the parser
+      const response = await fetch('/api/admin/parse-polling', {
+        method: 'POST',
+        headers: getAuthHeaders(),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          notifications.show({
+            title: 'Authentication Error',
+            message: 'Your session has expired. Please log in again.',
+            color: 'red',
+            icon: <IconX size={16} />,
+          });
+          onLogout();
+          return;
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      if (!result.success) {
+        throw new Error(result.message);
+      }
+
+      console.log('[CLIENT] Parser started, beginning polling...');
+      
+      // Start polling for status
+      const interval = setInterval(async () => {
+        try {
+          await pollParserStatus();
+        } catch (error) {
+          console.error('[CLIENT] Polling error:', error);
+          // Continue polling even if one request fails
+        }
+      }, 2000); // Poll every 2 seconds
+
+      setPollingInterval(interval);
+
+      // Do initial poll
+      await pollParserStatus();
+
+    } catch (error) {
+      console.error('[CLIENT] Error starting polling parser:', error);
+      setIsRunning(false);
+      setIsPolling(false);
+      
+      notifications.show({
+        title: 'Failed to start parser',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        color: 'red',
+        icon: <IconX size={16} />,
+      });
+    }
+  };
+
+  const pollParserStatus = async () => {
+    try {
+      const response = await fetch('/api/admin/parse-status', {
+        headers: getAuthHeaders(),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      if (result.success) {
+        const status = result.data;
+        
+        // Update UI with current status
+        setCurrentStep(status.currentStep || '');
+        setStreamingLogs(status.logs || []);
+        
+        // Check if parser is complete
+        if (!status.isRunning) {
+          // Parser finished
+          setIsRunning(false);
+          setIsPolling(false);
+          
+          if (pollingInterval) {
+            clearInterval(pollingInterval);
+            setPollingInterval(null);
+          }
+          
+          if (status.error) {
+            // Parser failed
+            notifications.show({
+              title: 'Parser failed',
+              message: status.error,
+              color: 'red',
+              icon: <IconX size={16} />,
+            });
+          } else if (status.result) {
+            // Parser succeeded
+            setLastResult(status.result);
+            notifications.show({
+              title: 'Parser completed successfully',
+              message: `Generated ${status.result.data?.totalPlaces} places`,
+              color: 'green',
+              icon: <IconCheck size={16} />,
+            });
+          }
+        }
+      }
+    } catch (error) {
+      console.error('[CLIENT] Error polling parser status:', error);
+    }
+  };
+
+  const stopPolling = async () => {
+    if (pollingInterval) {
+      clearInterval(pollingInterval);
+      setPollingInterval(null);
+    }
+    
+    setIsRunning(false);
+    setIsPolling(false);
+    setCurrentStep('');
+    
+    // Try to stop the parser on the server
+    try {
+      await fetch('/api/admin/parse-stop', {
+        method: 'POST',
+        headers: getAuthHeaders(),
+      });
+    } catch (error) {
+      console.error('[CLIENT] Error stopping parser:', error);
     }
   };
 
@@ -478,12 +635,22 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
             
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               <Button
-                onClick={handleRunStreamingParser}
+                onClick={handleRunPollingParser}
                 loading={isRunning}
                 leftSection={<IconPlayerPlay size={16} />}
                 disabled={isRunning}
               >
-                {isRunning ? 'Running Parser...' : 'Run Parser (Streaming)'}
+                {isRunning ? 'Running Parser...' : 'Run Parser (Polling)'}
+              </Button>
+              
+              <Button
+                onClick={handleRunStreamingParser}
+                loading={isRunning}
+                leftSection={<IconRefresh size={16} />}
+                disabled={isRunning}
+                variant="outline"
+              >
+                {isRunning ? 'Running Parser...' : 'Run Parser (SSE)'}
               </Button>
               
               <Button
@@ -495,6 +662,17 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
               >
                 {isRunning ? 'Running Parser...' : 'Run Parser (Legacy)'}
               </Button>
+              
+              {isPolling && (
+                <Button
+                  onClick={stopPolling}
+                  leftSection={<IconX size={16} />}
+                  variant="outline"
+                  color="red"
+                >
+                  Stop Polling
+                </Button>
+              )}
               
               {isStreaming && (
                 <Button
@@ -549,7 +727,7 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
               </div>
             </div>
 
-            {isRunning && !isStreaming && (
+            {isRunning && !isStreaming && !isPolling && (
               <Alert icon={<IconClock size={16} />} color="blue">
                 Parser is running... This may take a few minutes.
               </Alert>
@@ -559,7 +737,7 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
               <Stack gap="sm">
                 <Alert icon={<IconClock size={16} />} color="blue">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>Parser is running with live updates...</span>
+                    <span>Parser is running with live updates (SSE)...</span>
                     {currentStep && (
                       <Badge variant="light" size="sm">
                         {currentStep}
@@ -571,6 +749,53 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
                 {streamingLogs.length > 0 && (
                   <Paper withBorder p="sm" style={{ backgroundColor: '#f8f9fa' }}>
                     <Text size="sm" fw={500} mb="xs">Live Output:</Text>
+                    <ScrollArea h={200} scrollbarSize={8}>
+                      <Stack gap="xs">
+                        {streamingLogs.map((log, index) => (
+                          <div key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                            <Badge 
+                              size="xs" 
+                              variant="light"
+                              color={
+                                log.type === 'error' ? 'red' :
+                                log.type === 'warning' ? 'yellow' :
+                                log.type === 'step' ? 'blue' :
+                                log.type === 'completed' ? 'green' : 'gray'
+                              }
+                            >
+                              {log.type}
+                            </Badge>
+                            <Text size="sm" style={{ fontFamily: 'monospace', flex: 1 }}>
+                              {log.message}
+                            </Text>
+                            <Text size="xs" c="dimmed">
+                              {new Date(log.timestamp).toLocaleTimeString()}
+                            </Text>
+                          </div>
+                        ))}
+                      </Stack>
+                    </ScrollArea>
+                  </Paper>
+                )}
+              </Stack>
+            )}
+
+            {isPolling && (
+              <Stack gap="sm">
+                <Alert icon={<IconClock size={16} />} color="green">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>Parser is running with polling updates...</span>
+                    {currentStep && (
+                      <Badge variant="light" size="sm">
+                        {currentStep}
+                      </Badge>
+                    )}
+                  </div>
+                </Alert>
+                
+                {streamingLogs.length > 0 && (
+                  <Paper withBorder p="sm" style={{ backgroundColor: '#f0f9ff' }}>
+                    <Text size="sm" fw={500} mb="xs">Parser Output (updates every 2 seconds):</Text>
                     <ScrollArea h={200} scrollbarSize={8}>
                       <Stack gap="xs">
                         {streamingLogs.map((log, index) => (
