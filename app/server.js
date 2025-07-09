@@ -285,24 +285,34 @@ function handleSSETest(req, res, user) {
   
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
+    'Cache-Control': 'no-cache, no-store, must-revalidate, private',
     'Connection': 'keep-alive',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Cache-Control',
     'X-Accel-Buffering': 'no',
-    'Content-Encoding': 'none'
+    'Content-Encoding': 'none',
+    'Transfer-Encoding': 'chunked',
+    'Pragma': 'no-cache',
+    'Expires': '0'
   });
 
   console.log('[DEBUG] Headers sent');
 
-  // Send initial message
+  // Send initial message with padding
   const initialMessage = `data: ${JSON.stringify({ type: 'test', message: 'SSE test connection established', timestamp: new Date().toISOString() })}\n\n`;
   res.write(initialMessage);
   console.log('[DEBUG] Initial message sent');
 
-  // Add padding
-  res.write(':' + ' '.repeat(2048) + '\n\n');
-  console.log('[DEBUG] Padding sent');
+  // Add larger padding to try to force immediate delivery
+  const largePadding = ':' + ' '.repeat(8192) + '\n\n';
+  res.write(largePadding);
+  console.log('[DEBUG] Large padding sent');
+
+  // Send multiple padding chunks
+  for (let i = 0; i < 3; i++) {
+    res.write(`:test-padding-${i} ${' '.repeat(1024)}\n\n`);
+  }
+  console.log('[DEBUG] Multiple padding chunks sent');
 
   if (res.flush) {
     res.flush();
@@ -312,23 +322,25 @@ function handleSSETest(req, res, user) {
   let counter = 0;
   const testInterval = setInterval(() => {
     counter++;
+    // Add padding to each message
     const testMessage = `data: ${JSON.stringify({ 
       type: 'test-message', 
       message: `Test message ${counter}`, 
       timestamp: new Date().toISOString(),
       counter: counter
-    })}\n\n`;
+    })}\n\n:msg-padding ${' '.repeat(512)}\n\n`;
     
     try {
       res.write(testMessage);
       if (res.flush) {
         res.flush();
       }
-      console.log(`[DEBUG] Test message ${counter} sent`);
+      console.log(`[DEBUG] Test message ${counter} sent and flushed`);
       
       if (counter >= 5) {
         clearInterval(testInterval);
-        res.write(`data: ${JSON.stringify({ type: 'test-complete', message: 'Test completed', timestamp: new Date().toISOString() })}\n\n`);
+        const completionMessage = `data: ${JSON.stringify({ type: 'test-complete', message: 'Test completed', timestamp: new Date().toISOString() })}\n\n:final-padding ${' '.repeat(512)}\n\n`;
+        res.write(completionMessage);
         if (res.flush) {
           res.flush();
         }
@@ -340,7 +352,7 @@ function handleSSETest(req, res, user) {
       clearInterval(testInterval);
       res.end();
     }
-  }, 1000);
+  }, 2000); // Slower interval to better observe timing
 
   req.on('close', () => {
     console.log('[DEBUG] Test SSE client disconnected');
@@ -446,28 +458,37 @@ app.get('/api/admin/parse-stream', (req, res) => {
 async function handleParseStream(req, res, user) {
   console.log('[SSE] Setting up SSE headers...');
   
-  // Set up SSE headers with Heroku-specific headers to prevent buffering
+  // Set up SSE headers with more aggressive anti-buffering headers
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
+    'Cache-Control': 'no-cache, no-store, must-revalidate, private',
     'Connection': 'keep-alive',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Cache-Control',
     'X-Accel-Buffering': 'no', // Disable nginx buffering (Heroku)
-    'Content-Encoding': 'none' // Prevent compression buffering
+    'Content-Encoding': 'none', // Prevent compression buffering
+    'Transfer-Encoding': 'chunked', // Force chunked encoding
+    'Pragma': 'no-cache',
+    'Expires': '0'
   });
 
   console.log('[SSE] Headers set, sending initial message...');
 
-  // Send initial connection message with padding and flush
+  // Send initial connection message with larger padding and flush
   const initialMessage = `data: ${JSON.stringify({ type: 'connected', message: 'Connected to parser stream' })}\n\n`;
   res.write(initialMessage);
   console.log('[SSE] Initial message sent');
   
-  // Add padding to work around buffering and flush immediately
-  const padding = ':' + ' '.repeat(2048) + '\n\n'; // 2KB padding comment
-  res.write(padding);
-  console.log('[SSE] Padding sent');
+  // Add larger padding to work around buffering (8KB instead of 2KB)
+  const largePadding = ':' + ' '.repeat(8192) + '\n\n';
+  res.write(largePadding);
+  console.log('[SSE] Large padding sent');
+  
+  // Send multiple padding chunks to try to force buffer flush
+  for (let i = 0; i < 3; i++) {
+    res.write(`:padding-${i} ${' '.repeat(1024)}\n\n`);
+  }
+  console.log('[SSE] Multiple padding chunks sent');
   
   // Ensure the response is flushed immediately
   if (res.flush) {
@@ -481,17 +502,18 @@ async function handleParseStream(req, res, user) {
   let heartbeatInterval;
   let eventCount = 0;
 
-  // Function to send events to client with immediate flushing
+  // Function to send events to client with immediate flushing and padding
   const sendEvent = (type, message, data = null) => {
     eventCount++;
     const eventData = { type, message, timestamp: new Date().toISOString(), eventId: eventCount };
     if (data) eventData.data = data;
     
-    const eventString = `data: ${JSON.stringify(eventData)}\n\n`;
+    // Add padding to each event to help prevent buffering
+    const paddedEventString = `data: ${JSON.stringify(eventData)}\n\n:padding ${' '.repeat(512)}\n\n`;
     console.log(`[SSE] Sending event #${eventCount}:`, type, message);
     
     try {
-      res.write(eventString);
+      res.write(paddedEventString);
       
       // Flush immediately to prevent buffering
       if (res.flush) {
@@ -520,7 +542,7 @@ async function handleParseStream(req, res, user) {
     }
   });
 
-  // Send heartbeat every 10 seconds to keep connection alive
+  // Send heartbeat every 5 seconds (more frequent) to keep connection alive and test buffering
   heartbeatInterval = setInterval(() => {
     try {
       sendEvent('heartbeat', 'Connection alive');
@@ -528,7 +550,7 @@ async function handleParseStream(req, res, user) {
       console.error('[SSE] Heartbeat failed:', error);
       clearInterval(heartbeatInterval);
     }
-  }, 10000);
+  }, 5000);
 
   try {
     console.log('[SSE] Starting parser with streaming...');
