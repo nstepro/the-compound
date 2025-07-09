@@ -25,8 +25,8 @@ export function Navigation() {
   };
 
   return (
-    <Container size="xl" py="md">
-      <Group justify="space-between">
+    <Container size="xl" py="md" style={{ width: '100%' }}>
+      <Group justify="space-between" style={{ width: '100%' }}>
         {/* Logo */}
         <Link to="/" style={{ textDecoration: 'none' }}>
           <Box
@@ -58,23 +58,24 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         <Burger opened={opened} onClick={open} hiddenFrom="sm" color="brand.6" />
-        <Drawer opened={opened} onClose={close} position="right">
-          <Stack>
-            {tabs.map((tab) => (
-              <Button
-                key={tab.id}
-                variant={isActive(tab.path) ? 'filled' : 'subtle'}
-                component={Link}
-                to={tab.path}
-                fullWidth
-                onClick={close}
-              >
-                {tab.label}
-              </Button>
-            ))}
-          </Stack>
-        </Drawer>
       </Group>
+      
+      <Drawer opened={opened} onClose={close} position="right">
+        <Stack>
+          {tabs.map((tab) => (
+            <Button
+              key={tab.id}
+              variant={isActive(tab.path) ? 'filled' : 'subtle'}
+              component={Link}
+              to={tab.path}
+              fullWidth
+              onClick={close}
+            >
+              {tab.label}
+            </Button>
+          ))}
+        </Stack>
+      </Drawer>
     </Container>
   );
 } 

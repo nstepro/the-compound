@@ -6,6 +6,7 @@ export function Footer() {
     <Box 
       component="footer" 
       mt="xl" 
+      mb="md"
       pt="md" 
       style={{
         textAlign: 'center'

@@ -9,7 +9,6 @@ import '@mantine/notifications/styles.css';
 function AppContent() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-  const isAdminPage = location.pathname === '/admin';
 
   return (
     <div style={{ 
@@ -18,7 +17,7 @@ function AppContent() {
       display: 'flex',
       flexDirection: 'column'
     }}>
-      {!isHomePage && !isAdminPage && <Navigation />}
+      {!isHomePage && <Navigation />}
       <div style={{ flex: 1 }}>
         <Routes>
           <Route path="/" element={<Home />} />

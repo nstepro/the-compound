@@ -84,3 +84,45 @@
   text-decoration: underline;
 }
 
+/* Responsive wide-screen display for list view */
+@media (min-width: 768px) {
+  .wide-screen-only {
+    display: block !important;
+  }
+}
+
+/* Global classes for PlaceListItem component */
+:global(.medium-screen-only) {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  :global(.medium-screen-only) {
+    display: block !important;
+  }
+}
+
+:global(.wide-screen-only) {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  :global(.wide-screen-only) {
+    display: block !important;
+  }
+}
+
+/* Accordion item styling */
+:global(.mantine-Accordion-item) {
+  background-color: white !important;
+  border: 1px solid #e9ecef !important;
+}
+
+:global(.mantine-Accordion-control) {
+  background-color: white !important;
+}
+
+:global(.mantine-Accordion-panel) {
+  background-color: white !important;
+}
+

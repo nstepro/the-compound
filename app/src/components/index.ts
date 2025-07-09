@@ -1,4 +1,5 @@
 export { PlaceCard } from './PlaceCard';
+export { PlaceListItem } from './PlaceListItem';
 export { PlacesList } from './PlacesList';
 export { Home } from './Home';
 export { GettingHere } from './GettingHere';
