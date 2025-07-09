@@ -12,7 +12,10 @@ const PlaceSchema = z.object({
   phone: z.string().optional().describe('Phone number'),
   priceRange: z.enum(['$', '$$', '$$$', '$$$$']).optional().describe('Price range indicator'),
   rating: z.number().min(0).max(5).optional().describe('Rating out of 5'),
-  hours: z.string().optional().describe('Operating hours'),
+  hours: z.union([
+    z.string(),
+    z.array(z.string())
+  ]).optional().describe('Operating hours'),
   notes: z.string().nullish().describe('Additional notes or recommendations'),
   tags: z.array(z.string()).optional().describe('Tags for categorization and search'),
   coordinates: z.object({

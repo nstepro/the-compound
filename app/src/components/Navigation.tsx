@@ -17,7 +17,7 @@ export function Navigation() {
     { id: 'places', label: 'Places', path: '/places' },
     { id: 'shady', label: 'Shady', path: '/shady' },
     { id: 'lofty', label: 'Lofty', path: '/lofty' },
-    { id: 'getting-here', label: 'Getting to the Sheddy', path: '/getting-here' }
+    // { id: 'getting-here', label: 'Getting to the Sheddy', path: '/getting-here' }
   ];
 
   const isActive = (path: string) => {

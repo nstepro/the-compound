@@ -1,4 +1,4 @@
-import { Title, Text, Card, Box, LoadingOverlay, Alert } from '@mantine/core';
+import { Title, Text, Card, LoadingOverlay, Alert } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 import Markdown from 'react-markdown';
 import { useHouseMechanics } from './useHouseMechanics';

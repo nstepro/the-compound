@@ -1,4 +1,4 @@
-import { Title, Text, Card, Box, LoadingOverlay, Alert } from '@mantine/core';
+import { Title, Text, Card, LoadingOverlay, Alert } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 import Markdown from 'react-markdown';
 import { useHouseMechanics } from './useHouseMechanics';
@@ -14,18 +14,6 @@ function ShadyContent() {
       </Title>
       
       <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Box
-          component="img"
-          src="/sheddy-narrow.svg"
-          alt="Sheddy Logo"
-          mb="md"
-          style={{
-            maxWidth: '300px',
-            width: '100%',
-            height: 'auto',
-            filter: 'brightness(0) saturate(100%) invert(27%) sepia(77%) saturate(1729%) hue-rotate(211deg) brightness(95%) contrast(95%)'
-          }}
-        />
         
         <LoadingOverlay visible={loading} />
         
