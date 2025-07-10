@@ -40,16 +40,18 @@ GOOGLE_APPLICATION_CREDENTIALS_BASE64=base64_encoded_json
 - `JWT_SECRET` - Secret key for JWT token generation
 - `ADMIN_PASSWORD_HASH` - Bcrypt hash of admin password
 - `GUEST_PASSWORD_HASH` - Bcrypt hash of guest password (for accessing Lofty/Shady content)
+- `RATE_LIMIT_WINDOW_MS` - Rate limiting window in milliseconds (default: 900000 = 15 minutes)
+- `RATE_LIMIT_MAX_ATTEMPTS` - Maximum login attempts per window (default: 5)
 
 **Generate password hashes:**
 ```bash
 # Interactive mode (prompts for password)
-node generate-password.js admin
-node generate-password.js guest
+node utilities/generate-password.js admin
+node utilities/generate-password.js guest
 
 # Direct mode (password as argument)
-node generate-password.js admin mySecurePassword123
-node generate-password.js guest myGuestPassword456
+node utilities/generate-password.js admin mySecurePassword123
+node utilities/generate-password.js guest myGuestPassword456
 ```
 
 ## Optional Environment Variables
@@ -101,6 +103,10 @@ JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-make-it-long-and-
 ADMIN_PASSWORD_HASH=your_bcrypt_password_hash
 GUEST_PASSWORD_HASH=your_bcrypt_guest_password_hash
 
+# Rate Limiting Configuration (optional)
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_ATTEMPTS=5
+
 # Google Cloud Storage Configuration (optional)
 GOOGLE_CLOUD_STORAGE_BUCKET=compound-places-storage
 GOOGLE_CLOUD_STORAGE_FILE_NAME=compound-places.json
@@ -122,6 +128,8 @@ heroku config:set \
   JWT_SECRET=your-super-secret-jwt-key-change-this-in-production \
   ADMIN_PASSWORD_HASH=your_bcrypt_password_hash \
   GUEST_PASSWORD_HASH=your_bcrypt_guest_password_hash \
+  RATE_LIMIT_WINDOW_MS=900000 \
+  RATE_LIMIT_MAX_ATTEMPTS=5 \
   GOOGLE_CLOUD_STORAGE_BUCKET=your-bucket-name \
   GOOGLE_CLOUD_STORAGE_FILE_NAME=compound-places.json \
   GOOGLE_CLOUD_STORAGE_ENABLED=true

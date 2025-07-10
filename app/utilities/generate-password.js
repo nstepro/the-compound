@@ -32,18 +32,18 @@ async function generatePasswordHash(password, type = 'admin') {
 function printUsage() {
   console.log('Password Hash Generator');
   console.log('Usage:');
-  console.log('  node generate-password.js [type] [password]');
+  console.log('  node utilities/generate-password.js [type] [password]');
   console.log('');
   console.log('Arguments:');
   console.log('  type      Password type: "admin" or "guest" (default: admin)');
   console.log('  password  The password to hash (if omitted, will prompt)');
   console.log('');
   console.log('Examples:');
-  console.log('  node generate-password.js                    # Interactive mode (admin)');
-  console.log('  node generate-password.js admin              # Interactive mode (admin)');
-  console.log('  node generate-password.js guest              # Interactive mode (guest)');
-  console.log('  node generate-password.js admin myPassword   # Direct mode (admin)');
-  console.log('  node generate-password.js guest myPassword   # Direct mode (guest)');
+  console.log('  node utilities/generate-password.js                    # Interactive mode (admin)');
+console.log('  node utilities/generate-password.js admin              # Interactive mode (admin)');
+console.log('  node utilities/generate-password.js guest              # Interactive mode (guest)');
+console.log('  node utilities/generate-password.js admin myPassword   # Direct mode (admin)');
+console.log('  node utilities/generate-password.js guest myPassword   # Direct mode (guest)');
 }
 
 async function promptForPassword(type) {

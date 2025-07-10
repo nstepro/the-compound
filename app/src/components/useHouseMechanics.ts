@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 interface HouseMechanicsData {
   success: boolean;
@@ -13,6 +14,7 @@ interface HouseMechanicsError {
 }
 
 export function useHouseMechanics(house: 'lofty' | 'shady') {
+  const { user } = useAuth();
   const [data, setData] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,16 +25,14 @@ export function useHouseMechanics(house: 'lofty' | 'shady') {
         setLoading(true);
         setError(null);
 
-        // Get authentication token from localStorage
-        const token = localStorage.getItem('guestToken');
-        
-        if (!token) {
+        // Check if user is authenticated
+        if (!user?.token) {
           throw new Error('Authentication required');
         }
 
         const response = await fetch(`/api/house-mechanics/${house}`, {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${user.token}`,
             'Content-Type': 'application/json',
           },
         });
@@ -53,7 +53,7 @@ export function useHouseMechanics(house: 'lofty' | 'shady') {
     };
 
     fetchHouseMechanics();
-  }, [house]);
+  }, [house, user?.token]);
 
   return { data, loading, error };
 } 

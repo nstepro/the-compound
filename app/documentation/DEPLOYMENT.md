@@ -191,6 +191,8 @@ heroku config:set \
   OPENAI_API_KEY=your_openai_api_key \
   JWT_SECRET=your-super-secret-jwt-key-change-this-in-production \
   ADMIN_PASSWORD_HASH=your_bcrypt_password_hash \
+  RATE_LIMIT_WINDOW_MS=900000 \
+  RATE_LIMIT_MAX_ATTEMPTS=5 \
   GOOGLE_CLOUD_STORAGE_BUCKET=your-bucket-name \
   GOOGLE_CLOUD_STORAGE_FILE_NAME=compound-places.json \
   GOOGLE_CLOUD_STORAGE_ENABLED=true
@@ -212,6 +214,9 @@ Your app currently uses:
 - `OPENAI_API_KEY` - Required for AI processing
 - `JWT_SECRET` - Required for admin authentication
 - `ADMIN_PASSWORD_HASH` - Required for admin login
+- `GUEST_PASSWORD_HASH` - Required for guest access to protected content
+- `RATE_LIMIT_WINDOW_MS` - Rate limiting window in milliseconds (optional, default: 900000)
+- `RATE_LIMIT_MAX_ATTEMPTS` - Maximum login attempts per window (optional, default: 5)
 - `GOOGLE_CLOUD_STORAGE_BUCKET` - Name of the GCS bucket to store compound-places.json
 - `GOOGLE_CLOUD_STORAGE_FILE_NAME` - Name of the file in the bucket (default: compound-places.json)
 - `GOOGLE_CLOUD_STORAGE_ENABLED` - Enable/disable Google Cloud Storage (default: true)
@@ -227,6 +232,9 @@ GOOGLE_APPLICATION_CREDENTIALS=./credentials.json
 OPENAI_API_KEY=your_openai_api_key
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 ADMIN_PASSWORD_HASH=your_bcrypt_password_hash
+GUEST_PASSWORD_HASH=your_bcrypt_guest_password_hash
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_ATTEMPTS=5
 GOOGLE_CLOUD_STORAGE_BUCKET=your-bucket-name
 GOOGLE_CLOUD_STORAGE_FILE_NAME=compound-places.json
 GOOGLE_CLOUD_STORAGE_ENABLED=true
@@ -243,6 +251,9 @@ GOOGLE_APPLICATION_CREDENTIALS=./credentials.json
 OPENAI_API_KEY=your_openai_api_key
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 ADMIN_PASSWORD_HASH=your_bcrypt_password_hash
+GUEST_PASSWORD_HASH=your_bcrypt_guest_password_hash
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_ATTEMPTS=5
 GOOGLE_CLOUD_STORAGE_BUCKET=your-bucket-name
 GOOGLE_CLOUD_STORAGE_FILE_NAME=compound-places.json
 GOOGLE_CLOUD_STORAGE_ENABLED=true

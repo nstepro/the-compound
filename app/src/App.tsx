@@ -1,7 +1,12 @@
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { Navigation, PlacesList, Shady, Lofty, GettingHere, Home, Admin, Footer } from './components';
+import { AuthProvider } from './contexts/AuthContext';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { Navigation, PlacesList, GettingHere, Home, Footer } from './components';
+import { AdminDashboard } from './components/AdminDashboard';
+import { Lofty } from './components/Lofty';
+import { Shady } from './components/Shady';
 import { theme } from './theme';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
@@ -22,10 +27,43 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/places" element={<PlacesList />} />
-          <Route path="/shady" element={<Shady />} />
-          <Route path="/lofty" element={<Lofty />} />
           <Route path="/getting-here" element={<GettingHere />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route 
+            path="/shady" 
+            element={
+              <ProtectedRoute 
+                requiredRole="guest" 
+                title="Access Required"
+                subtitle="Please enter the password to access Shady content."
+              >
+                <Shady />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/lofty" 
+            element={
+              <ProtectedRoute 
+                requiredRole="guest" 
+                title="Access Required"
+                subtitle="Please enter the password to access Lofty content."
+              >
+                <Lofty />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin" 
+            element={
+              <ProtectedRoute 
+                requiredRole="admin" 
+                title="Admin Access"
+                subtitle="Please enter admin credentials."
+              >
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </div>
       <Footer />
@@ -38,7 +76,9 @@ function App() {
     <MantineProvider theme={theme}>
       <Notifications />
       <BrowserRouter>
-        <AppContent />
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
       </BrowserRouter>
     </MantineProvider>
   );

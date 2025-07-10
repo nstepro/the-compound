@@ -2,9 +2,8 @@ import { Title, Text, Card, LoadingOverlay, Alert } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 import Markdown from 'react-markdown';
 import { useHouseMechanics } from './useHouseMechanics';
-import { GuestAuth } from './GuestAuth';
 
-function LoftyContent() {
+export function Lofty() {
   const { data: markdownContent, loading, error } = useHouseMechanics('lofty');
 
   return (
@@ -36,13 +35,5 @@ function LoftyContent() {
         )}
       </Card>
     </>
-  );
-}
-
-export function Lofty() {
-  return (
-    <GuestAuth>
-      <LoftyContent />
-    </GuestAuth>
   );
 } 

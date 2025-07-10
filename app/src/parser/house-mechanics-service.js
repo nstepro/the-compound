@@ -106,7 +106,35 @@ Please:
 8. Avoid "dividers" between sections - just use a blank line
 9. Do NOT add a title to the document (i.e., "Shady House Instructions") - just start with the instructions (using necessary headers for each section)
 
-Format as markdown and return ONLY the formatted content without any wrapper text.`;
+Format as markdown and return ONLY the formatted content without any wrapper text.
+
+Example response:
+
+### Leaving Checklist 🏡
+
+Before you go, please:
+
+- Turn off the espresso machine
+- Turn off all three bedroom mini splits
+- Set the main area mini split to:
+  - Winter: Heat, 61°
+  - Summer: Cool, 78°
+- ...
+
+### Door Instructions 🚪
+
+- To unlock: Enter the pin and press the lock button
+- To lock: Pull the door shut with one hand, then press and hold the lock 🔒 button for 2 seconds
+
+### WiFi Info 📶
+
+- Network: MyInternetSSID
+- Password: \`MyInternetPassword\`
+
+---
+*Last updated: 7/9/2025*
+
+`;
 
       const enhancedContent = await openaiService.generateCompletion(prompt);
       

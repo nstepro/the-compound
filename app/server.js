@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +19,28 @@ app.use(express.json());
 
 // Serve static files from the dist directory
 app.use(express.static(path.join(__dirname, 'dist')));
+
+// Rate limiting configuration
+const RATE_LIMIT_WINDOW_MS = parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000; // Default: 15 minutes
+const RATE_LIMIT_MAX_ATTEMPTS = parseInt(process.env.RATE_LIMIT_MAX_ATTEMPTS) || 5; // Default: 5 attempts
+const RATE_LIMIT_WINDOW_MINUTES = Math.floor(RATE_LIMIT_WINDOW_MS / 60000); // Convert to minutes for message
+
+const loginLimiter = rateLimit({
+  windowMs: RATE_LIMIT_WINDOW_MS,
+  max: RATE_LIMIT_MAX_ATTEMPTS,
+  message: {
+    success: false,
+    message: `Too many login attempts from this IP, please try again in ${RATE_LIMIT_WINDOW_MINUTES} minutes.`
+  },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  // Skip rate limiting for successful requests
+  skipSuccessfulRequests: true,
+  // Custom key generator to handle both IP and user agent for better security
+  keyGenerator: (req) => {
+    return req.ip + ':' + (req.get('User-Agent') || '');
+  }
+});
 
 // Authentication middleware
 const authenticateToken = (req, res, next) => {
@@ -84,7 +107,7 @@ const authenticateGuestOrAdmin = (req, res, next) => {
 };
 
 // Authentication endpoint
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/auth/login', loginLimiter, async (req, res) => {
   try {
     const { password } = req.body;
     
@@ -124,6 +147,18 @@ app.post('/api/auth/login', async (req, res) => {
     console.error('Login error:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
+});
+
+// Token verification endpoint
+app.get('/api/auth/verify', authenticateToken, (req, res) => {
+  // If we reach here, the token is valid (checked by middleware)
+  res.json({
+    success: true,
+    valid: true,
+    role: req.user.role,
+    timestamp: req.user.timestamp,
+    message: 'Token is valid'
+  });
 });
 
 // Import the parser functions

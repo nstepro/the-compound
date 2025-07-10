@@ -9,7 +9,7 @@
     "start": "node server.js",
     "lint": "eslint .",
     "preview": "vite preview",
-    "update-data": "node update-data.js",
+    "update-data": "node utilities/update-data.js",
     "parse": "node src/parser/index.js",
     "parse-debug": "LOG_LEVEL=debug node src/parser/debug.js"
   },
@@ -25,6 +25,7 @@
     "cheerio": "^1.1.0",
     "dotenv": "^16.3.1",
     "express": "^4.21.2",
+    "express-rate-limit": "^7.5.1",
     "googleapis": "^126.0.1",
     "jsonwebtoken": "^9.0.2",
     "langchain": "^0.2.0",

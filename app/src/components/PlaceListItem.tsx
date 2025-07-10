@@ -139,7 +139,7 @@ export function PlaceListItem({ place }: PlaceListItemProps) {
             <Badge color={typeColor} variant="light" size="xs" style={{ flexShrink: 0 }}>
               {place.type.toUpperCase()}
             </Badge>
-            <Badge variant="light" size="xs" style={{ flexShrink: 0 }}>
+            <Badge variant="light" size="xs" style={{ flexShrink: 0 }} className="medium-screen-only">
               {place.category}
             </Badge>
             {place.tags.length > 0 && (

@@ -8,7 +8,7 @@ First, choose a strong password and generate its hash:
 
 ```bash
 # In the app directory
-node generate-password.js YourSecurePassword123
+node utilities/generate-password.js YourSecurePassword123
 ```
 
 This will output something like:
@@ -28,6 +28,11 @@ Create a `.env` file in the `app` directory with:
 # Security Configuration
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-make-it-long-and-random
 ADMIN_PASSWORD_HASH=paste-your-generated-hash-here
+GUEST_PASSWORD_HASH=paste-your-guest-hash-here
+
+# Optional: Rate limiting configuration
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_ATTEMPTS=5
 
 # Optional: Override default port
 # PORT=3000
@@ -61,19 +66,48 @@ ADMIN_PASSWORD_HASH=paste-your-generated-hash-here
 - **Logout:** Tokens are removed from localStorage
 - **Auto-logout:** Invalid/expired tokens trigger automatic logout
 
-## 6. Production Considerations
+## 6. Rate Limiting Configuration
+
+✅ **Built-in Rate Limiting:** The system includes configurable rate limiting to prevent brute force attacks:
+
+- **Default Settings:** 5 login attempts per 15 minutes per IP
+- **Configurable via Environment Variables:**
+  - `RATE_LIMIT_WINDOW_MS` - Time window in milliseconds (default: 900000 = 15 minutes)
+  - `RATE_LIMIT_MAX_ATTEMPTS` - Maximum attempts per window (default: 5)
+
+**Common Configurations:**
+```bash
+# Strict (recommended for production)
+RATE_LIMIT_WINDOW_MS=900000    # 15 minutes
+RATE_LIMIT_MAX_ATTEMPTS=3      # 3 attempts
+
+# Moderate (balanced)
+RATE_LIMIT_WINDOW_MS=600000    # 10 minutes
+RATE_LIMIT_MAX_ATTEMPTS=5      # 5 attempts
+
+# Lenient (development/testing)
+RATE_LIMIT_WINDOW_MS=300000    # 5 minutes
+RATE_LIMIT_MAX_ATTEMPTS=10     # 10 attempts
+```
+
+## 7. Production Considerations
 
 - Use a strong JWT secret (consider using a password generator)
 - Consider shorter token expiration times for high-security environments
-- Implement rate limiting on login attempts
+- Adjust rate limiting based on your security requirements
 - Use HTTPS in production
 - Consider implementing refresh tokens for longer sessions
 
-## 7. Troubleshooting
+## 8. Troubleshooting
 
 **Login fails with "Invalid password":**
 - Verify the password hash was generated correctly
 - Check that the hash is properly set in the .env file
+
+**"Too many login attempts" errors:**
+- Rate limiting is active - wait for the time window to expire
+- Adjust `RATE_LIMIT_WINDOW_MS` and `RATE_LIMIT_MAX_ATTEMPTS` if needed
+- Check server logs for rate limiting activity
 
 **"Access token required" errors:**
 - Token may have expired, try logging in again

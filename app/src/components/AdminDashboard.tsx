@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Paper, Title, Button, Stack, Alert, Text, Badge, ScrollArea } from '@mantine/core';
-import { IconRefresh, IconDownload, IconAlertCircle, IconCheck, IconClock, IconX, IconPlayerPlay } from '@tabler/icons-react';
+import { IconDownload, IconAlertCircle, IconCheck, IconClock, IconX, IconPlayerPlay } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
+import { useAuth } from '../contexts/AuthContext';
 
 interface ParseResult {
   success: boolean;
@@ -21,12 +22,9 @@ interface StreamEvent {
   data?: any;
 }
 
-interface AdminDashboardProps {
-  onLogout: () => void;
-  authToken: string | null;
-}
-
-export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
+export function AdminDashboard() {
+  const { user, logout } = useAuth();
+  const authToken = user?.token;
   const [isRunning, setIsRunning] = useState(false);
   const [lastResult, setLastResult] = useState<ParseResult | null>(null);
   const [streamingLogs, setStreamingLogs] = useState<StreamEvent[]>([]);
@@ -85,7 +83,7 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
             color: 'red',
             icon: <IconX size={16} />,
           });
-          onLogout();
+          logout();
           return;
         }
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -230,7 +228,7 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
             color: 'red',
             icon: <IconX size={16} />,
           });
-          onLogout();
+          logout();
           return;
         }
         throw new Error('Failed to download output');
@@ -262,7 +260,7 @@ export function AdminDashboard({ onLogout, authToken }: AdminDashboardProps) {
           <Stack gap="md">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Title order={2}>Admin Dashboard</Title>
-              <Button variant="subtle" onClick={onLogout}>
+              <Button variant="subtle" onClick={logout}>
                 Logout
               </Button>
             </div>

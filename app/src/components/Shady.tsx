@@ -2,9 +2,8 @@ import { Title, Text, Card, LoadingOverlay, Alert } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 import Markdown from 'react-markdown';
 import { useHouseMechanics } from './useHouseMechanics';
-import { GuestAuth } from './GuestAuth';
 
-function ShadyContent() {
+export function Shady() {
   const { data: markdownContent, loading, error } = useHouseMechanics('shady');
 
   return (
@@ -36,13 +35,5 @@ function ShadyContent() {
         )}
       </Card>
     </>
-  );
-}
-
-export function Shady() {
-  return (
-    <GuestAuth>
-      <ShadyContent />
-    </GuestAuth>
   );
 } 
