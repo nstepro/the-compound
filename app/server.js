@@ -134,7 +134,7 @@ app.post('/api/auth/login', loginLimiter, async (req, res) => {
     const token = jwt.sign(
       { role: userRole, timestamp: Date.now() },
       JWT_SECRET,
-      { expiresIn: '1h' } // Token expires in 1 hour
+      { expiresIn: '30d' } // Token expires in 1 hour
     );
 
     res.json({
@@ -362,6 +362,36 @@ app.post('/api/admin/parse-stop', authenticateAdmin, (req, res) => {
     success: true,
     message: 'Parser stop requested'
   });
+});
+
+// Get Google Doc URL
+app.get('/api/admin/google-doc-url', authenticateAdmin, (req, res) => {
+  try {
+    const config = require('./src/parser/config').config;
+    const docId = config.google.docId;
+    
+    if (!docId) {
+      return res.status(404).json({
+        success: false,
+        message: 'Google Doc ID not configured'
+      });
+    }
+
+    const googleDocUrl = `https://docs.google.com/document/d/${docId}/edit`;
+    
+    res.json({
+      success: true,
+      url: googleDocUrl,
+      docId: docId
+    });
+  } catch (error) {
+    console.error('Error getting Google Doc URL:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to get Google Doc URL',
+      error: error.message
+    });
+  }
 });
 
 // Async parser function that updates status

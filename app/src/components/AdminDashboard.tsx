@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Paper, Title, Button, Stack, Alert, Text, Badge, ScrollArea } from '@mantine/core';
-import { IconDownload, IconAlertCircle, IconCheck, IconClock, IconX, IconPlayerPlay } from '@tabler/icons-react';
+import { IconDownload, IconAlertCircle, IconCheck, IconClock, IconX, IconPlayerPlay, IconExternalLink } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -253,6 +253,43 @@ export function AdminDashboard() {
     }
   };
 
+  const handleOpenGoogleDoc = async () => {
+    try {
+      const response = await fetch('/api/admin/google-doc-url', {
+        headers: getAuthHeaders(),
+      });
+      
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          notifications.show({
+            title: 'Authentication Error',
+            message: 'Your session has expired. Please log in again.',
+            color: 'red',
+            icon: <IconX size={16} />,
+          });
+          logout();
+          return;
+        }
+        throw new Error('Failed to get Google Doc URL');
+      }
+      
+      const result = await response.json();
+      
+      if (result.success && result.url) {
+        window.open(result.url, '_blank', 'noopener,noreferrer');
+      } else {
+        throw new Error(result.message || 'Failed to get Google Doc URL');
+      }
+    } catch (error) {
+      notifications.show({
+        title: 'Failed to open Google Doc',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        color: 'red',
+        icon: <IconX size={16} />,
+      });
+    }
+  };
+
   return (
     <Container size="lg" mt="xl">
       <Stack gap="xl">
@@ -303,6 +340,15 @@ export function AdminDashboard() {
                 disabled={!lastResult?.success}
               >
                 Download Output
+              </Button>
+
+              <Button
+                onClick={handleOpenGoogleDoc}
+                leftSection={<IconExternalLink size={16} />}
+                variant="outline"
+                color="blue"
+              >
+                Open Google Doc
               </Button>
             </div>
 
