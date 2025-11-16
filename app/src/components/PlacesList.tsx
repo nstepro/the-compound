@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Container, Title, Text, Group, TextInput, SimpleGrid, LoadingOverlay, Alert, Tabs, Center, Loader, Accordion, Button, Code } from '@mantine/core';
-import { IconSearch, IconAlertCircle, IconLayoutList, IconMap, IconLayoutGrid, IconInfoCircle } from '@tabler/icons-react';
+import { Container, Title, Text, Group, TextInput, SimpleGrid, LoadingOverlay, Alert, Tabs, Center, Loader, Accordion, Button, Code, Switch, Flex, Stack, Box } from '@mantine/core';
+import { IconSearch, IconAlertCircle, IconLayoutList, IconMap, IconLayoutGrid, IconInfoCircle, IconStar } from '@tabler/icons-react';
 import { PlaceCard } from './PlaceCard';
 import { PlaceListItem } from './PlaceListItem';
 import { MapView } from './MapView';
@@ -47,7 +47,9 @@ const SAMPLE_DATA: PlacesData = {
         enriched: true,
         enrichedAt: new Date().toISOString(),
         enrichmentVersion: '2.0.0'
-      }
+      },
+      starred: true,
+      emoji: '🍽️'
     },
     {
       id: 'sample-activity-1',
@@ -70,7 +72,8 @@ const SAMPLE_DATA: PlacesData = {
         enriched: true,
         enrichedAt: new Date().toISOString(),
         enrichmentVersion: '2.0.0'
-      }
+      },
+      emoji: '⛰️'
     },
     {
       id: 'sample-shop-1',
@@ -93,7 +96,8 @@ const SAMPLE_DATA: PlacesData = {
         enriched: false,
         enrichedAt: new Date().toISOString(),
         enrichmentVersion: '2.0.0'
-      }
+      },
+      emoji: '🛍️'
     }
   ]
 };
@@ -108,6 +112,7 @@ export function PlacesList() {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [starredOnly, setStarredOnly] = useState(false);
   const [activeTab, setActiveTab] = useState<string | null>('grid');
   const [hasMore, setHasMore] = useState(true);
   const [isUsingSampleData, setIsUsingSampleData] = useState(false);
@@ -192,10 +197,16 @@ export function PlacesList() {
   useEffect(() => {
     if (!placesData) return;
 
-    const filtered = filterPlaces(placesData.places, debouncedSearchTerm);
+    let filtered = filterPlaces(placesData.places, debouncedSearchTerm);
+    
+    // Apply starred filter if enabled
+    if (starredOnly) {
+      filtered = filtered.filter(place => place.starred === true);
+    }
+    
     setFilteredPlaces(filtered);
     setCurrentPage(1);
-  }, [placesData, debouncedSearchTerm, filterPlaces]);
+  }, [placesData, debouncedSearchTerm, starredOnly, filterPlaces]);
 
   // Update displayed places when filtered places or current page changes
   useEffect(() => {
@@ -314,33 +325,67 @@ export function PlacesList() {
         </Alert>
       )}
       
-      <Group justify="center">
-        <div style={{ maxWidth: '600px', width: '100%' }}>
-          <TextInput
-            placeholder="Search by name, type, description, category, address, or tags..."
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.currentTarget.value)}
-            leftSection={<IconSearch size={16} />}
-            style={{ 
-              fontFamily: 'monospace'
-            }}
+      <Center mb="md">
+        <Flex
+          gap="md"
+          align="flex-start"
+          wrap="wrap"
+          maw={900}
+          w="100%"
+        >
+          <Box style={{ flex: '1 1 400px', minWidth: '300px' }}>
+            <Stack gap="xs">
+              <TextInput
+                placeholder="Search by name, type, description, category, address, or tags..."
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.currentTarget.value)}
+                leftSection={<IconSearch size={16} />}
+                styles={{
+                  input: {
+                    borderRadius: '9999px',
+                    borderColor: 'var(--mantine-color-blue-5)',
+                    color: 'var(--mantine-color-blue-7)',
+                    fontFamily: 'monospace',
+                    '&:focus': {
+                      borderColor: 'var(--mantine-color-blue-6)',
+                    }
+                  }
+                }}
+              />
+              <Text size="xs" ta="right" c="dimmed">
+                Showing {displayedPlaces.length} of {filteredPlaces.length} places
+              </Text>
+            </Stack>
+          </Box>
+          
+          <Switch
+            label="Just the hits!"
+            checked={starredOnly}
+            onChange={(event) => setStarredOnly(event.currentTarget.checked)}
+            color="yellow"
+            size="sm"
+            thumbIcon={
+              starredOnly ? (
+                <IconStar size={12} style={{ color: 'var(--mantine-color-yellow-6)' }} />
+              ) : null
+            }
             styles={{
-              input: {
-                borderRadius: '9999px',
-                borderColor: 'var(--mantine-color-blue-5)',
+              root: {
+                paddingTop: '0.5rem'
+              },
+              track: {
+                cursor: 'pointer',
+              },
+              label: {
+                cursor: 'pointer',
+                fontWeight: 500,
                 color: 'var(--mantine-color-blue-7)',
-                fontFamily: 'monospace',
-                '&:focus': {
-                  borderColor: 'var(--mantine-color-blue-6)',
-                }
+                whiteSpace: 'nowrap'
               }
             }}
           />
-          <Text size="xs" ta="right" c="dimmed" mt={4}>
-            Showing {displayedPlaces.length} of {filteredPlaces.length} places
-          </Text>
-        </div>
-      </Group>
+        </Flex>
+      </Center>
 
       <Tabs value={activeTab} onChange={setActiveTab} mb="xl" mt="none">
         <Tabs.List>

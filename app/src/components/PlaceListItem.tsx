@@ -142,6 +142,11 @@ export function PlaceListItem({ place }: PlaceListItemProps) {
             <Badge variant="light" size="xs" style={{ flexShrink: 0 }} className="medium-screen-only">
               {place.category}
             </Badge>
+            {place.starred && (
+              <Badge variant="filled" size="sm" color="yellow" style={{ fontWeight: '900', color: 'var(--mantine-color-blue-7)', fontFamily: 'var(--mantine-font-family)' }}>
+                DO IT!
+              </Badge>
+            )}
             {place.tags.length > 0 && (
               <div 
                 style={{ 

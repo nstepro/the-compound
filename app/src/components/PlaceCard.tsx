@@ -191,6 +191,12 @@ export function PlaceCard({
             ⭐ {place.rating}
           </Badge>
         )}
+            
+        {place.starred && (
+          <Badge variant="filled" size="sm" color="yellow" style={{ fontWeight: '900', color: 'var(--mantine-color-blue-7)', fontFamily: 'var(--mantine-font-family)' }}>
+            YES!
+          </Badge>
+        )}
       </Group>
 
       <Stack gap="xs" mb="md">

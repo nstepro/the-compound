@@ -23,6 +23,8 @@ export interface Place {
     enrichedAt: string;
     enrichmentVersion: string;
   };
+  starred?: boolean;
+  emoji?: string;
 }
 
 export interface PlacesData {

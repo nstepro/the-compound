@@ -18,6 +18,23 @@ const isTouchDevice = () => {
   return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 };
 
+// Function to calculate luminance and determine if color is light or dark
+const getContrastColor = (hexColor: string): string => {
+  // Remove # if present
+  const hex = hexColor.replace('#', '');
+  
+  // Convert to RGB
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  
+  // Calculate relative luminance using WCAG formula
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  
+  // Return black for light backgrounds, white for dark backgrounds
+  return luminance > 0.5 ? '#000000' : '#FFFFFF';
+};
+
 // Function to get icon and color based on place type
 const getTypeConfig = (type: string): { icon: string; backgroundColor: string } => {
   switch (type.toLowerCase()) {
@@ -225,9 +242,10 @@ export function MapView({ places, loading, error, isVisible }: MapViewProps) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: 'white',
+                      color: getContrastColor(getTypeConfig(place.type).backgroundColor),
                       fontSize: '18px',
-                      fontWeight: 'bold',
+                      fontFamily: '"Noto Emoji", sans-serif',
+                      fontWeight: 'normal',
                       cursor: 'pointer',
                       boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
                       transition: 'transform 0.2s ease, box-shadow 0.2s ease'
@@ -242,7 +260,7 @@ export function MapView({ places, loading, error, isVisible }: MapViewProps) {
                       e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
                     }}
                   >
-                    {getTypeConfig(place.type).icon}
+                    {place.emoji || getTypeConfig(place.type).icon}
                   </div>
                 </MarkerTooltip>
               </Marker>

@@ -29,7 +29,9 @@ const PlaceSchema = z.object({
     enriched: z.boolean().default(false),
     enrichedAt: z.string().datetime().optional(),
     enrichmentVersion: z.string().optional()
-  }).optional().describe('Tracking information for enrichment status')
+  }).optional().describe('Tracking information for enrichment status'),
+  starred: z.boolean().optional().describe('Whether this place is marked as a favorite with a standalone star marker (⭐ emoji or standalone * asterisk, NOT markdown formatting) in the original document'),
+  emoji: z.string().optional().describe('Suggested emoji that represents this place (e.g., 🏖️ for beach, 🍜 for Asian restaurant, 🍺 for brewery)')
 });
 
 // Complete output schema
