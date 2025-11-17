@@ -23,8 +23,16 @@ export function Shady() {
         )}
         
         {markdownContent && (
-          <div className="markdown-content">
-            <Markdown>{markdownContent}</Markdown>
+          <div className="markdown-content house-mechanics">
+            <Markdown
+              components={{
+                a: ({ node, ...props }) => (
+                  <a {...props} target="_blank" rel="noopener noreferrer" />
+                ),
+              }}
+            >
+              {markdownContent}
+            </Markdown>
           </div>
         )}
         

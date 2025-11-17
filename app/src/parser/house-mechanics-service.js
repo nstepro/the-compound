@@ -97,41 +97,60 @@ ${rawContent}
 
 Please:
 1. Convert bullet points to clear bulleted lists (avoid numbered lists)
-2. Format wifi passwords as inline code with backticks
-3. Add relevant emojis where appropriate, but ONLY to headings - don't overdo it.
-4. Make the language more conversational and clear
-5. Group related items together logically
-6. Add section headers where it makes sense, but keep them minimal.
-7. Keep all the original information but make it more readable
-8. Avoid "dividers" between sections - just use a blank line
-9. Do NOT add a title to the document (i.e., "Shady House Instructions") - just start with the instructions (using necessary headers for each section)
+2. **CRITICAL - BOLD KEY ITEMS**: For each bullet point, bold the primary subject/item being discussed. Examples:
+   - "There are **extra rolls of toilet paper** under the sink in the primary bathroom"
+   - "The **primary bath shower drain** is hidden under the white slab"
+   - "The **espresso machine** should be turned off when you leave"
+   - "**Mini split controls** are located on the wall in each bedroom"
+   Don't go overboard - just bold the main thing each bullet is about.
+3. **PRESERVE HYPERLINKS**: The input may contain markdown links in the format [text](url). Keep these EXACTLY as they appear. For example, if you see "[Mini Split Manual](https://example.com)", preserve it as a markdown link. Do NOT remove or alter links.
+4. **HANDLE IMPORTANT TEXT**: If the original text has ALL CAPS (like "IMPORTANT:" or "WARNING:") or multiple exclamation points, this indicates something is important:
+   - Just add a ‼️ emoji at the BEGINNING of that bullet point
+   - Don't create additional sub-bullets or use prefixes like "IMPORTANT:" or "WARNING:"
+   - Don't repeat the ALL CAPS or excessive exclamation points
+   - Example: If original says "IMPORTANT: Wipe up any spills right away", format as "‼️ Wipe up any **spills** right away"
+5. Format wifi passwords as inline code with backticks
+6. Do NOT add emojis to section headers - keep them clean and simple.
+7. Make the language more conversational and clear
+8. Group related items together logically
+9. Add section headers where it makes sense, but keep them minimal.
+10. Keep all the original information but make it more readable
+11. **NEVER** add horizontal separators (---, ***, etc.) between sections - just use blank lines
+12. Do NOT add a title to the document (i.e., "Shady House Instructions") - just start with the instructions (using necessary headers for each section)
+13. Do NOT create additional sub-bullets just to emphasize importance - keep the same structure as the original
 
 Format as markdown and return ONLY the formatted content without any wrapper text.
 
 Example response:
 
-### Leaving Checklist 🏡
+### Leaving Checklist
 
 Before you go, please:
 
-- Turn off the espresso machine
-- Turn off all three bedroom mini splits
-- Set the main area mini split to:
+- Turn off the **espresso machine**
+- Turn off all three **bedroom mini splits**
+- Set the **main area mini split** to:
   - Winter: Heat, 61°
   - Summer: Cool, 78°
-- ...
+- ‼️ **Lock all doors** - this is critical for security
 
-### Door Instructions 🚪
+### Door Instructions
 
-- To unlock: Enter the pin and press the lock button
-- To lock: Pull the door shut with one hand, then press and hold the lock 🔒 button for 2 seconds
+- To unlock: Enter the pin and press the **lock button**
+- To lock: Pull the door shut with one hand, then press and hold the lock button for 2 seconds
+- Refer to the [Lock Manual](https://example.com/manual) for detailed instructions
 
-### WiFi Info 📶
+### WiFi Info
 
 - Network: MyInternetSSID
 - Password: \`MyInternetPassword\`
 
----
+### Important Notes
+
+- **Extra toilet paper rolls** are located under the sink in the primary bathroom
+- The **primary bath shower drain** is hidden under the white slab - lift it to clean
+- ‼️ Don't put **coffee grounds or food scraps** down the sink
+
 *Last updated: 7/9/2025*
 
 `;
