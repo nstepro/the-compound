@@ -124,9 +124,32 @@ body {
 
 .markdown-content code {
   padding: 2px 8px;
-  background: var(--mantine-color-brand-1);
+  background: var(--mantine-color-brand-0);
   border-radius: 4px;
   color: var(--mantine-color-brand-8);
+}
+
+.markdown-content a {
+  color: var(--mantine-color-brand-6);
+  text-decoration: none;
+}
+
+.markdown-content a:hover {
+  text-decoration: underline;
+}
+
+/* House mechanics specific styling - bolder text */
+.house-mechanics h1,
+.house-mechanics h2,
+.house-mechanics h3,
+.house-mechanics h4,
+.house-mechanics h5,
+.house-mechanics h6 {
+  font-weight: 700 !important;
+}
+
+.house-mechanics strong {
+  font-weight: 700 !important;
 }
 
 /* Responsive adjustments */

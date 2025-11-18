@@ -115,15 +115,25 @@ Location context: ${config.location.region}`;
       let parsedData;
       try {
         // Clean the response content to extract JSON
-        const content = response.content.trim();
+        let content = response.content.trim();
         
         // Try to extract JSON from code blocks if present
-        const jsonMatch = content.match(/```json\s*([\s\S]*?)\s*```/) || 
-                         content.match(/```\s*([\s\S]*?)\s*```/) ||
-                         [null, content];
+        // Check for ```json first
+        let jsonMatch = content.match(/```json\s*([\s\S]*?)\s*```/);
+        if (jsonMatch && jsonMatch[1]) {
+          content = jsonMatch[1].trim();
+        } else {
+          // Try generic code block
+          jsonMatch = content.match(/```\s*([\s\S]*?)\s*```/);
+          if (jsonMatch && jsonMatch[1]) {
+            content = jsonMatch[1].trim();
+          }
+        }
         
-        const jsonString = jsonMatch[1] || content;
-        parsedData = JSON.parse(jsonString);
+        // Remove any leading/trailing backticks that might remain
+        content = content.replace(/^`+|`+$/g, '').trim();
+        
+        parsedData = JSON.parse(content);
         
         logger.info(`Successfully parsed ${parsedData.places?.length || 0} places`);
         

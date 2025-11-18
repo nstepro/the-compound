@@ -2,6 +2,7 @@
 
 .placeCard {
   transition: all 0.2s ease;
+  position: relative;
 }
 
 .placeCard.hoverEnabled {
@@ -124,5 +125,33 @@
 
 :global(.mantine-Accordion-panel) {
   background-color: white !important;
+}
+
+/* DO IT! Badge for starred places */
+.doItBadge {
+  background: #fac332;
+  color: var(--mantine-color-blue-7);
+  font-weight: 900;
+  font-size: 0.6rem;
+  padding: 0.1rem 0.8rem;
+  border-radius: 24px;
+  z-index: 10;
+  animation: wobble 2s ease-in-out infinite;
+  border: 2px solid transparent;
+  letter-spacing: 0.5px;
+}
+
+/* List item variant - adjusted positioning */
+.doItBadgeList {
+  position: relative;
+  display: inline-block;
+  background: #fac332;
+  color: var(--mantine-color-blue-7);
+  font-weight: 900;
+  font-size: 0.6rem;
+  padding: 0.1rem 0.8rem;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+  margin-left: 0.5rem;
 }
 

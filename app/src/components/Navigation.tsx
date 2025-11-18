@@ -15,8 +15,8 @@ export function Navigation() {
 
   const tabs = [
     { id: 'places', label: 'Places', path: '/places' },
-    { id: 'shady', label: 'Shady', path: '/shady' },
-    { id: 'lofty', label: 'Lofty', path: '/lofty' },
+    { id: 'shady', label: 'Shady (#142)', path: '/shady' },
+    { id: 'lofty', label: 'Lofty (#137)', path: '/lofty' },
     // { id: 'getting-here', label: 'Getting to the Sheddy', path: '/getting-here' }
   ];
 

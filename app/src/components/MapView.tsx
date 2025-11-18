@@ -225,9 +225,7 @@ export function MapView({ places, loading, error, isVisible }: MapViewProps) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: 'white',
                       fontSize: '18px',
-                      fontWeight: 'bold',
                       cursor: 'pointer',
                       boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
                       transition: 'transform 0.2s ease, box-shadow 0.2s ease'
@@ -242,7 +240,7 @@ export function MapView({ places, loading, error, isVisible }: MapViewProps) {
                       e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
                     }}
                   >
-                    {getTypeConfig(place.type).icon}
+                    {place.emoji || getTypeConfig(place.type).icon}
                   </div>
                 </MarkerTooltip>
               </Marker>

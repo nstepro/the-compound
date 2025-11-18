@@ -389,7 +389,17 @@ class GoogleDocsService {
         if (paragraph.elements) {
           paragraph.elements.forEach(elem => {
             if (elem.textRun && elem.textRun.content) {
-              paragraphText += elem.textRun.content;
+              const content = elem.textRun.content;
+              const textStyle = elem.textRun.textStyle;
+              
+              // Check if this text has a hyperlink
+              if (textStyle && textStyle.link && textStyle.link.url) {
+                // Format as markdown link: [text](url)
+                paragraphText += `[${content.trim()}](${textStyle.link.url})`;
+              } else {
+                // Regular text
+                paragraphText += content;
+              }
             }
           });
         }

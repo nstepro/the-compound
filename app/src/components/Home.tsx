@@ -11,8 +11,8 @@ function getBrandColorFilter(): string {
 export function Home() {
   const tabs = [
     { id: 'places', label: 'Places', path: '/places' },
-    { id: 'shady', label: 'Shady', path: '/shady' },
-    { id: 'lofty', label: 'Lofty', path: '/lofty' },
+    { id: 'shady', label: 'Shady (#142)', path: '/shady' },
+    { id: 'lofty', label: 'Lofty (#137)', path: '/lofty' },
     // { id: 'getting-here', label: 'Getting to the Sheddy', path: '/getting-here' }
   ];
 
@@ -52,7 +52,21 @@ export function Home() {
               component={Link}
               to={tab.path}
               size="sm"
-              style={{ fontWeight: 800 }}
+              radius="xl"
+              style={{ 
+                fontWeight: 800,
+                transition: 'all 0.3s ease',
+              }}
+              styles={{
+                root: {
+                  '&:hover': {
+                    backgroundColor: 'var(--mantine-color-accent-5)',
+                    borderColor: 'var(--mantine-color-accent-5)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    transform: 'translateY(-2px)',
+                  },
+                },
+              }}
             >
               {tab.label}
             </Button>
