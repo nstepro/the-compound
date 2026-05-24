@@ -5,7 +5,7 @@ const path = require('path');
 const { config } = require('./config');
 const { logger } = require('./logger');
 const { generateParsingPrompt, generateCategoryCleanupPrompt } = require('./prompts');
-const { PlaceSchema, validatePlace } = require('./schema');
+const { validatePlace } = require('./schema');
 
 class OpenAIService {
   constructor() {
@@ -225,7 +225,7 @@ ${parsedData.places.map((p, i) => `${i + 1}. ${p.name} (${p.type}) - Category: $
     }
   }
 
-  async enrichPlaceData(places, existingPlaces = []) {
+  async enrichPlaceData(places, _existingPlaces = []) {
     // DEPRECATED: This method is no longer supported
     // Use webEnrichmentService.enrichPlaces() instead for real Google Places API data
     logger.error('❌ DEPRECATED: enrichPlaceData() is no longer supported!');

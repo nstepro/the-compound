@@ -222,9 +222,9 @@ Your app currently uses:
 - `GOOGLE_CLOUD_STORAGE_ENABLED` - Enable/disable Google Cloud Storage (default: true)
 
 ### Local Development
-For local development, create a `.env.local` file (already in `.gitignore`):
+For local development, copy `.env.example` to `.env` (already in `.gitignore`):
 ```bash
-# .env.local (DO NOT COMMIT THIS FILE)
+# .env (DO NOT COMMIT THIS FILE)
 VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
 GOOGLE_PLACES_API_KEY=your_places_api_key
 GOOGLE_DOC_ID=your_google_doc_id
@@ -240,10 +240,9 @@ GOOGLE_CLOUD_STORAGE_FILE_NAME=compound-places.json
 GOOGLE_CLOUD_STORAGE_ENABLED=true
 ```
 
-**Pro tip:** You can create a `.env.local.example` file (safe to commit) to document what environment variables are needed:
+**Pro tip:** Use the committed `.env.example` as a template:
 ```bash
-# .env.local.example
-# Copy this file to .env.local and fill in your actual values
+# .env.example → copy to .env and fill in your actual values
 VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token_here
 GOOGLE_PLACES_API_KEY=your_places_api_key
 GOOGLE_DOC_ID=your_google_doc_id
@@ -266,4 +265,4 @@ GOOGLE_CLOUD_STORAGE_ENABLED=true
 - Since the app is in a subdirectory, use git subtree or monorepo buildpack for deployment
 - Environment variables are managed through Heroku config vars, not `.env` files
 - `.env` files are in `.gitignore` and should NEVER be committed to git
-- When you're ready to connect the parser and use S3, you'll need to update the data fetching logic 
+- Places data is served via GCS when enabled, or from `public/compound-places.json` locally — see ARCHITECTURE.md 

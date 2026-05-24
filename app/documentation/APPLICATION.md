@@ -29,17 +29,19 @@ A React application for visitors of the Teddy Sheddy compound. Built with Vite, 
 2. **Set up environment variables**:
    Create a `.env` file in the app directory with required variables (see ENVIRONMENT_VARIABLES.md)
 
-3. **Start the development server**:
+3. **Start development** (Vite + API together):
    ```bash
-   npm run dev
+   npm run dev:all
    ```
 
-4. **Start the production server**:
+   Or run separately: `npm run dev` (frontend) and `npm start` (API).
+
+4. **Optional local data** without running the parser:
    ```bash
-   npm start
+   npm run seed-local
    ```
 
-5. **Open your browser**: Navigate to `http://localhost:5173` (dev) or `http://localhost:3000` (production)
+5. **Open your browser**: Navigate to `http://localhost:5173` (dev) or `http://localhost:3000` (production build)
 
 ## Authentication
 
@@ -54,7 +56,6 @@ Authentication is handled via the `AuthContext` and `ProtectedRoute` components.
 ```
 src/
 ├── components/
-│   ├── Admin.tsx              # Admin route wrapper
 │   ├── AdminDashboard.tsx     # Admin interface for data management
 │   ├── Footer.tsx             # App footer
 │   ├── GettingHere.tsx        # Visitor information

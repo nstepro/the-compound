@@ -6,13 +6,43 @@ const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
+const DEFAULT_JWT_SECRET = 'your-super-secret-jwt-key-change-this-in-production';
+const DEFAULT_ADMIN_PASSWORD_HASH = '$2b$10$example.hash.replace.with.real.hash';
+const DEFAULT_GUEST_PASSWORD_HASH = '$2b$10$example.guest.hash.replace.with.real.hash';
+
+function validateProductionConfig() {
+  if (process.env.NODE_ENV !== 'production') {
+    return;
+  }
+
+  const errors = [];
+
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET === DEFAULT_JWT_SECRET) {
+    errors.push('JWT_SECRET must be set to a secure value in production');
+  }
+  if (!process.env.ADMIN_PASSWORD_HASH || process.env.ADMIN_PASSWORD_HASH === DEFAULT_ADMIN_PASSWORD_HASH) {
+    errors.push('ADMIN_PASSWORD_HASH must be set in production');
+  }
+  if (!process.env.GUEST_PASSWORD_HASH || process.env.GUEST_PASSWORD_HASH === DEFAULT_GUEST_PASSWORD_HASH) {
+    errors.push('GUEST_PASSWORD_HASH must be set in production');
+  }
+
+  if (errors.length > 0) {
+    console.error('Production configuration error:');
+    errors.forEach((message) => console.error(`  - ${message}`));
+    process.exit(1);
+  }
+}
+
+validateProductionConfig();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Security configuration
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production';
-const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || '$2b$10$example.hash.replace.with.real.hash';
-const GUEST_PASSWORD_HASH = process.env.GUEST_PASSWORD_HASH || '$2b$10$example.guest.hash.replace.with.real.hash';
+// Security configuration (defaults for local development only)
+const JWT_SECRET = process.env.JWT_SECRET || DEFAULT_JWT_SECRET;
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || DEFAULT_ADMIN_PASSWORD_HASH;
+const GUEST_PASSWORD_HASH = process.env.GUEST_PASSWORD_HASH || DEFAULT_GUEST_PASSWORD_HASH;
 
 // Middleware for JSON parsing
 app.use(express.json());
@@ -240,8 +270,8 @@ app.get('/api/house-mechanics/:house', authenticateGuestOrAdmin, async (req, res
         filename: filename
       });
     } else {
-      // Fallback to local file system (for development)
-      const localPath = path.join(__dirname, 'public', filename);
+      // Fallback to local fixtures (not in public/ — avoids static exposure in dist/)
+      const localPath = path.join(__dirname, 'fixtures', 'house-mechanics', filename);
       
       if (!fs.existsSync(localPath)) {
         return res.status(404).json({

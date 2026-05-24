@@ -1,0 +1,15 @@
+---
+description: Security rules for the-compound
+globs: app/**/*
+alwaysApply: false
+---
+
+# Security
+
+- Never commit `.env`, credentials JSON, API keys, or real passwords.
+- Use `app/.env.example` as the template; real values only in `.env`.
+- Do not place protected content in `public/` (bundled to `dist/` and may be served without API auth).
+- Production requires explicit `JWT_SECRET` and bcrypt password hashes (no defaults).
+- Prefer least-privilege IAM for GCS service accounts.
+
+See [AGENTS.md](../../AGENTS.md) and [ENVIRONMENT_VARIABLES.md](../../app/documentation/ENVIRONMENT_VARIABLES.md).

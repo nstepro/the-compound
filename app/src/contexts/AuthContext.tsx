@@ -64,12 +64,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } else {
         return { success: false, message: response.data.message || 'Login failed' };
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error:', error);
-      return { 
-        success: false, 
-        message: error.response?.data?.message || 'Network error. Please try again.' 
-      };
+      const message =
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        error.response &&
+        typeof error.response === 'object' &&
+        'data' in error.response &&
+        error.response.data &&
+        typeof error.response.data === 'object' &&
+        'message' in error.response.data &&
+        typeof error.response.data.message === 'string'
+          ? error.response.data.message
+          : 'Network error. Please try again.';
+      return { success: false, message };
     }
   };
 

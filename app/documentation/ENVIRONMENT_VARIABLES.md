@@ -78,14 +78,14 @@ node utilities/generate-password.js guest myGuestPassword456
 
 ## Local Development Setup
 
-1. Create a `.env.local` file in the app directory
-2. Copy the example below and fill in your actual values
-3. Make sure `.env.local` is in your `.gitignore` (it already is)
+1. Copy `.env.example` to `.env` in the app directory
+2. Fill in your actual values
+3. `.env` is in `.gitignore` — never commit it
 
-### Example .env.local file:
+### Example `.env` file:
 ```bash
-# Copy this content to .env.local and fill in your actual values
-# DO NOT commit .env or .env.local files - they contain sensitive data
+# Copy from .env.example and fill in your actual values
+# DO NOT commit .env — it contains sensitive data
 
 # Frontend Configuration
 VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token_here

@@ -19,7 +19,7 @@ interface StreamEvent {
   type: 'connected' | 'step' | 'info' | 'warning' | 'error' | 'completed' | 'heartbeat';
   message: string;
   timestamp: string;
-  data?: any;
+  data?: unknown;
 }
 
 export function AdminDashboard() {

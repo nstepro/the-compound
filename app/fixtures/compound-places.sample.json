@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "generatedAt": "2020-01-01T00:00:00.000Z",
+    "totalPlaces": 2,
+    "sourceDocId": "sample-fixture",
+    "parserVersion": "sample-1.0.0",
+    "categories": ["Restaurants", "Activities"]
+  },
+  "places": [
+    {
+      "id": "sample-restaurant-1",
+      "name": "Harbor Grill",
+      "type": "restaurant",
+      "description": "Sample seafood restaurant for local development.",
+      "category": "Restaurants",
+      "origText": "Harbor Grill — sample",
+      "tags": ["seafood", "sample"]
+    },
+    {
+      "id": "sample-activity-1",
+      "name": "Kayak Rentals",
+      "type": "activity",
+      "description": "Sample activity for local development.",
+      "category": "Activities",
+      "origText": "Kayak Rentals — sample",
+      "tags": ["outdoors", "sample"]
+    }
+  ]
+}

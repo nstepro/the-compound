@@ -5,13 +5,20 @@
   "type": "commonjs",
   "scripts": {
     "dev": "vite",
+    "dev:all": "concurrently -n vite,api -c blue,green \"npm run dev\" \"npm run start\"",
     "build": "tsc -b && vite build",
     "start": "node server.js",
     "lint": "eslint .",
+    "typecheck": "tsc -b --pretty false",
+    "check": "npm run lint && npm run typecheck",
+    "validate": "npm run check && npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "preview": "vite preview",
     "update-data": "node utilities/update-data.js",
+    "seed-local": "node utilities/seed-local.js",
     "parse": "node src/parser/index.js",
-    "parse-debug": "LOG_LEVEL=debug node src/parser/debug.js"
+    "parse-debug": "cross-env LOG_LEVEL=debug node src/parser/debug.js"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.13.0",
@@ -42,6 +49,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
     "@types/mapbox-gl": "^3.4.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
@@ -54,7 +63,8 @@
     "nodemon": "^3.0.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.34.1",
-    "vite": "^7.0.0"
+    "vite": "^7.0.0",
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=18"

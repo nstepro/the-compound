@@ -1,0 +1,17 @@
+---
+description: Parser data pipeline and output paths
+globs: app/src/parser/**/*
+alwaysApply: false
+---
+
+# Parser pipeline
+
+Flow: Google Doc → `src/parser/` → `src/parser/output/compound-places.json` → GCS or `public/` (when GCS disabled).
+
+Required env: `OPENAI_API_KEY`, `GOOGLE_DOC_ID`, `GOOGLE_PLACES_API_KEY` (see `config.js`).
+
+- Run: `npm run parse` from `app/`
+- Debug fixture: `src/parser/fixtures/example-input.md`
+- House mechanics output: GCS or `fixtures/house-mechanics/` for local dev
+
+Do not put guest-only markdown in `public/`. See [ARCHITECTURE.md](../../app/documentation/ARCHITECTURE.md).
