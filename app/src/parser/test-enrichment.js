@@ -220,7 +220,7 @@ async function main() {
         await tester.listPlaces({ maxPlaces: parseInt(args[1]) || 20 });
         break;
         
-      case 'test':
+      case 'test': {
         const maxPlaces = parseInt(args[1]) || 3;
         const startIndex = parseInt(args[2]) || 0;
         await tester.testEnrichment({ 
@@ -230,8 +230,9 @@ async function main() {
           dryRun: args.includes('--dry-run')
         });
         break;
+      }
         
-      case 'test-type':
+      case 'test-type': {
         const type = args[1];
         const count = parseInt(args[2]) || 3;
         if (!type) {
@@ -245,6 +246,7 @@ async function main() {
           dryRun: args.includes('--dry-run')
         });
         break;
+      }
         
       case 'help':
       default:

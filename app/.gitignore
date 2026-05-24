@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Generated local data (use npm run seed-local)
+public/compound-places.json
+
 # Environment variables
 .env
 .env.local

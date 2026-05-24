@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 const { config } = require('./config');
 const { logger } = require('./logger');
 const { googleDocsService } = require('./google-docs');
@@ -249,12 +248,6 @@ class Parser {
         const processedHouses = Object.keys(houseMechanicsResults).filter(house => houseMechanicsResults[house].success);
         logger.info(`House mechanics processed and uploaded to Google Cloud Storage: ${processedHouses.join(', ')}`);
       }
-
-      // Calculate type breakdown for result
-      const typeBreakdown = finalOutput.places.reduce((acc, place) => {
-        acc[place.type] = (acc[place.type] || 0) + 1;
-        return acc;
-      }, {});
 
       // Send final completion events
       sendEvent('info', `🎉 Parsing completed successfully! Generated ${finalOutput.places.length} places`);

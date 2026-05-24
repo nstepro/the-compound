@@ -20,4 +20,25 @@ export default tseslint.config([
       globals: globals.browser,
     },
   },
+  {
+    files: ['src/contexts/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+  {
+    files: ['server.js', 'utilities/**/*.js', 'src/parser/**/*.js'],
+    ignores: ['**/*.test.js'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'commonjs',
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+  },
 ])

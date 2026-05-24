@@ -1,5 +1,4 @@
 const { Storage } = require('@google-cloud/storage');
-const { google } = require('googleapis');
 const fs = require('fs');
 const { config } = require('./config');
 const { logger } = require('./logger');

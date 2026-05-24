@@ -1,7 +1,6 @@
 const { google } = require('googleapis');
 const TurndownService = require('turndown');
 const fs = require('fs');
-const path = require('path');
 const { config } = require('./config');
 const { logger } = require('./logger');
 

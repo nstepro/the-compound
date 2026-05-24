@@ -59,7 +59,7 @@ GOOGLE_CLOUD_STORAGE_ENABLED=true
 
 ### 4. Local Development Setup
 
-Update your `.env.local` file:
+Update your `.env` file:
 
 ```bash
 # Existing variables...

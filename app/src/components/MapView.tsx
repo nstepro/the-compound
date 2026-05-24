@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { Container, LoadingOverlay, Alert, Modal, Popover } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
-import Map, { Marker } from 'react-map-gl/mapbox';
+import Map, { Marker, type MapRef } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { Place } from '../types';
 import { PlaceCard } from './PlaceCard';
@@ -96,7 +96,7 @@ function MarkerTooltip({ place, children }: MarkerTooltipProps) {
 }
 
 export function MapView({ places, loading, error, isVisible }: MapViewProps) {
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<MapRef | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [modalOpened, setModalOpened] = useState(false);
   const [initialBoundsSet, setInitialBoundsSet] = useState(false);
@@ -109,12 +109,13 @@ export function MapView({ places, loading, error, isVisible }: MapViewProps) {
 
   useEffect(() => {
     // Only set initial bounds once when places are first loaded
-    if (mapRef.current && placesWithCoordinates.length > 0 && !initialBoundsSet) {
+    const map = mapRef.current?.getMap();
+    if (map && placesWithCoordinates.length > 0 && !initialBoundsSet) {
       if (placesWithCoordinates.length === 1) {
         // If there's only one place, center on it with a reasonable zoom
         const place = placesWithCoordinates[0];
         if (place.coordinates) {
-          mapRef.current.flyTo({
+          map.flyTo({
             center: [place.coordinates.lng, place.coordinates.lat],
             zoom: 12,
             duration: 1000
@@ -130,13 +131,13 @@ export function MapView({ places, loading, error, isVisible }: MapViewProps) {
           const lngs = coordinates.map(coord => coord!.lng);
           const lats = coordinates.map(coord => coord!.lat);
           
-          const bounds = [
-            [Math.min(...lngs), Math.min(...lats)], // Southwest coordinates
-            [Math.max(...lngs), Math.max(...lats)]  // Northeast coordinates
+          const bounds: [[number, number], [number, number]] = [
+            [Math.min(...lngs), Math.min(...lats)],
+            [Math.max(...lngs), Math.max(...lats)],
           ];
           
-          mapRef.current.fitBounds(bounds, {
-            padding: 50, // Add some padding around the bounds
+          map.fitBounds(bounds, {
+            padding: 50,
             duration: 1000
           });
         }
@@ -150,9 +151,7 @@ export function MapView({ places, loading, error, isVisible }: MapViewProps) {
     if (isVisible && mapRef.current) {
       // Small delay to ensure the tab content is fully rendered
       const timeoutId = setTimeout(() => {
-        if (mapRef.current) {
-          mapRef.current.resize();
-        }
+        mapRef.current?.getMap().resize();
       }, 100);
       
       return () => clearTimeout(timeoutId);

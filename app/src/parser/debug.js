@@ -3,9 +3,13 @@
 const { openaiService } = require('./openai-service');
 const { logger } = require('./logger');
 const fs = require('fs');
+const path = require('path');
 
-// Test the parsing with the example input
-const testInput = fs.readFileSync('./examples/example-input.md', 'utf8');
+// Test the parsing with the fixture input
+const testInput = fs.readFileSync(
+  path.join(__dirname, 'fixtures', 'example-input.md'),
+  'utf8'
+);
 
 async function debugParsing() {
   try {

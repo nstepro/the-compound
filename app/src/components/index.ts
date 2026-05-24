@@ -1,4 +1,3 @@
-export { Admin } from './Admin';
 export { AdminDashboard } from './AdminDashboard';
 export { Footer } from './Footer';
 export { GettingHere } from './GettingHere';

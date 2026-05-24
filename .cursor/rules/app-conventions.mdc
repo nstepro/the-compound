@@ -1,0 +1,14 @@
+---
+description: Code conventions for the-compound app directory
+globs: app/**/*
+alwaysApply: false
+---
+
+# App conventions
+
+- All npm commands run from `app/`.
+- Frontend: TypeScript, React 19, Mantine, React Router under `app/src/`.
+- Backend/parser: CommonJS JavaScript in `server.js`, `src/parser/`, `utilities/`.
+- Do not move `app/` to repo root (Heroku subtree deploy).
+
+Match existing style in each folder. See [AGENTS.md](../../AGENTS.md) for commands and workflow.

@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 const EXAMPLE_INPUT = `# Vacation Compound Guide
 
 ## Restaurants & Food
