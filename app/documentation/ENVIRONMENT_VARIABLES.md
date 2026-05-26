@@ -42,6 +42,8 @@ GOOGLE_APPLICATION_CREDENTIALS_BASE64=base64_encoded_json
 - `GUEST_PASSWORD_HASH` - Bcrypt hash of guest password (for accessing Lofty/Shady content)
 - `RATE_LIMIT_WINDOW_MS` - Rate limiting window in milliseconds (default: 900000 = 15 minutes)
 - `RATE_LIMIT_MAX_ATTEMPTS` - Maximum login attempts per window (default: 5)
+- `ADD_PLACE_RATE_LIMIT_WINDOW_MS` - Quick-add place rate limit window (default: 900000)
+- `ADD_PLACE_RATE_LIMIT_MAX` - Max quick-add preview/commit requests per window (default: 10)
 
 **Generate password hashes:**
 ```bash
