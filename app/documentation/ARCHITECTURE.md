@@ -53,6 +53,36 @@ This is **product AI** (data pipeline), not tooling for coding agents. See [AGEN
 
 Served only via authenticated API — **not** from `public/` (avoids static exposure in `dist/`).
 
+### Tides
+
+`src/tides/` is a self-contained module, deliberately isolated from `src/parser/` — it must not
+require `src/parser/config.js` (which throws at load time if OpenAI/Google env vars are missing),
+because `/tides` is a public route with no dependency on the parser.
+
+```mermaid
+flowchart LR
+  NOAA[NOAA CO-OPS] --> Sync[src/tides/sync.js]
+  USNO[USNO moon phases] --> Sync
+  Sync --> Cache[tide-predictions.json]
+  Cache --> API[GET /api/tides]
+  API --> UI[TideChart.tsx]
+```
+
+- NOAA CO-OPS `datagetter` (hi-lo predictions) and USNO's moon-phase API are both keyless.
+- There is no scheduler (`Procfile` is `web: npm run start` only), so coverage is maintained by a
+  **lazy self-heal**: each `/api/tides` request checks cache coverage and fires a mutexed,
+  backed-off background refetch (`ensureCoverage` in `sync.js`) if it's running low — the request
+  itself always serves whatever is cached, stale or not.
+- `npm run sync-tides` / `sync-tides:force` run the same sync from the CLI for manual/first runs.
+
+| Mode | Source |
+|------|--------|
+| GCS enabled | `tide-predictions.json` in bucket |
+| GCS disabled | `public/tide-predictions.json` (synced), falling back to `fixtures/tide-predictions.sample.json` |
+
+The committed fixture (Aug 2026 + Nov 2027, including the DST double-low-tide day) means a fresh
+clone with no `.env` still renders a working tide chart.
+
 ## API surface (`server.js`)
 
 | Method | Path | Auth | Description |
@@ -61,6 +91,7 @@ Served only via authenticated API — **not** from `public/` (avoids static expo
 | GET | `/api/auth/verify` | Bearer | Validate token |
 | GET | `/api/compound-places` | — | Places JSON |
 | GET | `/api/house-mechanics/:house` | guest or admin | Markdown for `lofty` or `shady` |
+| GET | `/api/tides` | — | One month of tide predictions (`?month=YYYY-MM`, defaults to current) |
 | POST | `/api/admin/parse` | admin | Run parser (sync) |
 | POST | `/api/admin/parse-polling` | admin | Start parser (async) |
 | GET | `/api/admin/parse-status` | admin | Parser job status |
@@ -76,12 +107,15 @@ Static SPA: `express.static('dist')` + `GET *` → `index.html`.
 - **React Router** routes in `App.tsx`
 - **Auth**: `AuthContext` + `ProtectedRoute` (guest/admin)
 - **Places**: `PlacesList` fetches `/api/compound-places`; inline sample data if 404
+- **Tides**: `TideChart` (public, `/tides`) fetches `/api/tides` via the `useTides` hook, which
+  keeps a client-side per-month cache so paging back and forth doesn't re-request
 
 ## Local development
 
 ```bash
-npm run dev:all    # Vite + Express
-npm run seed-local # Optional: sample places for API without parser
+npm run dev:all      # Vite + Express
+npm run seed-local   # Optional: sample places for API without parser
+npm run sync-tides   # Optional: force a real tide sync (works with zero .env)
 ```
 
 ## Deployment

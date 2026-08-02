@@ -599,6 +599,80 @@ async function runParser() {
 
 
 
+// API endpoint to serve a month of tide predictions (public, no auth — matches /api/compound-places)
+const tideSync = require('./src/tides/sync');
+const tideTransform = require('./src/tides/transform');
+const tideClock = require('./src/tides/clock');
+
+app.get('/api/tides', async (req, res) => {
+  try {
+    const cache = await tideSync.getCache();
+    const coverage = tideSync.ensureCoverage(cache);
+
+    if (!cache) {
+      return res.status(503).json({
+        success: false,
+        message: 'Tide data is being prepared. Try again in a moment.',
+      });
+    }
+
+    const requestedMonth = req.query.month;
+    if (requestedMonth && !/^\d{4}-\d{2}$/.test(requestedMonth)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid month parameter. Use YYYY-MM.',
+      });
+    }
+
+    const today = tideClock.todayLocalDate();
+    const monthKeyStr = requestedMonth || tideClock.monthKey(today);
+
+    const firstMonth = tideClock.monthKey(cache.predictions[0].t.slice(0, 10));
+    const lastMonth = tideClock.monthKey(cache.predictions[cache.predictions.length - 1].t.slice(0, 10));
+
+    if (monthKeyStr < firstMonth || monthKeyStr > lastMonth) {
+      return res.status(404).json({
+        success: false,
+        message: 'No tide data available for that month.',
+        available: { first: firstMonth, last: lastMonth },
+      });
+    }
+
+    const month = tideTransform.buildMonth(cache.predictions, monthKeyStr, cache.moonPhases, today);
+    const nextTideEvents = tideTransform.nextTides(cache.predictions, tideClock.nowLocalStamp(), 2);
+    const station = cache.metadata.station;
+
+    res.json({
+      success: true,
+      month: monthKeyStr,
+      monthLabel: month.monthLabel,
+      available: { first: firstMonth, last: lastMonth },
+      station: {
+        id: station.id,
+        name: station.name,
+        correctionNote: `Corrected for ${station.name}`,
+        correctionDetail: `${station.referenceStationName} reference · ${station.correction.timeOffsetMinutes} min · ×${station.correction.heightFactor}`,
+        datum: cache.metadata.datum,
+        units: 'ft',
+      },
+      today: { date: today, inRequestedMonth: today.startsWith(monthKeyStr) },
+      nextTides: nextTideEvents,
+      days: month.days,
+      moonPhases: month.moonPhases,
+      footnotes: month.footnotes,
+      stale: !coverage.ok,
+      generatedAt: cache.metadata.generatedAt,
+    });
+  } catch (error) {
+    console.error('Error fetching tide data:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch tide data',
+      error: error.message,
+    });
+  }
+});
+
 // Handle client-side routing - serve index.html for all routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));

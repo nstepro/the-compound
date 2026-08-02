@@ -10,6 +10,8 @@ export { PlaceListItem } from './PlaceListItem';
 export { PlacesList } from './PlacesList';
 export { ProtectedRoute } from './ProtectedRoute';
 export { Shady } from './Shady';
+export { TideChart } from './TideChart';
 
 // Hooks
-export { useHouseMechanics } from './useHouseMechanics'; 
+export { useHouseMechanics } from './useHouseMechanics';
+export { useTides } from './useTides'; 

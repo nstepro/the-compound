@@ -70,6 +70,18 @@ node utilities/generate-password.js guest myGuestPassword456
 - `OUTPUT_FILE` - Output filename (default: compound-places.json)
 - `FULL_REFRESH` - Force re-enrichment of all places (default: false)
 
+### Tides Configuration
+All optional — the `/tides` page and `npm run sync-tides` work with zero configuration
+(NOAA CO-OPS and USNO are keyless public APIs; a committed fixture covers local dev
+with no `.env` at all). See `src/tides/config.js`.
+- `TIDE_STATION_ID` - NOAA CO-OPS station id (default: 8415809, Tenants Harbor, ME)
+- `TIDE_STATION_NAME` - Display name for the configured station (default: Tenants Harbor)
+- `TIDE_TIMEZONE` - IANA timezone for local wall-clock formatting (default: America/New_York)
+- `TIDE_CACHE_FILE_NAME` - Filename for the synced predictions cache (default: tide-predictions.json)
+- `TIDE_COVERAGE_MIN_MONTHS` - Refetch when fewer months than this remain in the cache (default: 12)
+- `TIDE_COVERAGE_FETCH_MONTHS` - Months of predictions to fetch per sync (default: 24)
+- `TIDE_MOON_PHASES_ENABLED` - Enable moon-phase footnotes (default: true)
+
 ### Location Settings
 - `LOCATION_STATE` - State for location context (default: Maine)
 - `LOCATION_COUNTRY` - Country for location context (default: USA)

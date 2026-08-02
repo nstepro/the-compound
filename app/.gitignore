@@ -14,6 +14,7 @@ dist-ssr
 
 # Generated local data (use npm run seed-local)
 public/compound-places.json
+public/tide-predictions.json
 
 # Environment variables
 .env

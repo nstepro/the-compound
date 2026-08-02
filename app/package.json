@@ -17,6 +17,8 @@
     "preview": "vite preview",
     "update-data": "node utilities/update-data.js",
     "seed-local": "node utilities/seed-local.js",
+    "sync-tides": "node utilities/sync-tides.js",
+    "sync-tides:force": "node utilities/sync-tides.js --force",
     "parse": "node src/parser/index.js",
     "parse-debug": "cross-env LOG_LEVEL=debug node src/parser/debug.js"
   },
