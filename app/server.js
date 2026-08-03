@@ -726,6 +726,22 @@ app.get('/api/tides', async (req, res) => {
   }
 });
 
+// Force a fresh tide sync from NOAA/USNO (admin-only), bypassing the coverage
+// check — the same escape hatch as `npm run sync-tides:force`, for when the
+// cache is stale, gapped, or has fallen back to the committed sample fixture.
+app.post('/api/admin/tides/sync', authenticateAdmin, async (req, res) => {
+  try {
+    const result = await tideSync.syncTides({ force: true });
+    res.json({ success: true, ...result });
+  } catch (error) {
+    console.error('Tide sync error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Tide sync failed',
+    });
+  }
+});
+
 // Handle client-side routing - serve index.html for all routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));

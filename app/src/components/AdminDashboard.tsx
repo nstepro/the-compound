@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Paper, Title, Button, Stack, Alert, Text, Badge, ScrollArea } from '@mantine/core';
-import { IconDownload, IconAlertCircle, IconCheck, IconClock, IconX, IconPlayerPlay, IconExternalLink } from '@tabler/icons-react';
+import { IconDownload, IconAlertCircle, IconCheck, IconClock, IconX, IconPlayerPlay, IconExternalLink, IconRefresh } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import { useAuth } from '../contexts/AuthContext';
 import { AddPlacePanel } from './AddPlacePanel';
@@ -14,6 +14,21 @@ interface ParseResult {
     generatedAt: string;
     typeBreakdown: Record<string, number>;
   };
+}
+
+interface TideSyncResult {
+  success: boolean;
+  message?: string;
+  events?: number;
+  moonPhases?: number;
+  target?: 'gcs' | 'local';
+  coverage?: {
+    ok: boolean;
+    reason: string;
+    monthsRemaining: number;
+    lastDate?: string;
+  };
+  anomalies?: Array<{ date: string; slot: string; note: string }>;
 }
 
 interface StreamEvent {
@@ -33,6 +48,8 @@ export function AdminDashboard() {
   const [isPolling, setIsPolling] = useState(false);
   const [pollingInterval, setPollingInterval] = useState<NodeJS.Timeout | null>(null);
   const [completionNotificationShown, setCompletionNotificationShown] = useState(false);
+  const [isSyncingTides, setIsSyncingTides] = useState(false);
+  const [tideSyncResult, setTideSyncResult] = useState<TideSyncResult | null>(null);
 
   // Cleanup polling on component unmount
   useEffect(() => {
@@ -291,6 +308,62 @@ export function AdminDashboard() {
     }
   };
 
+  const handleSyncTides = async () => {
+    if (!authToken) {
+      notifications.show({
+        title: 'Authentication Error',
+        message: 'No authentication token found',
+        color: 'red',
+        icon: <IconX size={16} />,
+      });
+      return;
+    }
+
+    setIsSyncingTides(true);
+    setTideSyncResult(null);
+
+    try {
+      const response = await fetch('/api/admin/tides/sync', {
+        method: 'POST',
+        headers: getAuthHeaders(),
+      });
+
+      if (response.status === 401 || response.status === 403) {
+        notifications.show({
+          title: 'Authentication Error',
+          message: 'Your session has expired. Please log in again.',
+          color: 'red',
+          icon: <IconX size={16} />,
+        });
+        logout();
+        return;
+      }
+
+      const result = await response.json();
+      setTideSyncResult(result);
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || 'Tide sync failed');
+      }
+
+      notifications.show({
+        title: 'Tide sync complete',
+        message: `Fetched ${result.events} predictions (${result.moonPhases} moon phases) — coverage through ${result.coverage?.lastDate}`,
+        color: 'green',
+        icon: <IconCheck size={16} />,
+      });
+    } catch (error) {
+      notifications.show({
+        title: 'Tide sync failed',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        color: 'red',
+        icon: <IconX size={16} />,
+      });
+    } finally {
+      setIsSyncingTides(false);
+    }
+  };
+
   return (
     <Container size="lg" mt="xl">
       <Stack gap="xl">
@@ -404,6 +477,55 @@ export function AdminDashboard() {
                   </Paper>
                 )}
               </Stack>
+            )}
+          </Stack>
+        </Paper>
+
+        <Paper withBorder shadow="md" p="xl" radius="md">
+          <Stack gap="md">
+            <Title order={3}>Tide Data</Title>
+
+            <Text c="dimmed">
+              Force a fresh NOAA/USNO sync, bypassing the coverage check. Use this if the tide
+              chart is showing empty days — it usually means the cache fell back to stale or
+              placeholder data.
+            </Text>
+
+            <div>
+              <Button
+                onClick={handleSyncTides}
+                loading={isSyncingTides}
+                leftSection={<IconRefresh size={16} />}
+                disabled={isSyncingTides}
+                color="cyan"
+              >
+                {isSyncingTides ? 'Syncing Tides...' : 'Force Tide Sync'}
+              </Button>
+            </div>
+
+            {tideSyncResult && (
+              tideSyncResult.success ? (
+                <Alert icon={<IconCheck size={16} />} color="green">
+                  <Text size="sm">
+                    {tideSyncResult.events} predictions · {tideSyncResult.moonPhases} moon phases ·
+                    {' '}written to {tideSyncResult.target === 'gcs' ? 'Google Cloud Storage' : 'local file'}
+                  </Text>
+                  {tideSyncResult.coverage && (
+                    <Text size="sm">
+                      Coverage through {tideSyncResult.coverage.lastDate} ({tideSyncResult.coverage.monthsRemaining} months)
+                    </Text>
+                  )}
+                  {tideSyncResult.anomalies && tideSyncResult.anomalies.length > 0 && (
+                    <Text size="sm">
+                      {tideSyncResult.anomalies.length} DST anomal{tideSyncResult.anomalies.length === 1 ? 'y' : 'ies'} footnoted
+                    </Text>
+                  )}
+                </Alert>
+              ) : (
+                <Alert icon={<IconAlertCircle size={16} />} color="red">
+                  <Text size="sm">{tideSyncResult.message}</Text>
+                </Alert>
+              )
             )}
           </Stack>
         </Paper>

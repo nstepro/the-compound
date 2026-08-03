@@ -19,6 +19,24 @@ let memo = { cache: null, fetchedAt: 0 };
 let inFlight = null;
 let lastAttempt = 0;
 
+/**
+ * True if any calendar month between `fromDate` and `toDate` (inclusive) has
+ * zero predictions. A cache can have a reassuring last-event date while still
+ * being hollow in the middle — e.g. the committed sample fixture only has
+ * real events in its first and last month — so freshness can't be judged by
+ * the last date alone.
+ */
+function hasMonthGap(predictions, fromDate, toDate) {
+  const monthsWithData = new Set(predictions.map((p) => p.t.slice(0, 7)));
+  const lastMonth = monthKey(toDate);
+  let cursor = monthKey(fromDate);
+  while (cursor <= lastMonth) {
+    if (!monthsWithData.has(cursor)) return true;
+    cursor = monthKey(addMonths(`${cursor}-01`, 1));
+  }
+  return false;
+}
+
 /** How much runway is left in the cache, relative to `today` (defaults to now). */
 function getCoverage(cache, today = todayLocalDate()) {
   if (!cache?.predictions?.length) {
@@ -26,8 +44,15 @@ function getCoverage(cache, today = todayLocalDate()) {
   }
   const last = cache.predictions[cache.predictions.length - 1].t.slice(0, 10);
   const monthsRemaining = monthsBetween(today, last);
-  const ok = monthsRemaining >= config.coverageMinMonths;
-  return { ok, reason: ok ? 'fresh' : 'stale', monthsRemaining, lastDate: last };
+
+  if (monthsRemaining < config.coverageMinMonths) {
+    return { ok: false, reason: 'stale', monthsRemaining, lastDate: last };
+  }
+  if (hasMonthGap(cache.predictions, today, last)) {
+    return { ok: false, reason: 'gap', monthsRemaining, lastDate: last };
+  }
+
+  return { ok: true, reason: 'fresh', monthsRemaining, lastDate: last };
 }
 
 function countDistinctDays(predictions) {
