@@ -703,7 +703,7 @@ app.get('/api/tides', async (req, res) => {
       station: {
         id: station.id,
         name: station.name,
-        correctionNote: `Corrected for ${station.name}`,
+        correctionNote: `Corrected for ${station.name} and Surrounding Beaches`,
         correctionDetail: `${station.referenceStationName} reference · ${station.correction.timeOffsetMinutes} min · ×${station.correction.heightFactor}`,
         datum: cache.metadata.datum,
         units: 'ft',

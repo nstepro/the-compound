@@ -1,24 +1,60 @@
 import { Fragment } from 'react';
-import { Container, ActionIcon, LoadingOverlay, Alert, Button } from '@mantine/core';
+import { Container, ActionIcon, LoadingOverlay, Alert, Button, Divider } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight, IconAlertCircle } from '@tabler/icons-react';
 import { useTides } from './useTides';
 import type { TideEntry } from '../types';
 import styles from './TideChart.module.css';
 
+const MOON_PHASE_SYMBOLS: Record<string, string> = {
+  'New Moon': '●', // ● fully dark
+  'First Quarter': '◐', // ◐ right half lit (waxing)
+  'Full Moon': '○', // ○ fully lit
+  'Last Quarter': '◑', // ◑ left half lit (waning)
+};
+
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+/** Formats a "YYYY-MM-DD" date string as "MMMM D, YYYY" without Date/timezone parsing. */
+function formatLongDate(dateStr: string): string {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return `${MONTH_NAMES[month - 1]} ${day}, ${year}`;
+}
+
+function MoonGlyph({ phase }: { phase: string }) {
+  const symbol = MOON_PHASE_SYMBOLS[phase];
+  if (!symbol) return null;
+
+  return (
+    <span className={styles.moonGlyph} title={phase} aria-label={phase}>
+      {symbol}
+    </span>
+  );
+}
+
 function TideCell({ entry }: { entry: TideEntry | null }) {
   if (!entry) {
     return (
-      <td className={styles.emptyCell} aria-label="no tide">
-        &mdash;
-      </td>
+      <>
+        <td className={styles.emptyCell} aria-label="no tide">
+          &mdash;
+        </td>
+        <td className={styles.emptyCell} aria-label="no tide">
+          &mdash;
+        </td>
+      </>
     );
   }
 
+  const cellClassName = `${styles.cell} ${entry.extreme ? styles.extreme : ''}`;
+
   return (
-    <td className={`${styles.cell} ${entry.extreme ? styles.extreme : ''}`}>
-      <span className={styles.time}>{entry.time}</span>
-      <span className={styles.ft}>{entry.ft}</span>
-    </td>
+    <>
+      <td className={`${cellClassName} ${styles.time}`}>{entry.time}</td>
+      <td className={`${cellClassName} ${styles.height}`}>{entry.ft}</td>
+    </>
   );
 }
 
@@ -26,6 +62,8 @@ export function TideChart() {
   const {
     data, loading, error, notReady, retry, goPrevMonth, goNextMonth, canGoPrev, canGoNext,
   } = useTides();
+
+  const moonPhaseByDay = new Map((data?.moonPhases ?? []).map((m): [number, string] => [m.day, m.phase]));
 
   return (
     <Container size="lg" py="xl">
@@ -53,22 +91,30 @@ export function TideChart() {
           {data && (
             <>
               <div className={styles.nextTideStrip}>
-                {data.nextTides.map((tide, index) => (
-                  <Fragment key={`${tide.date}-${tide.time}-${tide.type}`}>
-                    {index > 0 && <span className={styles.nextTideSep}>&middot;</span>}
-                    <span>
-                      {tide.label.toUpperCase()} {tide.time} {tide.meridiem} {tide.ft} FT
-                    </span>
-                  </Fragment>
-                ))}
+                <div className={styles.todayDate}>{formatLongDate(data.today.date)}</div>
+                <div className={styles.tideRow}>
+                  {data.nextTides.map((tide, index) => (
+                    <Fragment key={`${tide.date}-${tide.time}-${tide.type}`}>
+                      {index > 0 && <span className={styles.nextTideSep}>—</span>}
+                      <span>
+                        <strong>{tide.label.toUpperCase()} {tide.time} {tide.meridiem}</strong> • {tide.ft} FT
+                      </span>
+                    </Fragment>
+                  ))}
+                </div>
               </div>
+
+              <Divider orientation="horizontal" my="sm" size="sm" color="black" w="50%" ml="25%" mb="0" />
 
               <div className={styles.monthNav}>
                 <ActionIcon
                   aria-label="Previous month"
-                  variant="subtle"
-                  disabled={!canGoPrev}
+                  variant="transparent"
                   onClick={goPrevMonth}
+                  color="black"
+                  className={canGoPrev ? undefined : styles.navHidden}
+                  tabIndex={canGoPrev ? 0 : -1}
+                  aria-hidden={!canGoPrev}
                 >
                   <IconChevronLeft />
                 </ActionIcon>
@@ -83,9 +129,12 @@ export function TideChart() {
 
                 <ActionIcon
                   aria-label="Next month"
-                  variant="subtle"
-                  disabled={!canGoNext}
+                  variant="transparent"
                   onClick={goNextMonth}
+                  color="black"
+                  className={canGoNext ? undefined : styles.navHidden}
+                  tabIndex={canGoNext ? 0 : -1}
+                  aria-hidden={!canGoNext}
                 >
                   <IconChevronRight />
                 </ActionIcon>
@@ -101,15 +150,27 @@ export function TideChart() {
                 </caption>
                 <thead>
                   <tr>
-                    <th rowSpan={2} scope="col" className={styles.dateHeader}>Date</th>
-                    <th colSpan={2} scope="colgroup" className={styles.groupHeader}>High Tides</th>
-                    <th colSpan={2} scope="colgroup" className={styles.groupHeader}>Low Tides</th>
+                    <th colSpan={1} scope="col"></th>
+                    <th colSpan={4} scope="colgroup" className={styles.groupHeader}>High Tides</th>
+                    <th colSpan={4} scope="colgroup" className={styles.groupHeader}>Low Tides</th>
                   </tr>
                   <tr>
-                    <th scope="col" className={styles.subHeader}>A.M.</th>
-                    <th scope="col" className={styles.subHeader}>P.M.</th>
-                    <th scope="col" className={styles.subHeader}>A.M.</th>
-                    <th scope="col" className={styles.subHeader}>P.M.</th>
+                    <th colSpan={1} scope="col"></th>
+                    <th colSpan={2} scope="colgroup" className={styles.subHeader}>A.M.</th>
+                    <th colSpan={2} scope="colgroup" className={styles.subHeader}>P.M.</th>
+                    <th colSpan={2} scope="colgroup" className={styles.subHeader}>A.M.</th>
+                    <th colSpan={2} scope="colgroup" className={styles.subHeader}>P.M.</th>
+                  </tr>
+                  <tr>
+                    <th scope="col" className={styles.subHeader}>DATE</th>
+                    <th scope="col" className={styles.subHeader}>Time</th>
+                    <th scope="col" className={styles.subHeader}>Ft.</th>
+                    <th scope="col" className={styles.subHeader}>Time</th>
+                    <th scope="col" className={styles.subHeader}>Ft.</th>
+                    <th scope="col" className={styles.subHeader}>Time</th>
+                    <th scope="col" className={styles.subHeader}>Ft.</th>
+                    <th scope="col" className={styles.subHeader}>Time</th>
+                    <th scope="col" className={styles.subHeader}>Ft.</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -118,8 +179,9 @@ export function TideChart() {
                       key={day.date}
                       className={[day.isToday && styles.today, day.isWeekend && styles.weekend].filter(Boolean).join(' ')}
                     >
-                      <th scope="row" className={styles.dateCell}>
-                        {day.day} {day.isWeekend ? day.dow.toUpperCase() : day.dow}
+                      <th scope="row" className={`${styles.dateCell} ${day.isWeekend ? styles.weekendLabel : ''}`}>
+                        {day.day} {day.dow}
+                        {moonPhaseByDay.has(day.day) && <MoonGlyph phase={moonPhaseByDay.get(day.day)!} />}
                       </th>
                       <TideCell entry={day.highs.am} />
                       <TideCell entry={day.highs.pm} />

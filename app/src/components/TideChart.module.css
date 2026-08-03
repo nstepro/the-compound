@@ -12,30 +12,39 @@
 
 .card {
   position: relative;
-  background-color: var(--mantine-color-white);
-  border: 1px solid var(--mantine-color-brand-3);
-  border-radius: var(--mantine-radius-lg);
   overflow: hidden;
 }
 
 /* Next-tide header strip */
 .nextTideStrip {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5em;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
   padding: 0.6rem 1rem;
-  background-color: var(--mantine-color-brand-9);
-  color: var(--mantine-color-white);
-  font-family: 'Archivo Narrow', sans-serif;
+  /* border: 2px solid var(--mantine-color-gray-9); */
+  color: var(--mantine-color-gray-9);
+  font-family: 'Jost', sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 13px;
   letter-spacing: 0.04em;
   text-align: center;
 }
 
+.todayDate {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tideRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5em;
+}
+
 .nextTideSep {
-  opacity: 0.6;
+  font-weight: 400;
 }
 
 /* Month header */
@@ -45,7 +54,6 @@
   justify-content: center;
   gap: 1rem;
   padding: 1.25rem 1rem 1rem;
-  border-bottom: 2px solid var(--mantine-color-brand-8);
   text-align: center;
 }
 
@@ -53,28 +61,35 @@
   min-width: 0;
 }
 
+.navHidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .monthLabel {
   font-family: 'Jost', sans-serif;
-  font-weight: 600;
+  font-weight: 900;
   font-size: 28px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--mantine-color-brand-9);
+  letter-spacing: 0.05em;
+  color: var(--mantine-color-gray-9);
 }
 
 .correctionNote {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 16px;
   letter-spacing: 0.02em;
-  color: var(--mantine-color-brand-8);
+  color: var(--mantine-color-gray-9);
 }
 
 .correctionDetail {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
   font-size: 10px;
-  color: var(--mantine-color-gray-6);
+  margin-top: -0.25rem;
+  text-transform: uppercase;
+  color: var(--mantine-color-gray-9);
 }
 
 .staleNote {
@@ -91,7 +106,6 @@
 .grid {
   width: 100%;
   border-collapse: collapse;
-  background-color: var(--mantine-color-white);
 }
 
 .grid th,
@@ -102,23 +116,23 @@
 
 .groupHeader {
   font-family: 'Jost', sans-serif;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: var(--mantine-color-brand-9);
-  border-top: 1px solid var(--mantine-color-brand-8);
-  border-bottom: 1px solid var(--mantine-color-brand-8);
+  color: var(--mantine-color-gray-9);
+  border: 2px solid var(--mantine-color-gray-8);
+  background-color: rgba(0,0,0,.05);
 }
 
 .subHeader {
   font-family: 'Jost', sans-serif;
-  font-weight: 500;
-  font-size: 11px;
+  font-weight: 600;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--mantine-color-gray-6);
-  border-bottom: 1px solid var(--mantine-color-brand-3);
+  color: var(--mantine-color-gray-9);
+  border: 2px solid var(--mantine-color-gray-8);
 }
 
 .dateHeader {
@@ -127,55 +141,61 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--mantine-color-gray-6);
+  color: var(--mantine-color-gray-9);
+  border: 2px solid var(--mantine-color-gray-8);
 }
 
 .dateCell {
-  font-family: 'Archivo Narrow', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 15px;
-  font-weight: 600;
-  color: var(--mantine-color-brand-9);
+  font-weight: 400;
+  color: var(--mantine-color-gray-9);
+  border-left: 2px solid var(--mantine-color-gray-8);
+  border-right: 2px solid var(--mantine-color-gray-8);
   white-space: nowrap;
 }
 
-.grid tbody tr:nth-child(even) {
-  background-color: color-mix(in srgb, var(--mantine-color-background-1) 40%, transparent);
-}
-
 .today {
-  background-color: var(--mantine-color-accent-2) !important;
-  box-shadow: inset 3px 0 0 var(--mantine-color-accent-6);
+  background-color: rgba(0,0,0,.05);
+  box-shadow: inset 4px 0 0 var(--mantine-color-gray-8);
 }
 
 .weekend .dateCell {
   text-transform: uppercase;
+  font-weight: 900;
+}
+
+.moonGlyph {
+  margin-left: 0.35em;
+  font-size: 0.85em;
+  color: var(--mantine-color-gray-9);
 }
 
 .cell {
-  font-family: 'Archivo Narrow', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-variant-numeric: tabular-nums;
   font-size: 15px;
-  color: var(--mantine-color-brand-9);
+  color: var(--mantine-color-gray-9);
+  border-left: 2px solid var(--mantine-color-gray-8);
+  border-right: 2px solid var(--mantine-color-gray-8);
   white-space: nowrap;
 }
 
-.cell .time {
-  margin-right: 0.4em;
-}
-
-.extreme {
+.extreme.time {
   font-weight: 700;
 }
 
 .emptyCell {
-  color: var(--mantine-color-gray-4);
+  color: var(--mantine-color-gray-9);
+  border-left: 2px solid var(--mantine-color-gray-8);
+  border-right: 2px solid var(--mantine-color-gray-8);
 }
 
 /* Footer: moon phases, footnotes, source line */
 .footer {
   padding: 0.75rem 1rem 1rem;
-  border-top: 1px solid var(--mantine-color-brand-3);
+  border-top: 2px solid var(--mantine-color-gray-8);
 }
 
 .moonLine,
@@ -185,7 +205,7 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--mantine-color-gray-6);
+  color: var(--mantine-color-gray-9);
   text-align: center;
 }
 
