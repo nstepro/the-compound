@@ -222,8 +222,49 @@ const generateCategoryCleanupPrompt = (category) => {
   return CATEGORY_CLEANUP_PROMPT.replace('{category}', category);
 };
 
+const generateAddPlacePrompt = (userText, notes, sectionTitles, locationContext) => {
+  const sectionsList = sectionTitles.length > 0
+    ? sectionTitles.map((s) => `- ${s}`).join('\n')
+    : '- Restaurants & Food\n- Activities';
+
+  return `You are helping add a single place to a vacation compound guide in ${locationContext}.
+
+The admin typed this free-text request:
+"${userText}"
+${notes ? `\nAdditional notes from admin: "${notes}"` : ''}
+
+Available document sections (pick the best match for "category"):
+${sectionsList}
+
+Return JSON for ONE place only:
+{
+  "place": {
+    "name": "Properly formatted business name",
+    "type": "dining|restaurant|activity|accommodation|shopping|other",
+    "description": "Brief description or null",
+    "notes": "Extra notes from admin input or null",
+    "category": "Exact section title from the list above",
+    "origText": "Line as it should appear in the Google Doc, e.g. **Name** — description. optional url",
+    "emoji": "single emoji",
+    "starred": false,
+    "needsClarification": false
+  }
+}
+
+Rules:
+- Infer the real business name; use proper capitalization.
+- "type" dining for cafes, restaurants, bars, bakeries.
+- "category" MUST be one of the listed section titles exactly.
+- "origText" should match doc style: **Name** — description. Include URL if mentioned.
+- Set needsClarification true only if the input is too vague to identify any business (no name at all).
+- Do NOT include address, phone, hours, rating, coordinates, or maps links.
+
+Return only valid JSON.`;
+};
+
 module.exports = {
   generateParsingPrompt,
+  generateAddPlacePrompt,
   CATEGORY_CLEANUP_PROMPT,
   generateCategoryCleanupPrompt
 }; 

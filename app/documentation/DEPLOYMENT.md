@@ -114,6 +114,8 @@ heroku config:set GOOGLE_PLACES_API_KEY=AIzaSyC...your_places_api_key_here
 
 #### 2. Google Docs API (Service Account - JSON Credentials)
 
+The service account needs **Editor** access on the source Google Doc (not just Viewer). Quick-add place appends lines via the Docs API (`documents` scope).
+
 **Option A: Direct JSON (Recommended)**
 ```bash
 # Copy your credentials.json content and set as environment variable

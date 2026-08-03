@@ -72,6 +72,22 @@ const loginLimiter = rateLimit({
   }
 });
 
+const ADD_PLACE_RATE_LIMIT_WINDOW_MS = parseInt(process.env.ADD_PLACE_RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000;
+const ADD_PLACE_RATE_LIMIT_MAX = parseInt(process.env.ADD_PLACE_RATE_LIMIT_MAX) || 10;
+const ADD_PLACE_RATE_LIMIT_MINUTES = Math.floor(ADD_PLACE_RATE_LIMIT_WINDOW_MS / 60000);
+
+const addPlaceLimiter = rateLimit({
+  windowMs: ADD_PLACE_RATE_LIMIT_WINDOW_MS,
+  max: ADD_PLACE_RATE_LIMIT_MAX,
+  message: {
+    success: false,
+    message: `Too many add-place requests from this IP, please try again in ${ADD_PLACE_RATE_LIMIT_MINUTES} minutes.`,
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => req.ip + ':' + (req.get('User-Agent') || ''),
+});
+
 // Authentication middleware
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -103,11 +119,11 @@ const authenticateAdmin = (req, res, next) => {
     if (err) {
       return res.status(403).json({ success: false, message: 'Invalid or expired token' });
     }
-    
+
     if (user.role !== 'admin') {
       return res.status(403).json({ success: false, message: 'Admin access required' });
     }
-    
+
     req.user = user;
     next();
   });
@@ -126,11 +142,11 @@ const authenticateGuestOrAdmin = (req, res, next) => {
     if (err) {
       return res.status(403).json({ success: false, message: 'Invalid or expired token' });
     }
-    
+
     if (user.role !== 'admin' && user.role !== 'guest') {
       return res.status(403).json({ success: false, message: 'Guest or admin access required' });
     }
-    
+
     req.user = user;
     next();
   });
@@ -140,7 +156,7 @@ const authenticateGuestOrAdmin = (req, res, next) => {
 app.post('/api/auth/login', loginLimiter, async (req, res) => {
   try {
     const { password } = req.body;
-    
+
     if (!password) {
       return res.status(400).json({ success: false, message: 'Password is required' });
     }
@@ -148,14 +164,14 @@ app.post('/api/auth/login', loginLimiter, async (req, res) => {
     // Check both admin and guest passwords
     const isAdminValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
     const isGuestValid = await bcrypt.compare(password, GUEST_PASSWORD_HASH);
-    
+
     let userRole = null;
     if (isAdminValid) {
       userRole = 'admin';
     } else if (isGuestValid) {
       userRole = 'guest';
     }
-    
+
     if (!userRole) {
       return res.status(401).json({ success: false, message: 'Invalid password' });
     }
@@ -194,16 +210,17 @@ app.get('/api/auth/verify', authenticateToken, (req, res) => {
 // Import the parser functions
 const { runParse, runParseWithStreaming } = require('./src/parser/index');
 const { googleCloudStorageService } = require('./src/parser/google-cloud-storage');
+const { addPlaceService } = require('./src/parser/add-place-service');
 
 // API endpoint to serve compound places data from Google Cloud Storage
 app.get('/api/compound-places', async (req, res) => {
   try {
     const config = require('./src/parser/config').config;
-    
+
     if (config.googleCloudStorage.enabled) {
       // Fetch from Google Cloud Storage
       const placesData = await googleCloudStorageService.downloadFile();
-      
+
       if (!placesData) {
         return res.status(404).json({
           success: false,
@@ -215,7 +232,7 @@ app.get('/api/compound-places', async (req, res) => {
     } else {
       // Fallback to local file system
       const outputPath = path.join(__dirname, 'public', 'compound-places.json');
-      
+
       if (!fs.existsSync(outputPath)) {
         return res.status(404).json({
           success: false,
@@ -240,7 +257,7 @@ app.get('/api/compound-places', async (req, res) => {
 app.get('/api/house-mechanics/:house', authenticateGuestOrAdmin, async (req, res) => {
   try {
     const { house } = req.params;
-    
+
     // Validate house parameter
     if (!['lofty', 'shady'].includes(house)) {
       return res.status(400).json({
@@ -248,14 +265,14 @@ app.get('/api/house-mechanics/:house', authenticateGuestOrAdmin, async (req, res
         message: 'Invalid house parameter. Must be "lofty" or "shady".'
       });
     }
-    
+
     const config = require('./src/parser/config').config;
     const filename = `house-mechanics-${house}.md`;
-    
+
     if (config.googleCloudStorage.enabled) {
       // Fetch from Google Cloud Storage
       const markdownContent = await googleCloudStorageService.downloadMarkdownFile(filename);
-      
+
       if (!markdownContent) {
         return res.status(404).json({
           success: false,
@@ -272,7 +289,7 @@ app.get('/api/house-mechanics/:house', authenticateGuestOrAdmin, async (req, res
     } else {
       // Fallback to local fixtures (not in public/ — avoids static exposure in dist/)
       const localPath = path.join(__dirname, 'fixtures', 'house-mechanics', filename);
-      
+
       if (!fs.existsSync(localPath)) {
         return res.status(404).json({
           success: false,
@@ -317,19 +334,19 @@ const addStatusEvent = (type, message, data = null) => {
     timestamp: new Date().toISOString(),
     data
   };
-  
+
   parserStatus.logs.push(event);
   parserStatus.lastUpdate = new Date().toISOString();
-  
+
   if (type === 'step') {
     parserStatus.currentStep = message;
   }
-  
+
   // Keep only last 100 log entries to prevent memory issues
   if (parserStatus.logs.length > 100) {
     parserStatus.logs = parserStatus.logs.slice(-100);
   }
-  
+
   console.log(`[PARSER-STATUS] ${type}: ${message}`);
 };
 
@@ -394,12 +411,50 @@ app.post('/api/admin/parse-stop', authenticateAdmin, (req, res) => {
   });
 });
 
+// Quick-add place: preview resolution (no writes)
+app.post('/api/admin/places/preview', authenticateAdmin, addPlaceLimiter, async (req, res) => {
+  try {
+    const { text, notes, selectedPlaceId } = req.body || {};
+    const result = await addPlaceService.preview({ text, notes, selectedPlaceId });
+    res.json({ success: true, ...result });
+  } catch (error) {
+    console.error('Add place preview error:', error);
+    res.status(400).json({
+      success: false,
+      message: error.message || 'Preview failed',
+    });
+  }
+});
+
+// Quick-add place: commit to Google Doc + compound-places.json
+app.post('/api/admin/places/commit', authenticateAdmin, addPlaceLimiter, async (req, res) => {
+  try {
+    const { proposedPlace, forceDuplicate } = req.body || {};
+    const result = await addPlaceService.commit({
+      proposedPlace,
+      forceDuplicate: forceDuplicate === true,
+    });
+    console.log(`[ADD-PLACE] Committed place id=${result.place?.id} role=${req.user?.role}`);
+    res.json({ success: true, ...result });
+  } catch (error) {
+    console.error('Add place commit error:', error);
+    const status = error.statusCode || 500;
+    res.status(status).json({
+      success: false,
+      message: error.message || 'Commit failed',
+      code: error.code,
+      existingPlace: error.existingPlace,
+      docUpdated: error.docUpdated,
+    });
+  }
+});
+
 // Get Google Doc URL
 app.get('/api/admin/google-doc-url', authenticateAdmin, (req, res) => {
   try {
     const config = require('./src/parser/config').config;
     const docId = config.google.docId;
-    
+
     if (!docId) {
       return res.status(404).json({
         success: false,
@@ -408,7 +463,7 @@ app.get('/api/admin/google-doc-url', authenticateAdmin, (req, res) => {
     }
 
     const googleDocUrl = `https://docs.google.com/document/d/${docId}/edit`;
-    
+
     res.json({
       success: true,
       url: googleDocUrl,
@@ -428,21 +483,21 @@ app.get('/api/admin/google-doc-url', authenticateAdmin, (req, res) => {
 async function runParserAsync() {
   try {
     addStatusEvent('info', 'Starting parser...');
-    
+
     // Use the parser with status callback
     const result = await runParseWithStreaming(null, addStatusEvent);
-    
+
     parserStatus.isRunning = false;
     parserStatus.result = result;
     parserStatus.currentStep = 'Completed';
     addStatusEvent('completed', 'Parser completed successfully', result);
-    
+
     // Handle file copying for local development if needed
     const config = require('./src/parser/config').config;
     if (!config.googleCloudStorage.enabled) {
       const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
       const publicPath = path.join(__dirname, 'public', 'compound-places.json');
-      
+
       if (fs.existsSync(outputPath)) {
         try {
           fs.copyFileSync(outputPath, publicPath);
@@ -452,7 +507,7 @@ async function runParserAsync() {
         }
       }
     }
-    
+
   } catch (error) {
     console.error('Async parser execution failed:', error);
     parserStatus.isRunning = false;
@@ -466,7 +521,7 @@ async function runParserAsync() {
 app.post('/api/admin/parse', authenticateAdmin, async (req, res) => {
   try {
     console.log('Running parser...');
-    
+
     // Use the parser directly instead of subprocess
     const result = await runParser();
     res.json(result);
@@ -482,11 +537,11 @@ app.post('/api/admin/parse', authenticateAdmin, async (req, res) => {
 app.get('/api/admin/download-output', authenticateAdmin, async (req, res) => {
   try {
     const config = require('./src/parser/config').config;
-    
+
     if (config.googleCloudStorage.enabled) {
       // Download from Google Cloud Storage
       const placesData = await googleCloudStorageService.downloadFile();
-      
+
       if (!placesData) {
         return res.status(404).json({
           success: false,
@@ -501,7 +556,7 @@ app.get('/api/admin/download-output', authenticateAdmin, async (req, res) => {
     } else {
       // Fallback to local file system
       const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
-      
+
       if (!fs.existsSync(outputPath)) {
         return res.status(404).json({
           success: false,
@@ -533,18 +588,18 @@ app.get('/api/admin/download-output', authenticateAdmin, async (req, res) => {
 async function runParser() {
   try {
     console.log('Starting parser...');
-    
+
     // Use the imported runParse function - it handles all the logic now
     await runParse();
-    
+
     console.log('Parser completed successfully');
-    
+
     // Handle file copying for local development if needed
     const config = require('./src/parser/config').config;
     if (!config.googleCloudStorage.enabled) {
       const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
       const publicPath = path.join(__dirname, 'public', 'compound-places.json');
-      
+
       if (fs.existsSync(outputPath)) {
         try {
           fs.copyFileSync(outputPath, publicPath);
@@ -596,8 +651,6 @@ async function runParser() {
     throw new Error(`Parser failed: ${error.message}`);
   }
 }
-
-
 
 // API endpoint to serve a month of tide predictions (public, no auth — matches /api/compound-places)
 const tideSync = require('./src/tides/sync');
@@ -680,4 +733,4 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-}); 
+});

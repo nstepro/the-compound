@@ -3,6 +3,7 @@ import { Container, Paper, Title, Button, Stack, Alert, Text, Badge, ScrollArea 
 import { IconDownload, IconAlertCircle, IconCheck, IconClock, IconX, IconPlayerPlay, IconExternalLink } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import { useAuth } from '../contexts/AuthContext';
+import { AddPlacePanel } from './AddPlacePanel';
 
 interface ParseResult {
   success: boolean;
@@ -406,6 +407,8 @@ export function AdminDashboard() {
             )}
           </Stack>
         </Paper>
+
+        <AddPlacePanel authToken={authToken} onAuthError={logout} />
 
         {lastResult && (
           <Paper withBorder shadow="md" p="xl" radius="md">

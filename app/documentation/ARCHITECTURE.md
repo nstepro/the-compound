@@ -98,6 +98,8 @@ clone with no `.env` still renders a working tide chart.
 | POST | `/api/admin/parse-stop` | admin | Stop parser job |
 | GET | `/api/admin/google-doc-url` | admin | Link to source doc |
 | GET | `/api/admin/download-output` | admin | Download places JSON |
+| POST | `/api/admin/places/preview` | admin | Resolve free-text place (Places + LLM); no writes |
+| POST | `/api/admin/places/commit` | admin | Append place to Google Doc + `compound-places.json` |
 
 Static SPA: `express.static('dist')` + `GET *` → `index.html`.
 
