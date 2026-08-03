@@ -46,7 +46,7 @@ class GoogleDocsService {
       const auth = new google.auth.GoogleAuth({
         credentials,
         scopes: [
-          'https://www.googleapis.com/auth/documents.readonly',
+          'https://www.googleapis.com/auth/documents',
           'https://www.googleapis.com/auth/drive.readonly',
           'https://www.googleapis.com/auth/drive.file'
         ]
@@ -489,6 +489,150 @@ class GoogleDocsService {
       logger.error(`Failed to convert document to markdown:`, error);
       throw error;
     }
+  }
+
+  listSectionTitles(document) {
+    const titles = [];
+    if (!document.body?.content) {
+      return titles;
+    }
+
+    for (const element of document.body.content) {
+      if (!element.paragraph?.paragraphStyle?.namedStyleType) {
+        continue;
+      }
+      const level = this.getHeadingLevel(element.paragraph.paragraphStyle.namedStyleType);
+      if (level < 1) {
+        continue;
+      }
+      let text = '';
+      for (const elem of element.paragraph.elements || []) {
+        if (elem.textRun?.content) {
+          text += elem.textRun.content;
+        }
+      }
+      const trimmed = text.trim();
+      if (trimmed && !/house\s+mechanics/i.test(trimmed)) {
+        titles.push(trimmed);
+      }
+    }
+    return titles;
+  }
+
+  findSectionInsertIndex(document, sectionTitle) {
+    if (!document.body?.content) {
+      throw new Error('Document has no body content');
+    }
+
+    const normalizedTarget = sectionTitle.trim().toLowerCase();
+    let inTargetSection = false;
+    let insertIndex = null;
+    let lastSectionEndIndex = null;
+
+    for (const element of document.body.content) {
+      const endIndex = element.endIndex;
+
+      if (element.paragraph) {
+        let paragraphText = '';
+        for (const elem of element.paragraph.elements || []) {
+          if (elem.textRun?.content) {
+            paragraphText += elem.textRun.content;
+          }
+        }
+        const trimmed = paragraphText.trim();
+        const headingLevel = element.paragraph.paragraphStyle?.namedStyleType
+          ? this.getHeadingLevel(element.paragraph.paragraphStyle.namedStyleType)
+          : 0;
+
+        if (headingLevel > 0 && trimmed) {
+          if (/house\s+mechanics/i.test(trimmed)) {
+            if (inTargetSection) {
+              break;
+            }
+            inTargetSection = false;
+            continue;
+          }
+
+          if (inTargetSection) {
+            break;
+          }
+
+          if (trimmed.toLowerCase() === normalizedTarget) {
+            inTargetSection = true;
+            insertIndex = endIndex;
+            continue;
+          }
+
+          lastSectionEndIndex = endIndex;
+          continue;
+        }
+
+        if (inTargetSection && trimmed) {
+          insertIndex = endIndex;
+        }
+      }
+    }
+
+    if (insertIndex !== null) {
+      return insertIndex;
+    }
+
+    if (lastSectionEndIndex !== null) {
+      return lastSectionEndIndex;
+    }
+
+    const bodyEnd = document.body.content[document.body.content.length - 1]?.endIndex;
+    if (bodyEnd == null) {
+      throw new Error('Could not determine document end index');
+    }
+    return bodyEnd - 1;
+  }
+
+  async appendPlaceEntry(docId, sectionTitle, lineText) {
+    if (/house\s+mechanics/i.test(sectionTitle)) {
+      throw new Error('Cannot append place entries to House Mechanics section');
+    }
+
+    const maxLen = 2000;
+    if (!lineText || lineText.length > maxLen) {
+      throw new Error(`Place line must be 1–${maxLen} characters`);
+    }
+
+    if (!this.docs) {
+      await this.authenticate();
+    }
+
+    const document = await this.getDocumentContent(docId);
+    const sections = this.listSectionTitles(document);
+    const matchedSection = sections.find(
+      (s) => s.trim().toLowerCase() === sectionTitle.trim().toLowerCase()
+    );
+
+    if (!matchedSection) {
+      throw new Error(
+        `Section "${sectionTitle}" not found in document. Available: ${sections.join(', ')}`
+      );
+    }
+
+    const insertIndex = this.findSectionInsertIndex(document, matchedSection);
+    const textToInsert = `\n${lineText.trim()}\n`;
+
+    await this.docs.documents.batchUpdate({
+      documentId: docId,
+      requestBody: {
+        requests: [
+          {
+            insertText: {
+              location: { index: insertIndex },
+              text: textToInsert,
+            },
+          },
+        ],
+      },
+    });
+
+    logger.info(`Appended place entry to section "${matchedSection}" in doc ${docId}`);
+    return { section: matchedSection, insertIndex };
   }
 
   async exportAsHtml(docId) {

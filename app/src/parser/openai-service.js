@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { config } = require('./config');
 const { logger } = require('./logger');
-const { generateParsingPrompt, generateCategoryCleanupPrompt } = require('./prompts');
+const { generateParsingPrompt, generateAddPlacePrompt, generateCategoryCleanupPrompt } = require('./prompts');
 const { validatePlace } = require('./schema');
 
 class OpenAIService {
@@ -222,6 +222,58 @@ ${parsedData.places.map((p, i) => `${i + 1}. ${p.name} (${p.type}) - Category: $
       logger.warn(`Failed to clean up category "${category}":`, error);
       // Return the original category if cleanup fails
       return category.replace(/^#+\s*/, '').trim();
+    }
+  }
+
+  parseJsonFromResponse(content) {
+    let text = content.trim();
+    let jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
+    if (jsonMatch?.[1]) {
+      text = jsonMatch[1].trim();
+    } else {
+      jsonMatch = text.match(/```\s*([\s\S]*?)\s*```/);
+      if (jsonMatch?.[1]) {
+        text = jsonMatch[1].trim();
+      }
+    }
+    text = text.replace(/^`+|`+$/g, '').trim();
+    return JSON.parse(text);
+  }
+
+  async parseFreeTextPlace(userText, notes, sectionTitles) {
+    try {
+      if (!this.model) {
+        this.initialize();
+      }
+
+      const prompt = generateAddPlacePrompt(
+        userText,
+        notes,
+        sectionTitles,
+        config.location.region
+      );
+
+      const messages = [
+        new SystemMessage(`You extract a single place from admin input. Return only valid JSON. Region: ${config.location.region}.`),
+        new HumanMessage(prompt),
+      ];
+
+      const response = await this.model.invoke(messages);
+      const parsed = this.parseJsonFromResponse(response.content);
+
+      if (!parsed.place || typeof parsed.place !== 'object') {
+        throw new Error('Invalid response format: missing place object');
+      }
+
+      const place = parsed.place;
+      if (place.category) {
+        place.category = await this.cleanupCategory(place.category);
+      }
+
+      return place;
+    } catch (error) {
+      logger.error('Free-text place parsing failed:', error);
+      throw new Error(`Failed to parse place: ${error.message}`);
     }
   }
 

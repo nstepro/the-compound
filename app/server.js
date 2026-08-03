@@ -72,6 +72,22 @@ const loginLimiter = rateLimit({
   }
 });
 
+const ADD_PLACE_RATE_LIMIT_WINDOW_MS = parseInt(process.env.ADD_PLACE_RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000;
+const ADD_PLACE_RATE_LIMIT_MAX = parseInt(process.env.ADD_PLACE_RATE_LIMIT_MAX) || 10;
+const ADD_PLACE_RATE_LIMIT_MINUTES = Math.floor(ADD_PLACE_RATE_LIMIT_WINDOW_MS / 60000);
+
+const addPlaceLimiter = rateLimit({
+  windowMs: ADD_PLACE_RATE_LIMIT_WINDOW_MS,
+  max: ADD_PLACE_RATE_LIMIT_MAX,
+  message: {
+    success: false,
+    message: `Too many add-place requests from this IP, please try again in ${ADD_PLACE_RATE_LIMIT_MINUTES} minutes.`,
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => req.ip + ':' + (req.get('User-Agent') || ''),
+});
+
 // Authentication middleware
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -194,6 +210,7 @@ app.get('/api/auth/verify', authenticateToken, (req, res) => {
 // Import the parser functions
 const { runParse, runParseWithStreaming } = require('./src/parser/index');
 const { googleCloudStorageService } = require('./src/parser/google-cloud-storage');
+const { addPlaceService } = require('./src/parser/add-place-service');
 
 // API endpoint to serve compound places data from Google Cloud Storage
 app.get('/api/compound-places', async (req, res) => {
@@ -392,6 +409,44 @@ app.post('/api/admin/parse-stop', authenticateAdmin, (req, res) => {
     success: true,
     message: 'Parser stop requested'
   });
+});
+
+// Quick-add place: preview resolution (no writes)
+app.post('/api/admin/places/preview', authenticateAdmin, addPlaceLimiter, async (req, res) => {
+  try {
+    const { text, notes, selectedPlaceId } = req.body || {};
+    const result = await addPlaceService.preview({ text, notes, selectedPlaceId });
+    res.json({ success: true, ...result });
+  } catch (error) {
+    console.error('Add place preview error:', error);
+    res.status(400).json({
+      success: false,
+      message: error.message || 'Preview failed',
+    });
+  }
+});
+
+// Quick-add place: commit to Google Doc + compound-places.json
+app.post('/api/admin/places/commit', authenticateAdmin, addPlaceLimiter, async (req, res) => {
+  try {
+    const { proposedPlace, forceDuplicate } = req.body || {};
+    const result = await addPlaceService.commit({
+      proposedPlace,
+      forceDuplicate: forceDuplicate === true,
+    });
+    console.log(`[ADD-PLACE] Committed place id=${result.place?.id} role=${req.user?.role}`);
+    res.json({ success: true, ...result });
+  } catch (error) {
+    console.error('Add place commit error:', error);
+    const status = error.statusCode || 500;
+    res.status(status).json({
+      success: false,
+      message: error.message || 'Commit failed',
+      code: error.code,
+      existingPlace: error.existingPlace,
+      docUpdated: error.docUpdated,
+    });
+  }
 });
 
 // Get Google Doc URL
