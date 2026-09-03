@@ -3,7 +3,7 @@ import { Notifications } from '@mantine/notifications';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { Navigation, PlacesList, GettingHere, Home, Footer } from './components';
+import { Navigation, PlacesList, GettingHere, Home, Footer, TideChart } from './components';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Lofty } from './components/Lofty';
 import { Shady } from './components/Shady';
@@ -27,6 +27,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/places" element={<PlacesList />} />
+          <Route path="/tides" element={<TideChart />} />
           <Route path="/getting-here" element={<GettingHere />} />
           <Route 
             path="/shady" 

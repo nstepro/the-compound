@@ -119,11 +119,11 @@ const authenticateAdmin = (req, res, next) => {
     if (err) {
       return res.status(403).json({ success: false, message: 'Invalid or expired token' });
     }
-    
+
     if (user.role !== 'admin') {
       return res.status(403).json({ success: false, message: 'Admin access required' });
     }
-    
+
     req.user = user;
     next();
   });
@@ -142,11 +142,11 @@ const authenticateGuestOrAdmin = (req, res, next) => {
     if (err) {
       return res.status(403).json({ success: false, message: 'Invalid or expired token' });
     }
-    
+
     if (user.role !== 'admin' && user.role !== 'guest') {
       return res.status(403).json({ success: false, message: 'Guest or admin access required' });
     }
-    
+
     req.user = user;
     next();
   });
@@ -156,7 +156,7 @@ const authenticateGuestOrAdmin = (req, res, next) => {
 app.post('/api/auth/login', loginLimiter, async (req, res) => {
   try {
     const { password } = req.body;
-    
+
     if (!password) {
       return res.status(400).json({ success: false, message: 'Password is required' });
     }
@@ -164,14 +164,14 @@ app.post('/api/auth/login', loginLimiter, async (req, res) => {
     // Check both admin and guest passwords
     const isAdminValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
     const isGuestValid = await bcrypt.compare(password, GUEST_PASSWORD_HASH);
-    
+
     let userRole = null;
     if (isAdminValid) {
       userRole = 'admin';
     } else if (isGuestValid) {
       userRole = 'guest';
     }
-    
+
     if (!userRole) {
       return res.status(401).json({ success: false, message: 'Invalid password' });
     }
@@ -216,11 +216,11 @@ const { addPlaceService } = require('./src/parser/add-place-service');
 app.get('/api/compound-places', async (req, res) => {
   try {
     const config = require('./src/parser/config').config;
-    
+
     if (config.googleCloudStorage.enabled) {
       // Fetch from Google Cloud Storage
       const placesData = await googleCloudStorageService.downloadFile();
-      
+
       if (!placesData) {
         return res.status(404).json({
           success: false,
@@ -232,7 +232,7 @@ app.get('/api/compound-places', async (req, res) => {
     } else {
       // Fallback to local file system
       const outputPath = path.join(__dirname, 'public', 'compound-places.json');
-      
+
       if (!fs.existsSync(outputPath)) {
         return res.status(404).json({
           success: false,
@@ -257,7 +257,7 @@ app.get('/api/compound-places', async (req, res) => {
 app.get('/api/house-mechanics/:house', authenticateGuestOrAdmin, async (req, res) => {
   try {
     const { house } = req.params;
-    
+
     // Validate house parameter
     if (!['lofty', 'shady'].includes(house)) {
       return res.status(400).json({
@@ -265,14 +265,14 @@ app.get('/api/house-mechanics/:house', authenticateGuestOrAdmin, async (req, res
         message: 'Invalid house parameter. Must be "lofty" or "shady".'
       });
     }
-    
+
     const config = require('./src/parser/config').config;
     const filename = `house-mechanics-${house}.md`;
-    
+
     if (config.googleCloudStorage.enabled) {
       // Fetch from Google Cloud Storage
       const markdownContent = await googleCloudStorageService.downloadMarkdownFile(filename);
-      
+
       if (!markdownContent) {
         return res.status(404).json({
           success: false,
@@ -289,7 +289,7 @@ app.get('/api/house-mechanics/:house', authenticateGuestOrAdmin, async (req, res
     } else {
       // Fallback to local fixtures (not in public/ — avoids static exposure in dist/)
       const localPath = path.join(__dirname, 'fixtures', 'house-mechanics', filename);
-      
+
       if (!fs.existsSync(localPath)) {
         return res.status(404).json({
           success: false,
@@ -334,19 +334,19 @@ const addStatusEvent = (type, message, data = null) => {
     timestamp: new Date().toISOString(),
     data
   };
-  
+
   parserStatus.logs.push(event);
   parserStatus.lastUpdate = new Date().toISOString();
-  
+
   if (type === 'step') {
     parserStatus.currentStep = message;
   }
-  
+
   // Keep only last 100 log entries to prevent memory issues
   if (parserStatus.logs.length > 100) {
     parserStatus.logs = parserStatus.logs.slice(-100);
   }
-  
+
   console.log(`[PARSER-STATUS] ${type}: ${message}`);
 };
 
@@ -454,7 +454,7 @@ app.get('/api/admin/google-doc-url', authenticateAdmin, (req, res) => {
   try {
     const config = require('./src/parser/config').config;
     const docId = config.google.docId;
-    
+
     if (!docId) {
       return res.status(404).json({
         success: false,
@@ -463,7 +463,7 @@ app.get('/api/admin/google-doc-url', authenticateAdmin, (req, res) => {
     }
 
     const googleDocUrl = `https://docs.google.com/document/d/${docId}/edit`;
-    
+
     res.json({
       success: true,
       url: googleDocUrl,
@@ -483,21 +483,21 @@ app.get('/api/admin/google-doc-url', authenticateAdmin, (req, res) => {
 async function runParserAsync() {
   try {
     addStatusEvent('info', 'Starting parser...');
-    
+
     // Use the parser with status callback
     const result = await runParseWithStreaming(null, addStatusEvent);
-    
+
     parserStatus.isRunning = false;
     parserStatus.result = result;
     parserStatus.currentStep = 'Completed';
     addStatusEvent('completed', 'Parser completed successfully', result);
-    
+
     // Handle file copying for local development if needed
     const config = require('./src/parser/config').config;
     if (!config.googleCloudStorage.enabled) {
       const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
       const publicPath = path.join(__dirname, 'public', 'compound-places.json');
-      
+
       if (fs.existsSync(outputPath)) {
         try {
           fs.copyFileSync(outputPath, publicPath);
@@ -507,7 +507,7 @@ async function runParserAsync() {
         }
       }
     }
-    
+
   } catch (error) {
     console.error('Async parser execution failed:', error);
     parserStatus.isRunning = false;
@@ -521,7 +521,7 @@ async function runParserAsync() {
 app.post('/api/admin/parse', authenticateAdmin, async (req, res) => {
   try {
     console.log('Running parser...');
-    
+
     // Use the parser directly instead of subprocess
     const result = await runParser();
     res.json(result);
@@ -537,11 +537,11 @@ app.post('/api/admin/parse', authenticateAdmin, async (req, res) => {
 app.get('/api/admin/download-output', authenticateAdmin, async (req, res) => {
   try {
     const config = require('./src/parser/config').config;
-    
+
     if (config.googleCloudStorage.enabled) {
       // Download from Google Cloud Storage
       const placesData = await googleCloudStorageService.downloadFile();
-      
+
       if (!placesData) {
         return res.status(404).json({
           success: false,
@@ -556,7 +556,7 @@ app.get('/api/admin/download-output', authenticateAdmin, async (req, res) => {
     } else {
       // Fallback to local file system
       const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
-      
+
       if (!fs.existsSync(outputPath)) {
         return res.status(404).json({
           success: false,
@@ -588,18 +588,18 @@ app.get('/api/admin/download-output', authenticateAdmin, async (req, res) => {
 async function runParser() {
   try {
     console.log('Starting parser...');
-    
+
     // Use the imported runParse function - it handles all the logic now
     await runParse();
-    
+
     console.log('Parser completed successfully');
-    
+
     // Handle file copying for local development if needed
     const config = require('./src/parser/config').config;
     if (!config.googleCloudStorage.enabled) {
       const outputPath = path.join(__dirname, 'src', 'parser', 'output', 'compound-places.json');
       const publicPath = path.join(__dirname, 'public', 'compound-places.json');
-      
+
       if (fs.existsSync(outputPath)) {
         try {
           fs.copyFileSync(outputPath, publicPath);
@@ -652,7 +652,95 @@ async function runParser() {
   }
 }
 
+// API endpoint to serve a month of tide predictions (public, no auth — matches /api/compound-places)
+const tideSync = require('./src/tides/sync');
+const tideTransform = require('./src/tides/transform');
+const tideClock = require('./src/tides/clock');
 
+app.get('/api/tides', async (req, res) => {
+  try {
+    const cache = await tideSync.getCache();
+    const coverage = tideSync.ensureCoverage(cache);
+
+    if (!cache) {
+      return res.status(503).json({
+        success: false,
+        message: 'Tide data is being prepared. Try again in a moment.',
+      });
+    }
+
+    const requestedMonth = req.query.month;
+    if (requestedMonth && !/^\d{4}-\d{2}$/.test(requestedMonth)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid month parameter. Use YYYY-MM.',
+      });
+    }
+
+    const today = tideClock.todayLocalDate();
+    const monthKeyStr = requestedMonth || tideClock.monthKey(today);
+
+    const firstMonth = tideClock.monthKey(cache.predictions[0].t.slice(0, 10));
+    const lastMonth = tideClock.monthKey(cache.predictions[cache.predictions.length - 1].t.slice(0, 10));
+
+    if (monthKeyStr < firstMonth || monthKeyStr > lastMonth) {
+      return res.status(404).json({
+        success: false,
+        message: 'No tide data available for that month.',
+        available: { first: firstMonth, last: lastMonth },
+      });
+    }
+
+    const month = tideTransform.buildMonth(cache.predictions, monthKeyStr, cache.moonPhases, today);
+    const nextTideEvents = tideTransform.nextTides(cache.predictions, tideClock.nowLocalStamp(), 2);
+    const station = cache.metadata.station;
+
+    res.json({
+      success: true,
+      month: monthKeyStr,
+      monthLabel: month.monthLabel,
+      available: { first: firstMonth, last: lastMonth },
+      station: {
+        id: station.id,
+        name: station.name,
+        correctionNote: `Corrected for ${station.name} and Surrounding Beaches`,
+        correctionDetail: `${station.referenceStationName} reference · ${station.correction.timeOffsetMinutes} min · ×${station.correction.heightFactor}`,
+        datum: cache.metadata.datum,
+        units: 'ft',
+      },
+      today: { date: today, inRequestedMonth: today.startsWith(monthKeyStr) },
+      nextTides: nextTideEvents,
+      days: month.days,
+      moonPhases: month.moonPhases,
+      footnotes: month.footnotes,
+      stale: !coverage.ok,
+      generatedAt: cache.metadata.generatedAt,
+    });
+  } catch (error) {
+    console.error('Error fetching tide data:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch tide data',
+      error: error.message,
+    });
+  }
+});
+
+// Force a fresh tide sync from NOAA/USNO (admin-only), bypassing the coverage
+// check — the same escape hatch as `npm run sync-tides:force`, for when the
+// cache is stale, gapped, or has fallen back to the committed sample fixture.
+app.post('/api/admin/tides/sync', authenticateAdmin, async (req, res) => {
+  try {
+    const result = await tideSync.syncTides({ force: true });
+    res.json({ success: true, ...result });
+  } catch (error) {
+    console.error('Tide sync error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Tide sync failed',
+    });
+  }
+});
 
 // Handle client-side routing - serve index.html for all routes
 app.get('*', (req, res) => {
@@ -661,4 +749,4 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-}); 
+});

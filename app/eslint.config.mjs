@@ -27,7 +27,7 @@ export default tseslint.config([
     },
   },
   {
-    files: ['server.js', 'utilities/**/*.js', 'src/parser/**/*.js'],
+    files: ['server.js', 'utilities/**/*.js', 'src/parser/**/*.js', 'src/tides/**/*.js'],
     ignores: ['**/*.test.js'],
     extends: [js.configs.recommended],
     languageOptions: {

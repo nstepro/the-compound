@@ -25,6 +25,8 @@ Canonical guide for coding agents working in this repository.
 | `npm run parse-debug` | Parser debug with fixture input |
 | `npm run update-data` | Copy parser output → `public/compound-places.json` |
 | `npm run seed-local` | Copy sample places fixture for local API |
+| `npm run sync-tides` | Sync tide predictions from NOAA/USNO if coverage is stale |
+| `npm run sync-tides:force` | Force a full tide resync regardless of coverage |
 
 ## Dev workflow
 
@@ -55,6 +57,21 @@ Google Doc → app/src/parser/ → src/parser/output/compound-places.json
 - Parser uses **OpenAI + Langchain** (in-app AI for data extraction, not agent tooling).
 - House mechanics markdown: production in GCS; local dev uses `app/fixtures/house-mechanics/` (not `public/`).
 
+## Tides
+
+```
+NOAA CO-OPS + USNO → app/src/tides/sync.js → tide-predictions.json → GET /api/tides → TideChart.tsx
+```
+
+- `app/src/tides/` is intentionally isolated from `app/src/parser/` — it must never `require`
+  parser config at module load time, since that throws if OpenAI/Google env vars are missing and
+  `/tides` is a public route with no dependency on the parser.
+- Both upstream APIs (NOAA CO-OPS, USNO) are keyless; no new secrets.
+- No scheduler exists (`Procfile` is `web: npm run start` only) — coverage is maintained by a lazy
+  self-heal on each `/api/tides` request (`ensureCoverage` in `sync.js`), plus `npm run sync-tides`
+  for manual/first runs.
+- Local dev with zero `.env` still works via the committed `app/fixtures/tide-predictions.sample.json`.
+
 Details: [`app/documentation/ARCHITECTURE.md`](app/documentation/ARCHITECTURE.md)
 
 ## Code conventions
@@ -62,7 +79,7 @@ Details: [`app/documentation/ARCHITECTURE.md`](app/documentation/ARCHITECTURE.md
 | Area | Stack |
 |------|-------|
 | `app/src/components/`, `App.tsx` | TypeScript, React 19, Mantine, React Router |
-| `app/server.js`, `app/src/parser/`, `app/utilities/` | CommonJS JavaScript |
+| `app/server.js`, `app/src/parser/`, `app/src/tides/`, `app/utilities/` | CommonJS JavaScript |
 
 Match existing patterns in each folder. Do not convert parser to TypeScript unless asked.
 
@@ -74,7 +91,7 @@ Match existing patterns in each folder. Do not convert parser to TypeScript unle
 
 ## Lint scope
 
-- ESLint covers `**/*.{ts,tsx}` and `server.js`, `utilities/**/*.js`, `src/parser/**/*.js`
+- ESLint covers `**/*.{ts,tsx}` and `server.js`, `utilities/**/*.js`, `src/parser/**/*.js`, `src/tides/**/*.js`
 - Run `npm run check` before finishing tasks
 
 ## Security

@@ -1,0 +1,242 @@
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Next-tide header strip */
+.nextTideStrip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.6rem 1rem;
+  /* border: 2px solid var(--mantine-color-gray-9); */
+  color: var(--mantine-color-gray-9);
+  font-family: 'Jost', sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.todayDate {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tideRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+.nextTideSep {
+  font-weight: 400;
+}
+
+/* Month header */
+.monthNav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.25rem 1rem 1rem;
+  text-align: center;
+}
+
+.monthTitle {
+  min-width: 0;
+}
+
+.navHidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.monthLabel {
+  font-family: 'Jost', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mantine-color-gray-9);
+}
+
+.correctionNote {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: var(--mantine-color-gray-9);
+}
+
+.correctionDetail {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  margin-top: -0.25rem;
+  text-transform: uppercase;
+  color: var(--mantine-color-gray-9);
+}
+
+.staleNote {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  color: var(--mantine-color-gray-6);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding: 0.25rem 1rem 0;
+}
+
+/* Grid */
+.grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grid th,
+.grid td {
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.groupHeader {
+  font-family: 'Jost', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mantine-color-gray-9);
+  border: 2px solid var(--mantine-color-gray-8);
+  background-color: rgba(0,0,0,.05);
+}
+
+.subHeader {
+  font-family: 'Jost', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mantine-color-gray-9);
+  border: 2px solid var(--mantine-color-gray-8);
+}
+
+.dateHeader {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mantine-color-gray-9);
+  border: 2px solid var(--mantine-color-gray-8);
+}
+
+.dateCell {
+  font-family: 'Jost', sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--mantine-color-gray-9);
+  border-left: 2px solid var(--mantine-color-gray-8);
+  border-right: 2px solid var(--mantine-color-gray-8);
+  white-space: nowrap;
+}
+
+.today {
+  background-color: rgba(0,0,0,.05);
+  box-shadow: inset 4px 0 0 var(--mantine-color-gray-8);
+}
+
+.weekend .dateCell {
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.moonGlyph {
+  margin-left: 0.35em;
+  font-size: 0.85em;
+  color: var(--mantine-color-gray-9);
+}
+
+.cell {
+  font-family: 'Jost', sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  color: var(--mantine-color-gray-9);
+  border-left: 2px solid var(--mantine-color-gray-8);
+  border-right: 2px solid var(--mantine-color-gray-8);
+  white-space: nowrap;
+}
+
+.extreme.time {
+  font-weight: 700;
+}
+
+.emptyCell {
+  color: var(--mantine-color-gray-9);
+  border-left: 2px solid var(--mantine-color-gray-8);
+  border-right: 2px solid var(--mantine-color-gray-8);
+}
+
+/* Footer: moon phases, footnotes, source line */
+.footer {
+  padding: 0.75rem 1rem 1rem;
+  border-top: 2px solid var(--mantine-color-gray-8);
+}
+
+.moonLine,
+.footnote,
+.sourceLine {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--mantine-color-gray-9);
+  text-align: center;
+}
+
+.footnote {
+  margin-top: 0.25rem;
+  color: var(--mantine-color-brand-8);
+}
+
+.sourceLine {
+  margin-top: 0.5rem;
+  text-transform: none;
+}
+
+/* Responsive: keep a 320px viewport from scrolling */
+@media (max-width: 576px) {
+  .monthLabel {
+    font-size: 22px;
+  }
+
+  .correctionDetail {
+    display: none;
+  }
+
+  .grid th,
+  .grid td {
+    padding: 2px 3px;
+    font-size: 11.5px;
+  }
+
+  .dateCell,
+  .cell {
+    font-size: 11.5px;
+  }
+}

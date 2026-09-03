@@ -44,4 +44,56 @@ export interface PlacesData {
     };
   };
   places: Place[];
+}
+
+export interface TideEntry {
+  time: string;
+  ft: string;
+  extreme: boolean;
+}
+
+export interface TideDay {
+  date: string;
+  day: number;
+  dow: string;
+  isWeekend: boolean;
+  isToday: boolean;
+  highs: { am: TideEntry | null; pm: TideEntry | null };
+  lows: { am: TideEntry | null; pm: TideEntry | null };
+}
+
+export interface MoonPhase {
+  day: number;
+  phase: string;
+}
+
+export interface NextTide {
+  type: 'H' | 'L';
+  label: string;
+  date: string;
+  time: string;
+  meridiem: string;
+  ft: string;
+}
+
+export interface TideMonth {
+  success: true;
+  month: string;
+  monthLabel: string;
+  available: { first: string; last: string };
+  station: {
+    id: string;
+    name: string;
+    correctionNote: string;
+    correctionDetail: string;
+    datum: string;
+    units: string;
+  };
+  today: { date: string; inRequestedMonth: boolean };
+  nextTides: NextTide[];
+  days: TideDay[];
+  moonPhases: MoonPhase[];
+  footnotes: string[];
+  stale: boolean;
+  generatedAt: string;
 } 

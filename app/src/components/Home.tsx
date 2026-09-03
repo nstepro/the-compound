@@ -13,6 +13,7 @@ export function Home() {
     { id: 'places', label: 'Places', path: '/places' },
     { id: 'shady', label: 'Shady (#142)', path: '/shady' },
     { id: 'lofty', label: 'Lofty (#137)', path: '/lofty' },
+    { id: 'tides', label: 'Tides', path: '/tides' },
     // { id: 'getting-here', label: 'Getting to the Sheddy', path: '/getting-here' }
   ];
 
